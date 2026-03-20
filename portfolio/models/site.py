@@ -52,11 +52,31 @@ class SiteSettings(SingletonModel):
         help_text="Default image used when sharing pages that have no cover image.",
     )
 
-    # SEO
+    # SEO — global default and per-page overrides
     meta_description = models.CharField(
         max_length=160,
         blank=True,
-        help_text="Shown in search results. Keep under 160 characters.",
+        help_text="Default meta description (homepage and fallback). Keep under 160 characters.",
+    )
+    about_meta_description = models.CharField(
+        max_length=160,
+        blank=True,
+        help_text="Meta description for the About page. Keep under 160 characters.",
+    )
+    services_meta_description = models.CharField(
+        max_length=160,
+        blank=True,
+        help_text="Meta description for the Services page. Keep under 160 characters.",
+    )
+    projects_meta_description = models.CharField(
+        max_length=160,
+        blank=True,
+        help_text="Meta description for the Projects list page. Keep under 160 characters.",
+    )
+    contact_meta_description = models.CharField(
+        max_length=160,
+        blank=True,
+        help_text="Meta description for the Contact page. Keep under 160 characters.",
     )
     google_analytics_id = models.CharField(
         max_length=30,

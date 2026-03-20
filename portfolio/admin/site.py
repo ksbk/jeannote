@@ -24,7 +24,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        ("SEO & Analytics", {"fields": ("meta_description", "og_image", "google_analytics_id")}),
+        ("SEO & Analytics", {"fields": ("meta_description", "about_meta_description", "services_meta_description", "projects_meta_description", "contact_meta_description", "og_image", "google_analytics_id")}),
     )
 
     def has_add_permission(self, request):

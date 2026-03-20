@@ -5,7 +5,7 @@
 {% block og_title %}Projects — {{ site_settings.site_name }}{% endblock %}
 {% block canonical %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}
 {% block og_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}
-{% block meta_description %}Jeannot Tsirenge’s architecture portfolio — residential houses, civic and cultural buildings, commercial projects, and interior architecture across South Africa.{% endblock %}
+{% block meta_description %}{{ site_settings.projects_meta_description|default:"Jeannot Tsirenge's architecture portfolio — residential houses, civic and cultural buildings, commercial projects, and interior architecture across South Africa." }}{% endblock %}
 
 {% block content %}
 
