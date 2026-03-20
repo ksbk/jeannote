@@ -26,6 +26,10 @@ if _dotenv.exists():
 # Core
 # ---------------------------------------------------------------------------
 
+# Safe default — overridden to True in dev.py only.
+# If base settings are ever used directly, the server does not expose debug info.
+DEBUG = False
+
 SECRET_KEY = env("SECRET_KEY")
 
 INSTALLED_APPS = [
