@@ -196,8 +196,9 @@ jeannote/
 │   ├── test_models.py     # model unit tests
 │   └── test_forms.py      # form validation + contact POST
 ├── scripts/tree.py        # repository tree printer
-├── pyproject.toml         # dependencies and tool configuration
-├── uv.lock                # locked dependency graph
+├── pyproject.toml         # dependencies and tool configuration (source of truth)
+├── uv.lock                # locked dependency graph (source of truth)
+├── requirements.txt       # generated for compatibility (do not edit by hand — run: uv export --no-dev --no-hashes -o requirements.txt)
 ├── .python-version        # Python version pin
 ├── .pre-commit-config.yaml
 └── .env.example
