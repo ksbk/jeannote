@@ -54,7 +54,7 @@ def test_about_page(client, site_settings):
 
 @pytest.mark.django_db
 def test_services_page(client, site_settings):
-    response = client.get(reverse("portfolio:services"))
+    response = client.get(reverse("services:list"))
     assert response.status_code == 200
 
 

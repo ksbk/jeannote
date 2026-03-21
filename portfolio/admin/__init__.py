@@ -1,7 +1,6 @@
-from .site import AboutProfileAdmin, ServiceAdmin, SiteSettingsAdmin
+from .site import AboutProfileAdmin, SiteSettingsAdmin
 
 __all__ = [
     "SiteSettingsAdmin",
     "AboutProfileAdmin",
-    "ServiceAdmin",
 ]

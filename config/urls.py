@@ -45,5 +45,6 @@ urlpatterns = [
     path("", include("portfolio.urls")),
     path("projects/", include("projects.urls")),
     path("contact/", include("contact.urls")),
+    path("services/", include("services.urls")),
 # static() is a no-op when DEBUG=False — safe to keep for local dev media serving.
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

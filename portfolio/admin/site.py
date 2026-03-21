@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from ..models import AboutProfile, Service, SiteSettings
+from ..models import AboutProfile, SiteSettings
 
 # ---------------------------------------------------------------------------
 # SiteSettings
@@ -47,19 +47,3 @@ class AboutProfileAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return not AboutProfile.objects.exists()
-
-
-# ---------------------------------------------------------------------------
-# Service
-# ---------------------------------------------------------------------------
-
-
-@admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ("title", "summary", "order", "active")
-    list_editable = ("order", "active")
-    prepopulated_fields = {"slug": ("title",)}
-    fieldsets = (
-        (None, {"fields": ("title", "slug", "summary", "order", "active", "icon_name")}),
-        ("Detail", {"fields": ("description", "who_for", "value_proposition", "deliverables")}),
-    )

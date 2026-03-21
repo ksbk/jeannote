@@ -90,7 +90,7 @@
     <ul class="services-list">
       {% for service in services %}
       <li class="service-item">
-        <a href="{% url 'portfolio:services' %}#{{ service.slug }}" class="service-item__link">
+        <a href="{% url 'services:list' %}#{{ service.slug }}" class="service-item__link">
           <h3 class="service-item__title">{{ service.title }}</h3>
           <p class="service-item__summary">{{ service.summary }}</p>
           <span class="service-item__arrow" aria-hidden="true">→</span>
@@ -99,7 +99,7 @@
       {% endfor %}
     </ul>
     <div class="section__footer">
-      <a href="{% url 'portfolio:services' %}" class="btn btn--outline">All Services</a>
+      <a href="{% url 'services:list' %}" class="btn btn--outline">All Services</a>
     </div>
   </div>
 </section>

@@ -11,7 +11,7 @@ class StaticViewSitemap(Sitemap):
             "portfolio:home",
             "projects:list",
             "portfolio:about",
-            "portfolio:services",
+            "services:list",
             "contact:contact",
         ]
 

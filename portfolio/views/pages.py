@@ -1,8 +1,9 @@
-from django.views.generic import ListView, TemplateView
+from django.views.generic import TemplateView
 
 from projects.models import Project, Testimonial
+from services.models import Service
 
-from ..models import AboutProfile, Service, SiteSettings
+from ..models import AboutProfile, SiteSettings
 
 # ---------------------------------------------------------------------------
 # Home
@@ -41,15 +42,3 @@ class AboutView(TemplateView):
         if site.og_image:
             ctx["og_image"] = site.og_image.url
         return ctx
-
-
-# ---------------------------------------------------------------------------
-# Services
-# ---------------------------------------------------------------------------
-
-
-class ServicesView(ListView):
-    model = Service
-    template_name = "portfolio/services.html"
-    context_object_name = "services"
-    queryset = Service.objects.filter(active=True)

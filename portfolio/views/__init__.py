@@ -1,7 +1,6 @@
-from .pages import AboutView, HomeView, ServicesView
+from .pages import AboutView, HomeView
 
 __all__ = [
     "HomeView",
     "AboutView",
-    "ServicesView",
 ]

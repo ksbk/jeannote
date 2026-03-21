@@ -1,8 +1,7 @@
-from .site import AboutProfile, Service, SingletonModel, SiteSettings
+from .site import AboutProfile, SingletonModel, SiteSettings
 
 __all__ = [
     "SingletonModel",
     "SiteSettings",
     "AboutProfile",
-    "Service",
 ]
