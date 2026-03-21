@@ -1,5 +1,5 @@
 """
-Custom Django system checks for the portfolio app.
+Custom Django system checks for the core app.
 
 These run automatically via `manage.py check` and `manage.py check --deploy`,
 and are registered when the app is ready (see apps.py).
@@ -45,7 +45,7 @@ def check_production_email_backend(app_configs, **kwargs):
                         "Without this, contact form enquiries are saved to the database "
                         "but no notification email is sent."
                     ),
-                    id="portfolio.W001",
+                    id="core.W001",
                 )
             )
     return errors

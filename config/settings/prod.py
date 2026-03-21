@@ -61,7 +61,7 @@ LOGGING = {
         "level": "WARNING",
     },
     "loggers": {
-        "portfolio": {
+        "core": {
             "handlers": ["console"],
             "level": "INFO",
             "propagate": False,

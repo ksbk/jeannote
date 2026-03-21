@@ -11,7 +11,7 @@ from ..models import AboutProfile
 
 
 class HomeView(TemplateView):
-    template_name = "portfolio/home.html"
+    template_name = "core/home.html"
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -30,7 +30,7 @@ class HomeView(TemplateView):
 
 
 class AboutView(TemplateView):
-    template_name = "portfolio/about.html"
+    template_name = "core/about.html"
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

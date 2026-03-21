@@ -84,7 +84,7 @@ filterwarnings = [
 ]
 
 [tool.coverage.run]
-source = ["portfolio", "projects", "contact", "services", "config"]
+source = ["core", "projects", "contact", "services", "config"]
 omit = [
     "*/migrations/*",
     "*/management/commands/seed_demo.py",

@@ -8,7 +8,7 @@ Run once; safe to re-run (uses get_or_create).
 
 from django.core.management.base import BaseCommand
 
-from portfolio.models import AboutProfile, SiteSettings
+from core.models import AboutProfile, SiteSettings
 from projects.models import Project, Testimonial
 from services.models import Service
 

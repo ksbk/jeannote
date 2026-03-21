@@ -8,9 +8,9 @@ class StaticViewSitemap(Sitemap):
 
     def items(self):
         return [
-            "portfolio:home",
+            "core:home",
             "projects:list",
-            "portfolio:about",
+            "core:about",
             "services:list",
             "contact:contact",
         ]
