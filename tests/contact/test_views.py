@@ -1,0 +1,34 @@
+"""
+View tests for apps.contact: contact page and success page.
+"""
+
+import pytest
+from django.urls import reverse
+
+
+@pytest.mark.django_db
+def test_contact_page_get(client, site_settings):
+    response = client.get(reverse("contact:contact"))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_contact_success_page(client, site_settings):
+    response = client.get(reverse("contact:success"))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_contact_prefills_project_type_from_query_param(client, site_settings):
+    response = client.get(reverse("contact:contact") + "?project_type=Residential+Design")
+    assert response.status_code == 200
+    form = response.context["form"]
+    assert form.initial.get("project_type") == "Residential Design"
+
+
+@pytest.mark.django_db
+def test_contact_ignores_invalid_project_type_query_param(client, site_settings):
+    response = client.get(reverse("contact:contact") + "?project_type=MaliciousValue")
+    assert response.status_code == 200
+    form = response.context["form"]
+    assert form.initial.get("project_type", "") == ""
