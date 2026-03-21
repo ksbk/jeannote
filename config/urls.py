@@ -22,8 +22,8 @@ from django.contrib.sitemaps.views import sitemap as sitemap_view
 from django.urls import include, path
 from django.views.generic import TemplateView
 
-from core.sitemaps import StaticViewSitemap
-from projects.sitemaps import ProjectSitemap
+from apps.core.sitemaps import StaticViewSitemap
+from apps.projects.sitemaps import ProjectSitemap
 
 _sitemaps = {
     "projects": ProjectSitemap,
@@ -42,9 +42,9 @@ urlpatterns = [
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
-    path("", include("core.urls")),
-    path("projects/", include("projects.urls")),
-    path("contact/", include("contact.urls")),
-    path("services/", include("services.urls")),
+    path("", include("apps.core.urls")),
+    path("projects/", include("apps.projects.urls")),
+    path("contact/", include("apps.contact.urls")),
+    path("services/", include("apps.services.urls")),
 # static() is a no-op when DEBUG=False — safe to keep for local dev media serving.
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

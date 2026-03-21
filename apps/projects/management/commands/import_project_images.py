@@ -39,7 +39,7 @@ from pathlib import Path
 from django.core.files import File
 from django.core.management.base import BaseCommand, CommandError
 
-from projects.models import Project, ProjectImage
+from apps.projects.models import Project, ProjectImage
 
 # Regex that matches Django's collision-avoidance suffix, e.g.
 # "cover_vFlUiiN" → "cover", "img_OV1wuG8" → "img"

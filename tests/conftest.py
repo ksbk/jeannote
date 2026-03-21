@@ -4,9 +4,9 @@ Shared pytest fixtures for the jeannote test suite.
 
 import pytest
 
-from core.models import SiteSettings
-from projects.models import Project
-from services.models import Service
+from apps.core.models import SiteSettings
+from apps.projects.models import Project
+from apps.services.models import Service
 
 
 @pytest.fixture

@@ -51,7 +51,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.text import slugify
 
-from projects.models import Project, ProjectImage
+from apps.projects.models import Project, ProjectImage
 
 _PLACEHOLDER_DESCRIPTION = "[Placeholder — update in admin]"
 

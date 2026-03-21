@@ -6,7 +6,7 @@ The contact form POST is tested separately in test_forms.py.
 import pytest
 from django.urls import reverse
 
-from projects.models import Testimonial
+from apps.projects.models import Testimonial
 
 # ---------------------------------------------------------------------------
 # Pages that need no database content to render (gracefully handle empty DB)

@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 
-from projects.models import Project, Testimonial
-from services.models import Service
+from apps.projects.models import Project, Testimonial
+from apps.services.models import Service
 
 from ..models import AboutProfile
 

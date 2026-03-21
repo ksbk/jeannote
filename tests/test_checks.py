@@ -5,7 +5,7 @@ a dev-only email backend being active in production-like mode (DEBUG=False).
 
 from django.test import override_settings
 
-from core.checks import check_production_email_backend
+from apps.core.checks import check_production_email_backend
 
 _CONSOLE = "django.core.mail.backends.console.EmailBackend"
 _DUMMY = "django.core.mail.backends.dummy.EmailBackend"

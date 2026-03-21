@@ -4,10 +4,10 @@ Model unit tests — instantiation, basic relations, and singleton behaviour.
 
 import pytest
 
-from contact.models import ContactInquiry
-from core.models import AboutProfile, SiteSettings
-from projects.models import Project, ProjectImage, Testimonial
-from services.models import Service
+from apps.contact.models import ContactInquiry
+from apps.core.models import AboutProfile, SiteSettings
+from apps.projects.models import Project, ProjectImage, Testimonial
+from apps.services.models import Service
 
 # ---------------------------------------------------------------------------
 # SiteSettings singleton

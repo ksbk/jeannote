@@ -5,7 +5,7 @@ Contact form tests — valid POST creates a ContactInquiry; invalid POST stays o
 import pytest
 from django.urls import reverse
 
-from contact.models import ContactInquiry
+from apps.contact.models import ContactInquiry
 
 VALID_PAYLOAD = {
     "name": "Alice Architect",
