@@ -6,6 +6,96 @@ A professional, content-driven portfolio platform for architecture practices, bu
 
 ---
 
+## What this is
+
+A production-ready Django template for architecture practices who want a content-managed
+portfolio site — not a generic website builder, not a theme on top of a CMS, but a
+properly engineered Django application built specifically for this domain.
+
+**Buy it. Clone it. Fill in your content. Ship it.**
+
+Everything needed to take a practice from no web presence to a live, professional site
+is already built and tested. You own the code outright — customise anything.
+
+---
+
+## Who it's for
+
+- Sole-practitioner architects or small studios
+- Graduates establishing an independent practice
+- Established practices replacing a dated or off-brand site
+- Developers or agencies building portfolio sites for architecture clients
+
+Not a good fit if you need multi-tenant, e-commerce, or blog publishing — this is a
+focused tool for a specific purpose.
+
+---
+
+## What's included
+
+### Pages
+| Page | What it does |
+| --- | --- |
+| **Home** | Hero, featured projects, services summary, testimonials, CTA |
+| **Projects** | Paginated portfolio grid with category filter |
+| **Project detail** | Full project case study — narrative, gallery, testimonials, SEO |
+| **About** | Biography, philosophy, credentials, portrait, CV download |
+| **Services** | Detailed service descriptions with deliverables |
+| **Contact** | Enquiry form with spam protection, saves to DB, emails on submission |
+
+### Admin
+Full Django admin for every model — no custom frontend needed to manage content.
+
+| Model | What you manage |
+| --- | --- |
+| **Site Settings** | Brand, contact details, social links, SEO, analytics — all in one place |
+| **About Profile** | About page content and portrait |
+| **Services** | Services listing with ordering and active/inactive toggle |
+| **Projects** | Portfolio projects with full story fields, gallery images, and testimonials |
+| **Contact Inquiries** | Submitted enquiries — read, manage, and track status |
+
+### Production features
+- **Cloudinary integration** — uploaded media is durable across deploys (Railway-safe)
+- **PostgreSQL-ready** — SQLite for dev, Postgres for production, configured via `DATABASE_URL`
+- **Sentry integration** — exception monitoring in production, opt-in via `SENTRY_DSN`
+- **Sitemap** — auto-generated XML sitemap for all projects and pages
+- **SEO fields** — per-page meta description and OG image on every model
+- **Google Analytics** — GA4 measurement ID managed in admin, no code changes
+- **SMTP email** — configurable email backend; contact form emails on every submission
+- **Content readiness check** — management command flags uncustomised fields before launch
+- **Whitenoise static serving** — no CDN required for static files
+
+### Developer ergonomics
+- **98-test suite** covering all models, views, forms, and admin
+- **Playwright e2e tests** for the contact form and key user journeys
+- **GitHub Actions CI** — lint, type-check, tests, migration check, deploy check on every push
+- **pre-commit hooks** — ruff, trailing whitespace, merge conflict detection
+- **`make health`** — one command to run the full quality gate locally
+- **Docker + Compose** — reproducible local start-up on macOS/Windows without installing Python
+
+---
+
+## Quick start
+
+```bash
+git clone <repo-url>
+cd <project-directory>
+uv sync --group dev
+cp .env.example .env          # then set SECRET_KEY
+uv run python manage.py migrate
+uv run python manage.py createsuperuser
+uv run python manage.py seed_demo   # loads generic starter content
+uv run python manage.py runserver
+```
+
+Site at **<http://127.0.0.1:8000>** · Admin at **<http://127.0.0.1:8000/admin>**
+
+See [SETUP.md](SETUP.md) for the full phase-by-phase guide from first run to live site.
+See [DEMO.md](DEMO.md) to stand up a preview instance or share a demo URL.
+See [CHANGELOG.md](CHANGELOG.md) for what's included in this release.
+
+---
+
 ## Stack
 
 | Layer | Technology |
@@ -596,7 +686,7 @@ EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER=apikey
 EMAIL_HOST_PASSWORD=your-api-key
-DEFAULT_FROM_EMAIL=Jeannot Tsirenge <contact@jeannot-tsirenge.com>
+DEFAULT_FROM_EMAIL=Your Name <hello@yourdomain.com>
 ```
 
 Recommended providers: SendGrid, Mailgun, Postmark, Amazon SES.

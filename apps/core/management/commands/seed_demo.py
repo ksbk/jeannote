@@ -206,7 +206,7 @@ TESTIMONIALS = [
         "order": 1,
     },
     {
-        "name": "N. Dlamini",
+        "name": "A. Navarro",
         "role": "Municipal Library Director",
         "company": "City District Municipality",
         "quote": (
@@ -219,7 +219,7 @@ TESTIMONIALS = [
         "order": 2,
     },
     {
-        "name": "T. Molefe",
+        "name": "C. Brennan",
         "role": "Director of Acquisitions",
         "company": "Urban Property Group",
         "quote": (
