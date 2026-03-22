@@ -19,10 +19,10 @@ Dry run — full:
         --title "Residential Housing — Reykjavík" \\
         --category residential \\
         --short-description "Multi-family residential housing project." \\
-        --cover /Users/ksb/Downloads/jeanote/byggingar_jeannot_0061_unnin.jpg \\
-        --gallery /Users/ksb/Downloads/jeanote/byggingar_jeannot_0096_unnin.jpg \\
-                  /Users/ksb/Downloads/jeanote/byggingar_jeannot_0034_unnin.jpg \\
-                  /Users/ksb/Downloads/jeanote/byggingar_jeannot_0025_unnin.jpg \\
+        --cover path/to/cover.jpg \\
+        --gallery path/to/gallery-01.jpg \\
+                  path/to/gallery-02.jpg \\
+                  path/to/gallery-03.jpg \\
         --featured --order 1 \\
         --dry-run
 
@@ -30,9 +30,9 @@ Live run (remove --dry-run when satisfied):
     python manage.py bootstrap_project \\
         --title "Residential Housing — Reykjavík" \\
         --category residential \\
-        --cover /Users/ksb/Downloads/jeanote/byggingar_jeannot_0061_unnin.jpg \\
-        --gallery /Users/ksb/Downloads/jeanote/byggingar_jeannot_0096_unnin.jpg \\
-                  /Users/ksb/Downloads/jeanote/byggingar_jeannot_0034_unnin.jpg \\
+        --cover path/to/cover.jpg \\
+        --gallery path/to/gallery-01.jpg \\
+                  path/to/gallery-02.jpg \\
         --featured --order 1
 
 Safety rules

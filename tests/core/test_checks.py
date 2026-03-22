@@ -120,19 +120,16 @@ def test_check_silent_when_sentry_dsn_present():
 
 
 # ---------------------------------------------------------------------------
-# core.W006 — CONTACT_EMAIL still the template default
+# core.W006 — CONTACT_EMAIL not configured
 # ---------------------------------------------------------------------------
 
-_TEMPLATE_EMAIL = "contact@jeannote-tsirenge.com"
 
-
-@override_settings(DEBUG=False, CONTACT_EMAIL=_TEMPLATE_EMAIL)
-def test_check_warns_when_contact_email_is_template_default():
-    """W006 fires in production when CONTACT_EMAIL was never changed."""
+@override_settings(DEBUG=False, CONTACT_EMAIL="")
+def test_check_warns_when_contact_email_is_blank():
+    """W006 fires in production when CONTACT_EMAIL is not set."""
     errors = check_contact_email_default(None)
     assert len(errors) == 1
     assert errors[0].id == "core.W006"
-    assert _TEMPLATE_EMAIL in errors[0].msg
 
 
 @override_settings(DEBUG=False, CONTACT_EMAIL="contact@myarchitecture.com")
@@ -141,8 +138,8 @@ def test_check_silent_when_contact_email_is_custom():
     assert errors == []
 
 
-@override_settings(DEBUG=True, CONTACT_EMAIL=_TEMPLATE_EMAIL)
+@override_settings(DEBUG=True, CONTACT_EMAIL="")
 def test_check_contact_email_silent_in_dev_mode():
-    """W006 is suppressed in dev — template email is expected during local setup."""
+    """W006 is suppressed in dev — blank CONTACT_EMAIL is expected during local setup."""
     errors = check_contact_email_default(None)
     assert errors == []

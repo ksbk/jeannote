@@ -1,7 +1,7 @@
 [project]
-name = "jeannote"
+name = "architecture-portfolio"
 version = "0.1.0"
-description = "Architecture portfolio platform for Jeannot Tsirenge"
+description = "A reusable Django portfolio template for architecture practices."
 requires-python = ">=3.13"
 dependencies = [
     "Django>=5.2,<5.3",

@@ -167,31 +167,26 @@ def check_production_sentry_dsn(app_configs, **kwargs):
     return errors
 
 
-_TEMPLATE_CONTACT_EMAIL = "contact@jeannote-tsirenge.com"
-
-
 @register()
 def check_contact_email_default(app_configs, **kwargs):
     """
-    Warn when CONTACT_EMAIL is still the template default in production.
+    Warn when CONTACT_EMAIL is not configured in production.
 
-    If this setting is never changed from the repo default, every contact form
-    submission sends a notification to the template author's inbox rather than
-    the live site owner's.
+    Without this setting, contact form submissions are saved to the database
+    but no notification email reaches the site owner.
     """
     errors: list[Warning] = []
     if settings.DEBUG:
         return errors
 
     contact_email = getattr(settings, "CONTACT_EMAIL", "")
-    if contact_email == _TEMPLATE_CONTACT_EMAIL:
+    if not contact_email:
         errors.append(
             Warning(
-                f"CONTACT_EMAIL is still the template default ('{_TEMPLATE_CONTACT_EMAIL}').",
+                "CONTACT_EMAIL is not set.",
                 hint=(
-                    "Set CONTACT_EMAIL to your real inbox in the production environment. "
-                    "Without this, contact form notifications go to the template "
-                    "author's email address."
+                    "Set CONTACT_EMAIL to your monitored inbox in the production environment. "
+                    "Without this, contact form notifications are never delivered."
                 ),
                 id="core.W006",
             )

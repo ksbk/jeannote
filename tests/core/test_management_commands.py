@@ -19,8 +19,8 @@ from apps.services.models import Service
 
 
 @pytest.mark.django_db
-def test_warns_when_site_name_is_template_default():
-    # SiteSettings.load() on a fresh DB creates with the model default name.
+def test_warns_when_site_name_is_blank():
+    # SiteSettings.load() on a fresh DB creates with site_name = "" (blank default).
     warnings = collect_warnings()
     assert any("site_name" in w for w in warnings)
 
@@ -35,8 +35,8 @@ def test_no_site_name_warning_when_customised():
 
 
 @pytest.mark.django_db
-def test_warns_when_contact_email_is_template_default():
-    # SiteSettings.load() creates with contact_email = template default.
+def test_warns_when_contact_email_is_blank():
+    # SiteSettings.load() creates with contact_email = "" (blank default).
     warnings = collect_warnings()
     assert any("contact_email" in w for w in warnings)
 

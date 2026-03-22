@@ -541,7 +541,7 @@ the complete annotated list.
 | `EMAIL_HOST_USER` | If SMTP | — | SMTP login username |
 | `EMAIL_HOST_PASSWORD` | If SMTP | — | SMTP login password |
 | `DEFAULT_FROM_EMAIL` | No | = `CONTACT_EMAIL` | "From" address on outgoing mail |
-| `CONTACT_EMAIL` | No | `contact@jeannot-tsirenge.com` | Receives contact form notifications |
+| `CONTACT_EMAIL` | **Prod** | — | Receives contact form notifications |
 | `CSRF_TRUSTED_ORIGINS` | **Prod** | `[]` | Required behind HTTPS reverse proxies |
 | `SENTRY_DSN` | Recommended | — | Enables Sentry exception capture in production |
 | `SENTRY_ENVIRONMENT` | No | `production` | Environment name reported to Sentry |
@@ -572,7 +572,7 @@ SECRET_KEY=<long-random-string>
 DJANGO_SETTINGS_MODULE=config.settings.prod
 ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
 DATABASE_URL=postgres://user:password@host:5432/dbname
-CONTACT_EMAIL=contact@jeannot-tsirenge.com
+CONTACT_EMAIL=hello@yourdomain.com
 CSRF_TRUSTED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
 SENTRY_DSN=https://examplePublicKey@o0.ingest.sentry.io/0
 ```

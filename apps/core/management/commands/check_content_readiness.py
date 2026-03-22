@@ -24,15 +24,6 @@ from apps.core.models import AboutProfile, SiteSettings
 from apps.projects.models import Project
 from apps.services.models import Service
 
-# ---------------------------------------------------------------------------
-# Template defaults — strings baked into model field default= values.
-# If the DB still contains them, the site has not been properly customised.
-# ---------------------------------------------------------------------------
-
-_DEFAULT_SITE_NAME = "Jeannot Tsirenge"
-_DEFAULT_TAGLINE = "Architectural design shaped by context, clarity, and identity."
-_DEFAULT_CONTACT_EMAIL = "contact@jeannot-tsirenge.com"  # matches SiteSettings model default
-
 
 def collect_warnings() -> list[str]:
     """
@@ -49,22 +40,16 @@ def collect_warnings() -> list[str]:
 
     # -- SiteSettings ---------------------------------------------------------
 
-    if site.site_name == _DEFAULT_SITE_NAME:
+    if not site.site_name:
         warnings.append(
-            f"SiteSettings.site_name is still the template default ('{_DEFAULT_SITE_NAME}'). "
-            "Update it in admin → Site Settings."
+            "SiteSettings.site_name is blank. "
+            "Update it in admin \u2192 Site Settings."
         )
 
-    if site.tagline == _DEFAULT_TAGLINE:
+    if not site.contact_email:
         warnings.append(
-            "SiteSettings.tagline is still the template default. "
-            "Update it in admin → Site Settings."
-        )
-
-    if site.contact_email == _DEFAULT_CONTACT_EMAIL:
-        warnings.append(
-            f"SiteSettings.contact_email is still the template default ('{_DEFAULT_CONTACT_EMAIL}'). "
-            "Enquiries will go to the wrong inbox."
+            "SiteSettings.contact_email is blank. "
+            "Set it in admin \u2192 Site Settings so enquiries reach your inbox."
         )
 
     if not site.meta_description:
@@ -90,7 +75,7 @@ def collect_warnings() -> list[str]:
     if about.experience_years == 0:
         warnings.append(
             "AboutProfile.experience_years is 0. "
-            "This value renders publicly — enter the real figure in admin."
+            "This value renders publicly \u2014 enter the real figure in admin."
         )
 
     if not about.portrait:

@@ -1,5 +1,5 @@
 """
-Shared pytest fixtures for the jeannote test suite.
+Shared pytest fixtures for the portfolio test suite.
 """
 
 import pytest

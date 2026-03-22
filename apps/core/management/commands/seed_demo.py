@@ -101,7 +101,7 @@ PROJECTS = [
         "short_description": "A private residence that uses the natural topography of its sloping site to create a sequence of connected levels, each framing a distinct view of the landscape.",
         "category": "residential",
         "status": "completed",
-        "location": "Eastern Cape",
+        "location": "Hillside Region",
         "year": 2023,
         "area": "320 m²",
         "overview": "Set on a steeply sloping site at the edge of a small town, this private house uses the natural fall of the land to organise a sequence of living levels — each with its own relationship to the landscape and light. The brief called for a family home that would feel rooted in its place, generous without excess, and quietly contemporary in character.",
@@ -116,7 +116,7 @@ PROJECTS = [
         "short_description": "A lightweight civic pavilion housing a branch library, reading rooms, and flexible community space — designed to be both a landmark and a welcoming public threshold.",
         "category": "cultural",
         "status": "completed",
-        "location": "Western Cape",
+        "location": "Coastal City",
         "year": 2022,
         "area": "480 m²",
         "overview": "This community library pavilion was commissioned by a local municipality as part of a small civic precinct development. The brief asked for a building that would serve the neighbourhood as a library, study space, and informal gathering place — one that would feel welcoming even to those who had never entered a library before.",
@@ -131,7 +131,7 @@ PROJECTS = [
         "short_description": "The interior transformation of a 1970s apartment block unit — stripping back decades of poor alterations to reveal strong bones and reorganise the plan for contemporary urban living.",
         "category": "interior",
         "status": "completed",
-        "location": "Cape Town",
+        "location": "City Centre",
         "year": 2024,
         "area": "95 m²",
         "overview": "A compact city apartment — the kind that had been subdivided and re-divided over five decades — was stripped back to its structure and completely reimagined. The starting point was a question: what is actually here, and what should be here?",
@@ -146,7 +146,7 @@ PROJECTS = [
         "short_description": "The transformation of a decommissioned warehouse into a flexible co-working campus — preserving industrial character while introducing contemporary amenity and environmental performance.",
         "category": "commercial",
         "status": "completed",
-        "location": "Johannesburg",
+        "location": "City District",
         "year": 2023,
         "client": "Undisclosed Property Developer",
         "area": "1 850 m²",
@@ -188,12 +188,12 @@ PROJECTS = [
 
 TESTIMONIALS = [
     {
-        "name": "Sarah & Mark Lindström",
+        "name": "Sarah & Mark L.",
         "role": "Private Clients",
         "company": "",
         "quote": (
-            "Working with Jeannot was the best decision we made on this project. "
-            "He listened carefully from the very first meeting, never tried to impose "
+            "Working with the studio was the best decision we made on this project. "
+            "They listened carefully from the very first meeting, never tried to impose "
             "a signature style, and kept us informed at every stage. The house exceeded "
             "what we thought was possible on our budget and timeline."
         ),
@@ -201,9 +201,9 @@ TESTIMONIALS = [
         "order": 1,
     },
     {
-        "name": "Nkosi Dlamini",
+        "name": "N. Dlamini",
         "role": "Municipal Library Director",
-        "company": "Western Cape District Municipality",
+        "company": "City District Municipality",
         "quote": (
             "The pavilion has transformed how the community uses the library. We were "
             "worried a striking building might feel intimidating — the opposite happened. "
@@ -214,14 +214,14 @@ TESTIMONIALS = [
         "order": 2,
     },
     {
-        "name": "Thabo Molefe",
+        "name": "T. Molefe",
         "role": "Director of Acquisitions",
         "company": "Urban Property Group",
         "quote": (
-            "Jeannot delivered a technically complex project on time and within budget, "
-            "which alone would make him stand out. But the commercial outcome — full "
+            "The studio delivered a technically complex project on time and within budget, "
+            "which alone would make them stand out. But the commercial outcome — full "
             "occupancy inside fourteen months — reflects design quality as much as market "
-            "conditions. We will work with him again."
+            "conditions. We will work with them again."
         ),
         "project_title": "Commercial Office Conversion",
         "order": 3,
@@ -246,12 +246,12 @@ class Command(BaseCommand):
 
     def _seed_settings(self):
         settings, created = SiteSettings.objects.get_or_create(pk=1)
-        settings.site_name = "Jeannot Tsirenge"
+        settings.site_name = "Demo Architecture Studio"
         settings.tagline = "Architectural design shaped by context, clarity, and identity."
-        settings.contact_email = "contact@jeannot-tsirenge.com"
-        settings.location = "South Africa"
+        settings.contact_email = "hello@demo-architecture.example"
+        settings.location = "Your City, Your Country"
         settings.meta_description = (
-            "Jeannot Tsirenge is an architect whose work combines spatial clarity, "
+            "An architecture practice whose work combines spatial clarity, "
             "contextual sensitivity, and thoughtful design to create places with identity, "
             "purpose, and lasting value."
         )
@@ -263,18 +263,19 @@ class Command(BaseCommand):
         profile, created = AboutProfile.objects.get_or_create(pk=1)
         profile.headline = "An architect whose work is shaped by context, clarity, and care."
         profile.intro = (
-            "Jeannot Tsirenge is an architect whose work combines spatial clarity, "
+            "[Your Name] is an architect whose work combines spatial clarity, "
             "contextual sensitivity, and thoughtful design to create places with identity, "
             "purpose, and lasting value."
         )
         profile.biography = (
-            "Jeannot Tsirenge is a registered architect with a practice spanning residential, "
-            "cultural, and commercial projects across sub-Saharan Africa. His work is characterised "
+            "[Your Name] is a registered architect with a practice spanning residential, "
+            "cultural, and commercial projects. Their work is characterised "
             "by a commitment to design quality, material honesty, and a genuine engagement with "
             "the specific conditions of each site and brief.\n\n"
-            "After completing his studies in architecture, he worked with several award-winning "
-            "practices before establishing his own independent practice. His work has been recognised "
-            "in a number of regional competitions and has been exhibited at professional venues."
+            "After completing their studies in architecture, they worked with several "
+            "award-winning practices before establishing an independent practice. Their work "
+            "has been recognised in a number of regional competitions and exhibited at "
+            "professional venues."
         )
         profile.philosophy = (
             "Architecture is not primarily about buildings. It is about the relationship between "
@@ -287,11 +288,11 @@ class Command(BaseCommand):
         )
         profile.credentials = (
             "Bachelor of Architecture (Professional)\n"
-            "Registered Architect — South African Council for the Architectural Profession (SACAP)\n"
-            "Member — South African Institute of Architects (SAIA)"
+            "Registered Architect — [Your Local Professional Body]\n"
+            "Member — [Your Professional Institute]"
         )
-        profile.experience_years = 8
-        profile.location = "South Africa"
+        profile.experience_years = 0
+        profile.location = "Your City"
         profile.save()
         action = "Created" if created else "Updated"
         self.stdout.write(f"  {action} AboutProfile")

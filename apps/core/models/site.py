@@ -25,13 +25,13 @@ class SingletonModel(models.Model):
 
 
 class SiteSettings(SingletonModel):
-    site_name = models.CharField(max_length=120, default="Jeannot Tsirenge")
+    site_name = models.CharField(max_length=120, default="")
     tagline = models.CharField(
         max_length=220,
         default="Architectural design shaped by context, clarity, and identity.",
     )
     logo = models.ImageField(upload_to="site/", blank=True, null=True)
-    contact_email = models.EmailField(default="contact@jeannot-tsirenge.com")
+    contact_email = models.EmailField(default="")
     phone = models.CharField(max_length=40, blank=True)
     location = models.CharField(max_length=120, blank=True)
     address = models.TextField(blank=True)

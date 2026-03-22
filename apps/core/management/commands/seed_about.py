@@ -11,7 +11,7 @@ Usage:
     uv run python manage.py seed_about --force    # overwrite all text fields
 
 Fields NOT set by this command (must be set in admin):
-    - experience_years  (specific to Jeannot — enter the real number)
+    - experience_years  (enter your real number)
     - portrait          (upload file)
     - cv_file           (upload file)
     - location          (set to city/region as appropriate)
@@ -29,9 +29,9 @@ CONTENT = {
         "Architect working across residential design, renovation, and interior architecture."
     ),
     "intro": (
-        "Jeannot Tsirenge is a registered architect based in South Africa, working with "
-        "private clients on residential projects, renovations, and interior architecture. "
-        "His practice focuses on work that is grounded in site, brief, and budget — "
+        "[Your Name] is a registered architect working with private clients on "
+        "residential projects, renovations, and interior architecture. "
+        "The practice focuses on work that is grounded in site, brief, and budget — "
         "designed with enough specificity to build well. "
         "Whether the project is a new home, an existing building being restructured, "
         "or an interior resolved from first principles, the approach is the same: "
