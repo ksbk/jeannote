@@ -286,6 +286,8 @@ uv run playwright install chromium  # install the browser once locally
 uv run pytest tests/e2e --override-ini="addopts=-v --tb=short" -m e2e --browser chromium
 ```
 
+`uv run pytest` excludes browser tests by default — use `make test-e2e` for the Playwright suite. CI runs both.
+
 ### Coverage
 
 ```bash
@@ -293,8 +295,7 @@ make coverage
 # or: uv run pytest --cov --cov-report=term-missing
 ```
 
-Current baseline (at time of writing): **99 % coverage** (480 statements, 1 missed).
-The number may shift as features are added; run `make coverage` to see the current figure.
+Run `make coverage` to see the current figure.
 Coverage is also reported in CI on every push.
 
 ### pre-commit hooks
@@ -348,6 +349,31 @@ make clean-db      # delete db.sqlite3 (prompts for confirmation)
 make clean-media   # delete media/ uploads (prompts for confirmation)
 make clean-all     # everything (prompts for confirmation)
 ```
+
+---
+
+## Management commands
+
+Five custom commands handle content bootstrap and media import.
+
+| Command | Use for | Safe on production | Idempotent | Key flags |
+| --- | --- | --- | --- | --- |
+| `seed_demo` | Local quick-start only | **No** | Yes (`get_or_create`) | — |
+| `seed_about` | `AboutProfile` skeleton | Yes | Yes — skips non-blank fields | `--force` to overwrite existing |
+| `seed_services` | `Service` records | Yes | Yes — skips non-blank fields | `--reset` deletes and reinitialises all |
+| `bootstrap_project` | Create one project from local files | Yes | No — creates a new record each run | **`--dry-run` required first** |
+| `import_project_images` | Attach images to an existing project | Yes | Yes — deduplicates by filename | **`--dry-run` required first** |
+
+### Safe production bootstrap order
+
+1. `migrate` + `createsuperuser`
+2. `seed_about` — fills `AboutProfile` skeleton (blank fields only)
+3. `seed_services` — fills `Service` records
+4. Log in to `/admin/` and replace placeholder copy with real content
+5. `bootstrap_project --dry-run …` then live run for each new project
+6. `import_project_images --dry-run …` then live run to attach images
+
+> **Do not run `seed_demo` on production.** It writes `SiteSettings`, `AboutProfile`, and `Service` in one pass and will overwrite content you have already edited in admin.
 
 ---
 
@@ -680,15 +706,3 @@ A GitHub Actions workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.yml
 
 CI uses `config.settings.dev` (SQLite, console email) with a dummy `SECRET_KEY`. No deployment step is wired — deploys are manual by design until the production media and SMTP configuration is confirmed.
 
----
-
-## Roadmap (Version 2)
-
-- [ ] Blog / journal section
-- [ ] Project PDF download sheets
-- [ ] Bilingual / multilingual support (French + English)
-- [ ] Press & publications section
-- [ ] Awards section
-- [ ] Consultation booking / calendar integration
-- [ ] Newsletter signup
-- [ ] Advanced project search / full-text filtering
