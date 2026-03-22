@@ -10,7 +10,13 @@ from ..models import AboutProfile, SiteSettings
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(admin.ModelAdmin):
     fieldsets = (
-        ("Identity", {"fields": ("site_name", "tagline", "logo")}),
+        (
+            "Identity",
+            {
+                "fields": ("site_name", "tagline", "logo", "og_image"),
+                "description": "og_image is the default image used when sharing any page on social media.",
+            },
+        ),
         ("Contact", {"fields": ("contact_email", "phone", "location", "address")}),
         (
             "Social",
@@ -24,7 +30,19 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        ("SEO & Analytics", {"fields": ("meta_description", "about_meta_description", "services_meta_description", "projects_meta_description", "contact_meta_description", "og_image", "google_analytics_id")}),
+        (
+            "SEO & Analytics",
+            {
+                "fields": (
+                    "meta_description",
+                    "about_meta_description",
+                    "services_meta_description",
+                    "projects_meta_description",
+                    "contact_meta_description",
+                    "google_analytics_id",
+                )
+            },
+        ),
     )
 
     def has_add_permission(self, request):

@@ -108,7 +108,10 @@ class AboutProfile(SingletonModel):
         blank=True,
         help_text="Education, certifications, memberships — one per line.",
     )
-    experience_years = models.PositiveIntegerField(default=0)
+    experience_years = models.PositiveIntegerField(
+        default=0,
+        help_text="Years of professional experience. This value renders publicly — 0 is a placeholder; enter the real figure.",
+    )
     location = models.CharField(max_length=120, blank=True)
     portrait = models.ImageField(upload_to="about/", blank=True, null=True)
     cv_file = models.FileField(upload_to="about/cv/", blank=True, null=True)
