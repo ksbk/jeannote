@@ -49,6 +49,8 @@ def test_contact_form_valid_post_creates_inquiry(client, site_settings):
 def test_contact_form_missing_required_fields_stays_on_page(client, site_settings):
     response = client.post(reverse("contact:contact"), data={"name": "", "email": "", "message": ""})
     assert response.status_code == 200
+    assert b"Please wait a moment and try again." not in response.content
+    assert response.context["form"].fields["name"].widget.attrs.get("autofocus") == "autofocus"
     assert ContactInquiry.objects.count() == 0
 
 
@@ -58,6 +60,17 @@ def test_contact_form_invalid_email(client, site_settings):
     response = client.post(reverse("contact:contact"), data=payload)
     assert response.status_code == 200
     assert ContactInquiry.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_contact_form_focuses_first_invalid_field(client, site_settings):
+    payload = make_payload(email="not-an-email")
+    response = client.post(reverse("contact:contact"), data=payload)
+    assert response.status_code == 200
+
+    form = response.context["form"]
+    assert form.fields["name"].widget.attrs.get("autofocus") is None
+    assert form.fields["email"].widget.attrs.get("autofocus") == "autofocus"
 
 
 @pytest.mark.django_db

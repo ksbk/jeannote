@@ -59,6 +59,7 @@ def contact_view(request):
                 email_delivery,
             )
             return redirect("contact:success")
+        form.focus_first_error()
         client_ip = _client_ip(request) or "unknown"
         if request.POST.get("website"):
             logger.warning("Contact form honeypot triggered ip=%s", client_ip)

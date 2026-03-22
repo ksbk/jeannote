@@ -98,6 +98,9 @@ class ContactForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean() or {}
+        if self._errors:
+            return cleaned_data
+
         token = cleaned_data.get("submission_token", "")
         if not token:
             raise forms.ValidationError("Invalid submission.")
@@ -115,6 +118,12 @@ class ContactForm(forms.ModelForm):
             raise forms.ValidationError("Please wait a moment and try again.")
 
         return cleaned_data
+
+    def focus_first_error(self) -> None:
+        for name, field in self.fields.items():
+            if name in self.errors and not field.widget.is_hidden:
+                field.widget.attrs["autofocus"] = "autofocus"
+                break
 
     def clean_name(self) -> str:
         name = self.cleaned_data.get("name", "").strip()

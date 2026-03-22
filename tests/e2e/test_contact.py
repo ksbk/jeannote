@@ -32,3 +32,14 @@ def test_contact_form_submit_reaches_success_page(
     inquiry = ContactInquiry.objects.get(email="alice@example.com")
     assert inquiry.name == "Alice Architect"
     assert inquiry.project_type == "Residential Design"
+
+
+def test_contact_form_invalid_submit_prioritizes_field_errors_and_focuses_name(
+    page, open_page, site_settings
+):
+    open_page("/contact/")
+
+    page.get_by_role("button", name="Send Enquiry").click()
+
+    expect(page.get_by_text("Please wait a moment and try again.")).to_have_count(0)
+    expect(page.locator("#id_name")).to_be_focused()
