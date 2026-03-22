@@ -1,6 +1,6 @@
-# Jeannot Tsirenge — Architecture Portfolio
+# Architecture Portfolio — Django Template
 
-A professional, content-driven portfolio platform built with Django.
+A professional, content-driven portfolio platform for architecture practices, built with Django.
 
 ---
 
@@ -34,7 +34,7 @@ A professional, content-driven portfolio platform built with Django.
 
 ```bash
 git clone <repo-url>
-cd jeannote
+cd <project-directory>
 
 # Install all dependencies (runtime + dev) into an isolated virtualenv
 uv sync --group dev
@@ -69,15 +69,16 @@ uv run python manage.py createsuperuser
 Enter your chosen username, email, and a strong password at the prompts.
 There are no default credentials anywhere in this codebase.
 
-### 5. Seed demo content (optional)
+### 5. Seed starter content (optional)
 
 ```bash
 uv run python manage.py seed_demo
 ```
 
-This populates demo site settings, an about profile, services, and placeholder
-projects so the site renders immediately. Safe to run multiple times
-(uses `get_or_create`). Does not create any user accounts.
+Seeds a complete set of generic starter content — SiteSettings, AboutProfile,
+six service definitions, and four placeholder projects — so the site renders
+fully on first load. Use this as your starting point and replace content via
+admin. Safe to re-run (idempotent). Does not create any user accounts.
 
 ### 6. Start the dev server
 
@@ -358,7 +359,7 @@ Six custom commands handle content bootstrap, media import, and readiness checki
 
 | Command | Use for | Safe on production | Idempotent | Key flags |
 | --- | --- | --- | --- | --- |
-| `seed_demo` | Local quick-start only | **No** | Yes (`get_or_create`) | — |
+| `seed_demo` | Generic starter content for new installs | Yes | Yes (`get_or_create`) | — |
 | `seed_about` | `AboutProfile` skeleton | Yes | Yes — skips non-blank fields | `--force` to overwrite existing |
 | `seed_services` | `Service` records | Yes | Yes — skips non-blank fields | `--reset` deletes and reinitialises all |
 | `bootstrap_project` | Create one project from local files | Yes | No — creates a new record each run | **`--dry-run` required first** |
@@ -368,13 +369,16 @@ Six custom commands handle content bootstrap, media import, and readiness checki
 ### Safe production bootstrap order
 
 1. `migrate` + `createsuperuser`
-2. `seed_about` — fills `AboutProfile` skeleton (blank fields only)
-3. `seed_services` — fills `Service` records
-4. Log in to `/admin/` and replace placeholder copy with real content
+2. `seed_demo` — loads generic starter content so the site renders on first visit
+3. Log in to `/admin/` and replace starter copy with your real content
+4. `seed_about` — optional; fills only blank `AboutProfile` fields if you prefer incremental setup
 5. `bootstrap_project --dry-run …` then live run for each new project
 6. `import_project_images --dry-run …` then live run to attach images
 
-> **Do not run `seed_demo` on production.** It writes `SiteSettings`, `AboutProfile`, and `Service` in one pass and will overwrite content you have already edited in admin.
+> `seed_demo` is idempotent and uses generic placeholder copy — it is safe to run on
+> a fresh production database to get the site rendering immediately.
+> It will update existing records if re-run, so avoid running it
+> after you have replaced starter copy with your own real content.
 
 ---
 

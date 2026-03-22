@@ -20,11 +20,11 @@ PROJECT_TYPE_CHOICES = [
 
 BUDGET_CHOICES = [
     ("", "Budget range (optional)…"),
-    ("Under R500k", "Under R500k"),
-    ("R500k – R2M", "R500k – R2M"),
-    ("R2M – R5M", "R2M – R5M"),
-    ("R5M – R15M", "R5M – R15M"),
-    ("R15M+", "R15M+"),
+    ("Under 100k", "Under 100k"),
+    ("100k – 500k", "100k – 500k"),
+    ("500k – 1M", "500k – 1M"),
+    ("1M – 5M", "1M – 5M"),
+    ("5M+", "5M+"),
     ("To discuss", "To discuss"),
 ]
 

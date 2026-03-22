@@ -1,9 +1,14 @@
 """
 Management command: python manage.py seed_demo
 
-Creates initial demo content — SiteSettings, AboutProfile, Services, and
-three placeholder projects — so the site renders immediately after setup.
-Run once; safe to re-run (uses get_or_create).
+Seeds a complete set of generic starter content: SiteSettings, AboutProfile,
+Services, and placeholder projects so the site renders immediately after setup.
+
+This is your starting point — use it to see a working site, then replace
+content with your own via the admin. All copy uses generic placeholders;
+nothing is specific to any individual or region.
+
+Idempotent — safe to re-run (uses get_or_create / update).
 """
 
 from django.core.management.base import BaseCommand
@@ -231,9 +236,9 @@ TESTIMONIALS = [
 
 class Command(BaseCommand):
     help = (
-        "Seed demo/placeholder content: SiteSettings, AboutProfile, Services, and example "
-        "Projects with fictional testimonials (names are placeholders — replace via admin "
-        "before launch). Safe to re-run; existing records are updated, not duplicated."
+        "Seed generic starter content: SiteSettings, AboutProfile, Services, and example "
+        "Projects with placeholder testimonials. Use as your starting point and replace "
+        "content via admin. Idempotent — safe to re-run."
     )
 
     def handle(self, *args, **options):
@@ -242,7 +247,7 @@ class Command(BaseCommand):
         self._seed_services()
         self._seed_projects()
         self._seed_testimonials()
-        self.stdout.write(self.style.SUCCESS("Demo content seeded successfully."))
+        self.stdout.write(self.style.SUCCESS("Starter content seeded successfully."))
 
     def _seed_settings(self):
         settings, created = SiteSettings.objects.get_or_create(pk=1)

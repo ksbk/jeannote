@@ -22,7 +22,7 @@ def make_payload(**overrides):
         "email": "alice@example.com",
         "message": "I would like to discuss a residential project.",
         "project_type": "Residential Design",
-        "budget_range": "R2M – R5M",
+        "budget_range": "500k – 1M",
         "timeline": "3–6 months",
         "submission_token": valid_submission_token(),
     }
