@@ -21,10 +21,10 @@ is set in Railway. Follow this checklist when you have dashboard access.
 2. Go to the service → **Variables**
 3. Add the following (at minimum):
 
-   | Variable           | Value                           |
-   |--------------------|---------------------------------|
-   | `SENTRY_DSN`       | the DSN from step 1             |
-   | `SENTRY_ENVIRONMENT` | `production`                  |
+   | Variable             | Value                           |
+   | ------------------- | ------------------------------- |
+   | `SENTRY_DSN`         | the DSN from step 1             |
+   | `SENTRY_ENVIRONMENT` | `production`                    |
 
 4. Optional but recommended:
    - `SENTRY_RELEASE` — set to the current git SHA
@@ -47,10 +47,12 @@ Railway picks up new env vars automatically on the next deploy trigger.
 ## 4 — Trigger a safe verification event
 
 Option A — from a browser (no code needed):
+
 1. Visit `https://your-production-domain.com/this-path-does-not-exist-sentry-test/`
 2. This triggers a genuine 404 — Sentry captures it as an event with request context
 
 Option B — from Railway shell or local machine (more explicit):
+
 ```bash
 # Set your production URL
 BASE_URL=https://your-production-domain.com
@@ -82,7 +84,7 @@ If the event appears within ~30 seconds, Sentry is live.
 ## Status
 
 | Step | Status |
-|------|--------|
+| ---- | ------ |
 | Code merged to `main` | ✅ Done |
 | `SENTRY_DSN` set in Railway | ⏳ Pending external access |
 | Redeployed | ⏳ Pending external access |

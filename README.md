@@ -4,10 +4,10 @@ A professional, content-driven portfolio platform for architecture practices, bu
 
 > **New here?** See [SETUP.md](SETUP.md) for the buyer-facing setup and customisation checklist.
 >
-> **Current stable version:** `v1.0.0`  
-> **Status:** Stable  
-> **Stack:** Python `3.13` · Django `5.2 LTS`  
-> **Docs:** [SETUP.md](SETUP.md) · [DEMO.md](DEMO.md) · [CHANGELOG.md](CHANGELOG.md) · [LICENSE.md](LICENSE.md)  
+> **Current stable version:** `v1.0.0`\
+> **Status:** Stable\
+> **Stack:** Python `3.13` · Django `5.2 LTS`\
+> **Docs:** [SETUP.md](SETUP.md) · [DEMO.md](DEMO.md) · [CHANGELOG.md](CHANGELOG.md) · [LICENSE.md](LICENSE.md)\
 > **Maintainers:** [RELEASE.md](RELEASE.md)
 
 ---
@@ -40,6 +40,7 @@ focused tool for a specific purpose.
 ## What's included
 
 ### Pages
+
 | Page | What it does |
 | --- | --- |
 | **Home** | Hero, featured projects, services summary, testimonials, CTA |
@@ -50,6 +51,7 @@ focused tool for a specific purpose.
 | **Contact** | Enquiry form with spam protection, saves to DB, emails on submission |
 
 ### Admin
+
 Full Django admin for every model — no custom frontend needed to manage content.
 
 | Model | What you manage |
@@ -61,6 +63,7 @@ Full Django admin for every model — no custom frontend needed to manage conten
 | **Contact Inquiries** | Submitted enquiries — read, manage, and track status |
 
 ### Production features
+
 - **Cloudinary integration** — uploaded media is durable across deploys (Railway-safe)
 - **PostgreSQL-ready** — SQLite for dev, Postgres for production, configured via `DATABASE_URL`
 - **Sentry integration** — exception monitoring in production, opt-in via `SENTRY_DSN`
@@ -72,6 +75,7 @@ Full Django admin for every model — no custom frontend needed to manage conten
 - **Whitenoise static serving** — no CDN required for static files
 
 ### Developer ergonomics
+
 - **100+ automated tests** across pytest, pytest-django, and Playwright
 - **Playwright e2e tests** for the contact form and key user journeys
 - **GitHub Actions CI** — lint, type-check, tests, migration check, deploy check on every push
@@ -196,7 +200,7 @@ uv run python manage.py runserver
 An alternative to the `uv` setup above. Useful for reproducible local start-up
 across macOS and Windows without installing Python or uv on the host.
 
-### Prerequisites
+### Docker requirements
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (macOS / Windows)
   or Docker Engine + Compose plugin (Linux)
@@ -610,7 +614,7 @@ Django's `APP_DIRS=True` loader finds app-level templates automatically. The pro
 
 ---
 
-## Pages
+## URL routes
 
 | URL | View | Purpose |
 | --- | --- | --- |

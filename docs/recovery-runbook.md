@@ -11,7 +11,7 @@ a degraded state.
 All must be set in Railway → Service → Variables before deploying.
 
 | Variable | Required | Description |
-|----------|----------|-------------|
+| -------- | -------- | ----------- |
 | `SECRET_KEY` | **Yes** | Django secret key — generate with `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"` |
 | `DJANGO_SETTINGS_MODULE` | **Yes** | `config.settings.prod` |
 | `ALLOWED_HOSTS` | **Yes** | Comma-separated, e.g. `jeannote.up.railway.app,yourdomain.com` |
@@ -38,17 +38,20 @@ All must be set in Railway → Service → Variables before deploying.
 **Ownership:** Railway Postgres service attached to the jeannote project.
 
 **Recovery assumptions:**
+
 - Railway Postgres includes automatic daily backups (check Railway dashboard → Postgres service → Backups)
 - The schema is fully reproducible from Django migrations — a blank database can be brought up to the current schema with `python manage.py migrate`
 - Content (projects, site settings, about profile, etc.) is **not** in the git repo — it lives in the database only. If the database is lost without a backup, content must be re-entered via admin
 
 **Backup a snapshot manually:**
+
 ```bash
 # From Railway shell or a connected psql client:
 pg_dump $DATABASE_URL > backup_$(date +%Y%m%d_%H%M%S).sql
 ```
 
 **Restore from a dump:**
+
 ```bash
 psql $DATABASE_URL < backup_YYYYMMDD_HHMMSS.sql
 ```
@@ -61,12 +64,14 @@ psql $DATABASE_URL < backup_YYYYMMDD_HHMMSS.sql
 `cloudinary_storage.storage.MediaCloudinaryStorage` in `config/settings/prod.py`.
 
 **Recovery assumptions:**
+
 - Cloudinary is the durable source of truth for all uploaded images
 - Re-deploying Django does not affect Cloudinary assets — files survive Railway redeploys
 - If a Cloudinary asset is deleted manually, it must be re-uploaded via the Django admin
 - Local `media/` directory is only used in development (local filesystem) — not in production
 
 **If Cloudinary credentials are lost:**
+
 1. Log in to [cloudinary.com](https://cloudinary.com) and retrieve the cloud name, API key, and secret
 2. Update the Railway env vars and redeploy
 
