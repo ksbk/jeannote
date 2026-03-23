@@ -14,8 +14,7 @@ jobs:
 
     env:
       # Required by base.py — value is irrelevant for tests
-      # trunk-ignore(trufflehog)
-      SECRET_KEY: ci-only-not-a-real-secret
+      SECRET_KEY: ci-only-not-a-real-secret  # trunk-ignore(trufflehog)
       # dev settings: DEBUG=True, SQLite, console email — no extra env needed
       DJANGO_SETTINGS_MODULE: config.settings.dev
 

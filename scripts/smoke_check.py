@@ -34,7 +34,7 @@ def fetch(url: str, timeout: float) -> tuple[int, bytes]:
     request = urllib.request.Request(
         url, headers={"User-Agent": "architecture-portfolio-smoke/1.0.0"}
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310
+    with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310  # trunk-ignore(bandit/B310)
         return response.getcode(), response.read()
 
 

@@ -93,30 +93,36 @@ python manage.py seed_demo
 
 After running `seed_demo`, the site contains:
 
-**Home page**
+### Home page
+
 - Practice tagline
 - Three featured projects in the portfolio grid
 - Services summary section
 - Three client testimonials
 
-**Projects**
+### Projects
+
 - Four complete project records across residential, cultural, commercial, and interior categories
 - Each project has a full narrative: overview, challenge, concept, and outcome
 - Category filter works on the list page
 
-**Services**
+### Services
+
 - Six service descriptions with `who_for`, `value_proposition`, and `deliverables` fields
 
-**About**
+### About
+
 - Populated biography, philosophy, and credentials sections
 - `experience_years` is set to `0` as a placeholder — update in admin to see the correct display
 
-**Contact**
+### Contact
+
 - Fully functional contact form
 - Submissions save to the database and appear in admin under Contact Inquiries
 - Email notifications require SMTP configuration (local dev uses console backend — emails print to terminal)
 
-**Admin**
+### Admin
+
 - Log in at `/admin/` to see the full content management interface
 - All content visible on the site is managed entirely through admin — no template editing required
 

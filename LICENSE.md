@@ -1,6 +1,6 @@
 # Commercial License — Architecture Portfolio Django Template
 
-**Version 1.0.0 · Effective date: 2026-03-22**
+Version 1.0.0 · Effective date: 2026-03-22
 
 Please read this license carefully before purchasing or using this template.
 By purchasing, downloading, or using this template you agree to the terms below.
@@ -68,12 +68,14 @@ for updates, new features, or major version releases.
 This template includes written documentation (SETUP.md, DEMO.md, README.md)
 covering installation, configuration, and deployment.
 
-**Included:**
+### Included
+
 - Documentation as shipped with the template
 - Bug reports accepted via the designated issue channel
 - Bug-fix releases within the current major version
 
-**Not included:**
+### Not included
+
 - Installation assistance or walkthrough support
 - Customisation or feature development
 - Server administration, hosting setup, or third-party service configuration

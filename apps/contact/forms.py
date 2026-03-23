@@ -98,7 +98,7 @@ class ContactForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean() or {}
-        if self.errors:  # type: ignore[attr-defined]
+        if self.errors:
             return cleaned_data
 
         token = cleaned_data.get("submission_token", "")

@@ -1,0 +1,11 @@
+{
+  // MD029: allow sequential source numbering (1. 2. 3.) in ordered lists.
+  // The default "1/1/1" style requires every item to start with "1." which
+  // harms source readability when lists are split by code blocks.
+  "MD029": { "style": "ordered" },
+
+  // MD060: use compact table style — cells do not need to be padded to equal
+  // widths. Aligned-style enforcement fights with tables whose content is
+  // naturally uneven (e.g. short variable names vs long descriptions).
+  "MD060": { "style": "compact" }
+}

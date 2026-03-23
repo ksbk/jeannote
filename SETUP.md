@@ -48,7 +48,7 @@ Visit **<http://127.0.0.1:8000/admin>** and log in with the credentials you just
 
 ## Phase 2 — Brand and site identity
 
-#### Admin → Site Settings
+### Admin → Site Settings
 
 Replace every placeholder with your real information.
 
@@ -88,7 +88,7 @@ page appears in search results):
 
 ## Phase 3 — About page
 
-#### Admin → About Profile
+### Admin → About Profile
 
 | Field | What to enter | Notes |
 | --- | --- | --- |
@@ -106,7 +106,7 @@ page appears in search results):
 
 ## Phase 4 — Services
 
-#### Admin → Services
+### Admin → Services
 
 Six placeholder service records are loaded by `seed_demo`. Edit them to match your
 actual offering, or delete and create your own.
@@ -129,14 +129,14 @@ For each service:
 
 ## Phase 5 — Projects
 
-#### Admin → Projects
+### Admin → Projects
 
 Four placeholder projects are loaded by `seed_demo`. Delete them and add your real work,
 or add a project directly via admin.
 
 For each project:
 
-#### Core
+### Core
 
 | Field | What to enter |
 | --- | --- |
@@ -145,7 +145,7 @@ For each project:
 | `category` | Residential / Commercial / Cultural / Interiors / Renovation |
 | `status` | Completed / In Progress / Concept / Competition Entry |
 
-#### Metadata
+### Metadata
 
 | Field | What to enter |
 | --- | --- |
@@ -165,14 +165,14 @@ For each project:
 | `process` | Design and construction process |
 | `outcome` | Result and impact |
 
-#### Media
+### Media
 
 | Field | What to enter |
 | --- | --- |
 | `cover_image` | Hero image — at least 1600 × 900 px, JPEG or WebP |
 | Project Images (inline) | Gallery images — add as many as needed |
 
-#### Display flags
+### Display flags
 
 | Field | What to enter |
 | --- | --- |
