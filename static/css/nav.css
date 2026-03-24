@@ -139,8 +139,10 @@
     box-shadow: none; /* suppress scrolled box-shadow if present */
   }
 
-  /* Brand name must be white on the dark open-state header */
+  /* Brand must be visible on the dark open-state header.
+   * Text name: color override. Logo image: invert to white. */
   .site-header.nav-open .nav__name { color: var(--c-white); }
+  .site-header.nav-open .nav__logo { filter: brightness(0) invert(1); }
 
   .nav__toggle {
     display: flex;
