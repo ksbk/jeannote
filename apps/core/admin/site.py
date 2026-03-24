@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 
 from ..models import AboutProfile, SiteSettings
 
@@ -54,6 +54,23 @@ class SiteSettingsAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+    def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
+        # Warn when site_name is blank. For GET requests we check the DB value;
+        # for POST we check the submitted value so we don't fire after a successful fix.
+        site_name_blank = (
+            not request.POST.get("site_name")
+            if request.method == "POST"
+            else not SiteSettings.load().site_name
+        )
+        if site_name_blank:
+            self.message_user(
+                request,
+                "Site name is blank. It appears in the page heading, navigation, and "
+                "footer — set it before sharing or publishing the site.",
+                level=messages.WARNING,
+            )
+        return super().changeform_view(request, object_id, form_url, extra_context)
 
     def has_add_permission(self, request):
         return not SiteSettings.objects.exists()
