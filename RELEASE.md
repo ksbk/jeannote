@@ -12,6 +12,9 @@ Use this checklist when cutting a tagged product release.
 
 ## 2. Run the release checks
 
+**Dependency source of truth:** `pyproject.toml` + `uv.lock` own the dependency graph.
+`requirements.txt` is a generated compatibility artifact only — export it with `uv export`, never edit it by hand.
+
 Run the full repo checks before tagging:
 
 ```bash
