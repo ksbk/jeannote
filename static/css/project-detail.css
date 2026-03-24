@@ -11,6 +11,14 @@
   overflow: hidden;
 }
 
+/* No cover image state: dark surface, compact height, top-anchored */
+.project-hero--no-image {
+  min-height: 0;
+  align-items: flex-start;
+  background-color: var(--c-black);
+  padding-block: var(--space-xl) var(--space-lg);
+}
+
 .project-hero__media {
   position: absolute;
   inset: 0;

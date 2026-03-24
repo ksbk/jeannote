@@ -10,7 +10,7 @@
 {% block content %}
 
 <!-- Project hero -->
-<section class="project-hero">
+<section class="project-hero{% if not project.cover_image %} project-hero--no-image{% endif %}">
   {% if project.cover_image %}
   <div class="project-hero__media">
     <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="project-hero__img" loading="eager">
