@@ -97,8 +97,13 @@
 }
 
 @media (max-width: 480px) {
-  /* Phone portrait: long email can't share a column — stack nav and contact full width */
-  .footer__inner { grid-template-columns: 1fr; }
+  /* Phone portrait: tighten vertical rhythm — footer was drawing 19rem of whitespace */
+  .site-footer { padding-block-start: var(--space-lg); }   /* 7rem → 4rem */
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);                /* row-gap 4rem → 2rem, halves inter-block space */
+    padding-block-end: var(--space-md);  /* 4rem → 2rem before divider */
+  }
   .footer__brand { grid-column: auto; }
 }
 
