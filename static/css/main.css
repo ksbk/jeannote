@@ -9,12 +9,13 @@
      base.css        — reset, base elements, layout utilities
      nav.css         — site header & navigation
      buttons.css     — button variants
-     hero.css        — home hero, page hero, project hero
-     components.css  — section headers, philosophy, services
-                       home list, trust, testimonials, CTA
-     projects.css    — project cards, grid, filter bar,
-                       pagination, project detail
-     about.css       — about page
+     hero.css            — home hero, page hero
+     components.css      — section headers, philosophy, services
+                           home list, trust, testimonials, CTA
+     project-cards.css   — project cards, grid, filter bar, pagination
+     project-detail.css  — project hero, metadata, story, gallery,
+                           navigation, project testimonials
+     about.css           — about page
      services.css    — services detail page
      contact.css     — contact form & page layout
      footer.css      — site footer
@@ -27,7 +28,8 @@
 @import url('buttons.css');
 @import url('hero.css');
 @import url('components.css');
-@import url('projects.css');
+@import url('project-cards.css');
+@import url('project-detail.css');
 @import url('about.css');
 @import url('services.css');
 @import url('contact.css');
