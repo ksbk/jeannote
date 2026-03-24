@@ -24,14 +24,17 @@
   if (toggle && navLinks) {
     toggle.addEventListener('click', () => {
       const isOpen = navLinks.classList.toggle('is-open');
+      toggle.classList.toggle('is-open', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
       document.body.style.overflow = isOpen ? 'hidden' : '';
+      if (isOpen) navLinks.querySelector('a')?.focus();
     });
 
     // Close on link click
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('is-open');
+        toggle.classList.remove('is-open');
         toggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       });
@@ -41,6 +44,7 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && navLinks.classList.contains('is-open')) {
         navLinks.classList.remove('is-open');
+        toggle.classList.remove('is-open');
         toggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
         toggle.focus();

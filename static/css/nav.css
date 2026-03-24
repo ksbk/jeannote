@@ -126,7 +126,22 @@
 .home .site-header:not(.scrolled) .nav__toggle span { background-color: var(--c-white); }
 
 @media (max-width: 768px) {
-  .nav__toggle { display: flex; }
+  .nav__toggle {
+    display: flex;
+    position: relative;
+    z-index: 101; /* above .nav__links overlay at z-index 99 */
+  }
+
+  /* Hamburger → × when open */
+  .nav__toggle.is-open span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .nav__toggle.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav__toggle.is-open span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
 
   .nav__links {
     display: none;
