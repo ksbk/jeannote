@@ -241,7 +241,7 @@
   }
 
   .home .homepage-projects .section__footer {
-    margin-block-start: 2.25rem;
+    margin-block-start: 1.75rem;
   }
 
   .home .homepage-philosophy {
@@ -259,37 +259,47 @@
 
   .home .homepage-services .section__header {
     margin-block-end: 2.5rem;
+    max-width: 42rem;
   }
 
   .home .services-list--home {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.5rem;
+    gap: 1.35rem;
     border-block-start: none;
   }
 
   .home .services-list--home .service-item {
     display: flex;
     border: 1px solid var(--c-warm-grey);
-    background-color: var(--c-stone);
+    background: linear-gradient(180deg, var(--c-white) 0%, var(--c-stone) 100%);
+    box-shadow: 0 10px 24px rgba(26, 25, 23, 0.04);
   }
 
   .home .services-list--home .service-item__link {
     flex: 1;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 1rem;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: start;
+    gap: 1.15rem;
     min-height: 100%;
-    padding: 2rem 1.75rem;
+    padding: 2.1rem 1.8rem 1.9rem;
+  }
+
+  .home .services-list--home .service-item__title {
+    font-size: 1.4rem;
+    line-height: 1.15;
+    margin-block-end: 0;
   }
 
   .home .services-list--home .service-item__summary {
-    max-width: 34ch;
-    font-size: 0.92rem;
+    max-width: 31ch;
+    font-size: 0.95rem;
+    color: var(--c-text);
   }
 
   .home .services-list--home .service-item__arrow {
     margin-block-start: auto;
+    font-size: 1.1rem;
   }
 
   .home .homepage-fit {
@@ -344,5 +354,16 @@
   .home .homepage-cta .cta-section__body {
     max-width: 560px;
     margin-block-end: 0.25rem;
+  }
+
+  .home .homepage-section__footer {
+    justify-content: flex-end;
+    margin-block-start: 1.5rem;
+    padding-block-start: 1.25rem;
+    border-block-start: 1px solid var(--c-warm-grey);
+  }
+
+  .home .homepage-section__button {
+    min-width: 11rem;
   }
 }
