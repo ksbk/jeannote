@@ -16,9 +16,9 @@
   </div>
 </section>
 
-<section class="section">
+{% for service in services %}
+<section class="service-section {% cycle 'service-section--light' 'service-section--tinted' %}">
   <div class="container">
-    {% for service in services %}
     <article class="service-detail" id="{{ service.slug }}">
       <header class="service-detail__header">
         <span class="service-detail__number">{{ forloop.counter|stringformat:"02d" }}</span>
@@ -33,52 +33,59 @@
         </div>
         {% endif %}
 
-        <div class="service-detail__meta">
+        {% if service.who_for or service.value_proposition or service.deliverables_list %}
+        <dl class="service-meta-inline">
           {% if service.who_for %}
-          <div class="service-meta-block">
-            <h3>Ideal for</h3>
-            <p>{{ service.who_for }}</p>
+          <div class="service-meta-row">
+            <dt>Ideal for</dt>
+            <dd>{{ service.who_for }}</dd>
           </div>
           {% endif %}
-
           {% if service.value_proposition %}
-          <div class="service-meta-block">
-            <h3>What you get</h3>
-            <p>{{ service.value_proposition }}</p>
+          <div class="service-meta-row">
+            <dt>What you get</dt>
+            <dd>{{ service.value_proposition }}</dd>
           </div>
           {% endif %}
-
           {% if service.deliverables_list %}
-          <div class="service-meta-block">
-            <h3>Deliverables</h3>
-            <ul>
-              {% for item in service.deliverables_list %}
-              <li>{{ item }}</li>
-              {% endfor %}
-            </ul>
+          <div class="service-meta-row">
+            <dt>Deliverables</dt>
+            <dd>
+              <ul class="service-deliverables">
+                {% for item in service.deliverables_list %}<li>{{ item }}</li>{% endfor %}
+              </ul>
+            </dd>
           </div>
           {% endif %}
-        </div>
+        </dl>
+        {% endif %}
 
-        <a href="{% url 'contact:contact' %}?project_type={{ service.contact_project_type|urlencode }}" class="btn btn--outline">Enquire about this service</a>
+        <a href="{% url 'contact:contact' %}?project_type={{ service.contact_project_type|urlencode }}" class="service-enquiry-link">Discuss this service →</a>
       </div>
     </article>
-    {% if not forloop.last %}<hr class="divider">{% endif %}
-    {% empty %}
+  </div>
+</section>
+{% empty %}
+<section class="service-section service-section--light">
+  <div class="container">
     <div class="prose">
       <p>The practice works across housing, civic, and workplace projects, from early feasibility through developed design and technical coordination.</p>
       <p>Services are structured to help clients understand the type of project being taken on, while leaving room to define the right scope as the brief develops.</p>
       <p>If your project does not fit neatly into one category yet, getting in touch with the project context is still the right place to begin.</p>
     </div>
-    {% endfor %}
   </div>
 </section>
+{% endfor %}
 
-<section class="section cta-section">
-  <div class="container container--narrow cta-section__inner">
-    <h2 class="cta-section__title">Not sure where your project fits?</h2>
-    <p class="cta-section__body">Whether you have a clear brief or an early-stage question, get in touch with the project context.</p>
-    <a href="{% url 'contact:contact' %}" class="btn btn--primary btn--large">Get in Touch</a>
+<section class="services-end-strip">
+  <div class="container">
+    <div class="services-end-strip__inner">
+      <div class="services-end-strip__copy">
+        <h2 class="services-end-strip__title">Not sure where your project fits?</h2>
+        <p>Whether you have a clear brief or an early-stage question, get in touch with the project context.</p>
+      </div>
+      <a href="{% url 'contact:contact' %}" class="btn btn--primary">Get in Touch</a>
+    </div>
   </div>
 </section>
 

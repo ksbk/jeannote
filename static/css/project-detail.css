@@ -94,8 +94,8 @@
    18. Project metadata bar
    --------------------------------------------------------- */
 .project-meta-bar {
-  background-color: var(--c-stone);
-  padding-block: 1.5rem;
+  padding-block: 0.875rem 1rem;
+  border-block-start: 1px solid var(--c-warm-grey);
   border-block-end: 1px solid var(--c-warm-grey);
 }
 
@@ -115,7 +115,7 @@
 
 .project-meta-item dd {
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--c-text);
 }
 
@@ -124,12 +124,12 @@
    19. Project story
    --------------------------------------------------------- */
 .project-story {
-  padding-block: var(--space-xl);
+  padding-block: var(--space-lg);
 }
 
 .project-section {
   max-width: 720px;
-  margin-block-end: var(--space-xl);
+  margin-block-end: var(--space-lg);
 }
 
 .project-section--accent {
@@ -139,19 +139,26 @@
 
 .project-section__title {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--c-text-muted);
+  margin-block-end: 0.75rem;
+}
+
+/* Design Concept retains the stronger accent marker */
+.project-section--accent .project-section__title {
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--c-accent);
-  margin-block-end: 1rem;
 }
 
 .prose p { margin-block-end: 1.25em; }
 .prose p:last-child { margin-block-end: 0; }
 
 /* Gallery */
-.gallery { margin-block: var(--space-lg); }
+.gallery { margin-block: var(--space-md); }
 
 .gallery--3col {
   display: grid;

@@ -21,6 +21,57 @@
 
     <div class="contact-grid">
 
+      <!-- Sidebar first in DOM: mobile reads context before the form -->
+      <aside class="contact-info-col">
+        <div class="contact-process">
+          <h2 class="contact-process__title">What to expect</h2>
+          <p class="contact-process__intro">
+            The practice will review your enquiry and follow up within two working days.
+            {% if site_settings.phone and site_settings.contact_email %}
+            For urgent matters, reach out directly.
+            {% elif site_settings.contact_email %}
+            For urgent matters, email directly.
+            {% elif site_settings.phone %}
+            For urgent matters, call directly.
+            {% endif %}
+          </p>
+          <div class="contact-info">
+            {% if site_settings.contact_email %}
+            <p>
+              <span class="contact-info__label">Email</span>
+              <a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a>
+            </p>
+            {% endif %}
+            {% if site_settings.phone %}
+            <p>
+              <span class="contact-info__label">Phone</span>
+              <a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a>
+            </p>
+            {% endif %}
+            {% if site_settings.location %}
+            <p>
+              <span class="contact-info__label">Studio</span>
+              <span>{{ site_settings.location }}</span>
+            </p>
+            {% endif %}
+          </div>
+          <div class="contact-social">
+            {% if site_settings.linkedin_url %}
+            <a href="{{ site_settings.linkedin_url }}" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
+            {% endif %}
+            {% if site_settings.instagram_url %}
+            <a href="{{ site_settings.instagram_url }}" target="_blank" rel="noopener" class="social-link">Instagram</a>
+            {% endif %}
+            {% if site_settings.behance_url %}
+            <a href="{{ site_settings.behance_url }}" target="_blank" rel="noopener" class="social-link">Behance</a>
+            {% endif %}
+            {% if site_settings.issuu_url %}
+            <a href="{{ site_settings.issuu_url }}" target="_blank" rel="noopener" class="social-link">Issuu</a>
+            {% endif %}
+          </div>
+        </div>
+      </aside>
+
       <!-- Form -->
       <div class="contact-form-col">
         <h2 class="contact-form-col__heading">Send an enquiry</h2>
@@ -34,6 +85,7 @@
           </div>
           {% endif %}
 
+          <h3 class="form-group-heading">About you</h3>
           <div class="form-row form-row--2">
             <div class="form-field {% if form.name.errors %}has-error{% endif %}">
               <label for="{{ form.name.id_for_label }}">Name <span class="required">*</span></label>
@@ -58,6 +110,7 @@
             </div>
           </div>
 
+          <h3 class="form-group-heading">The project</h3>
           <div class="form-row form-row--2">
             <div class="form-field">
               <label for="{{ form.location.id_for_label }}">Project location</label>
@@ -76,6 +129,7 @@
             </div>
           </div>
 
+          <h3 class="form-group-heading">Your message</h3>
           <div class="form-row">
             <div class="form-field {% if form.message.errors %}has-error{% endif %}">
               <label for="{{ form.message.id_for_label }}">Message <span class="required">*</span></label>
@@ -87,63 +141,10 @@
 
           {{ form.website }}
           {{ form.submission_token }}
-          <p class="contact-form__trust">Your details are used only to respond to your enquiry. After submission, the practice will review your message and follow up by email.</p>
           <button type="submit" class="btn btn--primary btn--large">Send Enquiry</button>
+          <p class="contact-form__trust">Your details are used only to respond to your enquiry. After submission, the practice will review your message and follow up by email.</p>
         </form>
       </div>
-
-      <!-- Contact info -->
-      <aside class="contact-info-col">
-        <div class="contact-info">
-          <h2>Direct contact</h2>
-          {% if site_settings.contact_email %}
-          <p>
-            <span class="contact-info__label">Email</span>
-            <a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a>
-          </p>
-          {% endif %}
-          {% if site_settings.phone %}
-          <p>
-            <span class="contact-info__label">Phone</span>
-            <a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a>
-          </p>
-          {% endif %}
-          {% if site_settings.location %}
-          <p>
-            <span class="contact-info__label">Studio</span>
-            <span>{{ site_settings.location }}</span>
-          </p>
-          {% endif %}
-        </div>
-
-        <div class="contact-social">
-          {% if site_settings.linkedin_url %}
-          <a href="{{ site_settings.linkedin_url }}" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
-          {% endif %}
-          {% if site_settings.instagram_url %}
-          <a href="{{ site_settings.instagram_url }}" target="_blank" rel="noopener" class="social-link">Instagram</a>
-          {% endif %}
-          {% if site_settings.behance_url %}
-          <a href="{{ site_settings.behance_url }}" target="_blank" rel="noopener" class="social-link">Behance</a>
-          {% endif %}
-          {% if site_settings.issuu_url %}
-          <a href="{{ site_settings.issuu_url }}" target="_blank" rel="noopener" class="social-link">Issuu</a>
-          {% endif %}
-        </div>
-
-        <div class="contact-note">
-          <p>
-            The practice typically responds within two working days.
-            {% if site_settings.phone and site_settings.contact_email %}
-            For urgent enquiries, call or email directly.
-            {% elif site_settings.contact_email %}
-            For urgent enquiries, email directly.
-            {% elif site_settings.phone %}
-            For urgent enquiries, call directly.
-            {% endif %}
-          </p>
-        </div>
-      </aside>
 
     </div>
   </div>

@@ -13,7 +13,7 @@ def test_contact_page_get(client, site_settings):
     response = client.get(reverse("contact:contact"))
     assert response.status_code == 200
     assert b"Your details are used only to respond to your enquiry." in response.content
-    assert b"For urgent enquiries, email directly." in response.content
+    assert b"For urgent matters, email directly." in response.content
 
 
 @pytest.mark.django_db
