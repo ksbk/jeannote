@@ -115,7 +115,7 @@
 }
 
 .page-hero--short {
-  padding-block: calc(4.5rem + var(--space-lg)) var(--space-lg);
+  padding-block: calc(4.5rem + var(--space-md)) var(--space-md);
 }
 
 .page-hero__label {

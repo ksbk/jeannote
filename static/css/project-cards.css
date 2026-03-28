@@ -3,8 +3,8 @@
    --------------------------------------------------------- */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
 
 .projects-grid--featured {
@@ -21,11 +21,7 @@
 }
 
 .projects-grid--uniform {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.projects-grid--uniform.projects-grid--count-4 .project-card:last-child {
-  grid-column: 2 / span 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .project-card {
@@ -116,9 +112,6 @@
 }
 
 @media (max-width: 1024px) {
-  .projects-grid { grid-template-columns: repeat(2, 1fr); }
-  .projects-grid--uniform { grid-template-columns: repeat(2, 1fr); }
-  .projects-grid--uniform.projects-grid--count-4 .project-card:last-child { grid-column: auto; }
   .projects-grid--featured { grid-template-columns: repeat(2, 1fr); }
   .projects-grid--featured .project-card { grid-column: span 1; }
   .projects-grid--featured .project-card--large { grid-column: span 2; }

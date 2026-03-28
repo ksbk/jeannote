@@ -14,8 +14,7 @@
   <div class="container">
     <p class="page-hero__label">Portfolio</p>
     <h1 class="page-hero__title">Projects</h1>
-    <p class="page-hero__subtitle">A curated selection of architectural work shaped by context, clarity, and considered design.</p>
-  </div>
+    </div>
 </section>
 
 {% if show_category_filters %}
@@ -32,10 +31,10 @@
 </div>
 {% endif %}
 
-<section class="section">
+<section class="section section--archive">
   <div class="container">
     {% if projects %}
-    <div class="projects-grid projects-grid--uniform{% if projects|length == 4 %} projects-grid--count-4{% endif %}">
+    <div class="projects-grid projects-grid--uniform">
       {% for project in projects %}
       <article class="project-card">
         <a href="{{ project.get_absolute_url }}" class="project-card__link">

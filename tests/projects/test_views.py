@@ -77,7 +77,8 @@ def test_project_list_only_shows_populated_sector_filters(client, site_settings,
 
 
 @pytest.mark.django_db
-def test_project_list_adds_four_card_grid_class_for_wide_layout(client, site_settings, project):
+def test_project_list_four_cards_renders_uniform_grid(client, site_settings, project):
+    """4-card count should use the standard 2-col grid without any orphan-centering class."""
     Project.objects.create(
         title="Civic Hall",
         slug="civic-hall",
@@ -103,7 +104,8 @@ def test_project_list_adds_four_card_grid_class_for_wide_layout(client, site_set
     response = client.get(reverse("projects:list"))
 
     assert response.status_code == 200
-    assert b"projects-grid--count-4" in response.content
+    assert b"projects-grid--uniform" in response.content
+    assert b"projects-grid--count-4" not in response.content
 
 
 @pytest.mark.django_db

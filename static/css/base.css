@@ -76,6 +76,12 @@ h1, h2, h3, h4, h5 {
   background-color: var(--c-stone);
 }
 
+/* Archive/browse pages: filter bar already provides visual separation;
+   push the grid up to remove the redundant --space-xl gap. */
+.section--archive {
+  padding-block-start: var(--space-md);
+}
+
 @media (max-width: 768px) {
   .section { padding-block: var(--space-lg); }
 }

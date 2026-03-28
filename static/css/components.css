@@ -276,7 +276,10 @@
 /* ---------------------------------------------------------
    13. CTA section
    --------------------------------------------------------- */
-.cta-section { text-align: center; }
+.cta-section {
+  text-align: center;
+  padding-block: var(--space-lg);
+}
 
 .cta-section__inner {
   display: flex;
