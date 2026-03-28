@@ -14,31 +14,10 @@
 .projects-grid--featured .project-card { grid-column: span 4; }
 .projects-grid--featured .project-card--large { grid-column: span 8; }
 
-@media (min-width: 960px) {
-  /* Restore 12-col for the home 4-card layout.
-     The .home prefix gives this block higher specificity (0,2,0) than the
-     generic max-width:1024px rule (0,1,0) so it wins at exactly 1024px.
-     Without scoping, the grid-template-columns would collapse to 2-col while
-     the nth-child span-7/span-5 rules (higher specificity) still applied,
-     causing cards to span 7 tracks in a 2-col grid — layout explosion. */
-  .home .projects-grid--featured-home-4 {
-    grid-template-columns: repeat(12, 1fr);
-  }
-
-  .home .projects-grid--featured-home-4 .project-card:nth-child(1),
-  .home .projects-grid--featured-home-4 .project-card:nth-child(4) {
-    grid-column: span 7;
-  }
-
-  .home .projects-grid--featured-home-4 .project-card:nth-child(2),
-  .home .projects-grid--featured-home-4 .project-card:nth-child(3) {
-    grid-column: span 5;
-  }
-
-  .home .projects-grid--featured-home-4 .project-card:nth-child(1) .project-card__media,
-  .home .projects-grid--featured-home-4 .project-card:nth-child(4) .project-card__media {
-    aspect-ratio: 16/10;
-  }
+/* Homepage featured projects — calm 2-column balanced grid */
+.projects-grid--home {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
 
 .projects-grid--uniform {
@@ -148,7 +127,8 @@
 @media (max-width: 640px) {
   .projects-grid,
   .projects-grid--featured,
-  .projects-grid--uniform { grid-template-columns: 1fr; }
+  .projects-grid--uniform,
+  .projects-grid--home { grid-template-columns: 1fr; }
   .projects-grid--featured .project-card,
   .projects-grid--featured .project-card--large { grid-column: span 1; }
 }

@@ -38,9 +38,9 @@
       <span class="section__label">Portfolio</span>
       <h2 class="section__title">Selected Projects</h2>
     </div>
-    <div class="projects-grid projects-grid--featured projects-grid--featured-home {% if homepage_projects|length == 4 %}projects-grid--featured-home-4{% endif %}">
+    <div class="projects-grid projects-grid--home">
       {% for project in homepage_projects %}
-      <article class="project-card {% if forloop.first %}project-card--large{% endif %}">
+      <article class="project-card">
         <a href="{{ project.get_absolute_url }}" class="project-card__link">
           <div class="project-card__media">
             {% if project.preview_image %}
