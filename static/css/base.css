@@ -77,12 +77,12 @@ h1, h2, h3, h4, h5 {
 }
 
 /* Archive/browse pages: filter bar already provides visual separation;
-   push the grid up to remove the redundant --space-xl gap. */
+   push the grid up; also cap end padding so projects-close strip connects cleanly. */
 .section--archive {
-  padding-block-start: var(--space-md);
+  padding-block: var(--space-md);
 }
 
 @media (max-width: 768px) {
   .section { padding-block: var(--space-lg); }
-  .section--archive { padding-block-start: var(--space-md); }
+  .section--archive { padding-block: var(--space-md); }
 }

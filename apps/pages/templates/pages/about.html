@@ -55,8 +55,17 @@
     </div>
     {% endif %}
 
+    {% if profile.approach %}
+    <div class="about-philosophy">
+      <h2>Approach</h2>
+      <div class="prose">
+        {{ profile.approach|linebreaks }}
+      </div>
+    </div>
+    {% endif %}
+
     {% if show_professional_profile %}
-    <div class="about-profile">
+    <div class="about-profile about-profile--ruled">
       <h2>Professional Profile</h2>
       <ul>
         <li>Based in {{ about_public_location }}</li>
@@ -72,24 +81,19 @@
     </div>
     {% endif %}
 
-    {% if profile.approach %}
-    <div class="about-philosophy">
-      <h2>Approach</h2>
-      <div class="prose">
-        {{ profile.approach|linebreaks }}
-      </div>
-    </div>
-    {% endif %}
-
   </div>
 </section>
 
 <!-- CTA -->
-<section class="section cta-section">
+<section class="section cta-section about-cta">
   <div class="container container--narrow cta-section__inner">
+    {% if profile.closing_invitation and profile.closing_invitation|length <= 80 %}
+    <h2 class="cta-section__title">{{ profile.closing_invitation }}</h2>
+    {% else %}
     <h2 class="cta-section__title">Have a project in mind?</h2>
     {% if profile.closing_invitation %}
     <p class="cta-section__body">{{ profile.closing_invitation }}</p>
+    {% endif %}
     {% endif %}
     <div class="cta-section__actions">
       <a href="{% url 'contact:contact' %}" class="btn btn--primary btn--large">Get in Touch</a>

@@ -5,7 +5,7 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: var(--space-xl);
-  padding-block: var(--space-xl);
+  padding-block: var(--space-xl) var(--space-md);
   align-items: start;
 }
 
@@ -53,7 +53,7 @@
 .about-bio { margin-block-end: var(--space-lg); }
 
 .about-philosophy {
-  margin-block: var(--space-lg);
+  margin-block: var(--space-md);
   padding: var(--space-md);
   background-color: var(--c-stone);
   border-inline-start: 3px solid var(--c-accent);
@@ -70,13 +70,19 @@
   margin-block-end: 1rem;
 }
 
-.about-profile { margin-block: var(--space-lg); }
+.about-profile { margin-block: var(--space-md); }
+
+.about-profile--ruled {
+  border-block-start: 1px solid var(--c-warm-grey);
+  padding-block-start: var(--space-md);
+}
 
 .about-profile ul {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  max-width: 40ch;
 }
 
 .about-profile li {
@@ -98,4 +104,10 @@
     gap: var(--space-md);
   }
   .about-portrait { position: static; max-width: 380px; }
+}
+
+/* CTA seal — stone background with hairline anchors the page close */
+.about-cta {
+  background-color: var(--c-stone);
+  border-block-start: 1px solid var(--c-warm-grey);
 }

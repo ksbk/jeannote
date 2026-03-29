@@ -73,7 +73,7 @@
       </aside>
 
       <!-- Form -->
-      <div class="contact-form-col">
+      <div class="contact-form-col contact-form-col--field">
         <h2 class="contact-form-col__heading">Send an enquiry</h2>
         <form method="post" action="{% url 'contact:contact' %}" class="contact-form" data-submit-pending-label="Sending…" novalidate>
           {% csrf_token %}
@@ -147,6 +147,12 @@
       </div>
 
     </div>
+  </div>
+</section>
+
+<section class="contact-close-strip">
+  <div class="container">
+    <p class="contact-close-strip__note">{% if site_settings.location %}{{ site_settings.location }} · {% endif %}Enquiries reviewed within two working days</p>
   </div>
 </section>
 
