@@ -241,7 +241,7 @@ def test_homepage_projects_merge_featured_and_supporting_work(client, site_setti
 
 
 @pytest.mark.django_db
-def test_homepage_context_exposes_last_selected_project_for_coda(client, site_settings):
+def test_homepage_context_exposes_hero_project(client, site_settings):
     first = Project.objects.create(
         title="First Selected",
         slug="first-selected",
@@ -251,7 +251,7 @@ def test_homepage_context_exposes_last_selected_project_for_coda(client, site_se
         featured=True,
         order=1,
     )
-    second = Project.objects.create(
+    Project.objects.create(
         title="Second Selected",
         slug="second-selected",
         short_description="Second project.",
@@ -264,7 +264,6 @@ def test_homepage_context_exposes_last_selected_project_for_coda(client, site_se
     response = client.get(reverse("pages:home"))
 
     assert response.status_code == 200
-    assert response.context["home_coda_project"] == second
     assert response.context["hero_project"] == first
 
 
@@ -323,7 +322,7 @@ def test_homepage_uses_selected_projects_strip_and_updated_cta(client, site_sett
     assert b"More Work" not in response.content
     assert b"Design Services" not in response.content
     assert b"Client testimonials" not in response.content
-    assert b"Start Here" in response.content
+    assert b"homepage-coda" in response.content
     assert b"Get in Touch" in response.content
 
 

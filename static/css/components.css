@@ -315,67 +315,27 @@
 
 
 /* ---------------------------------------------------------
-   13b. Homepage coda
+   13b. Homepage coda — ruled close
    --------------------------------------------------------- */
 .homepage-coda {
-  padding-block: 0;
-  background: linear-gradient(180deg, var(--c-white) 0%, rgba(242, 238, 233, 0.82) 100%);
+  background-color: var(--c-stone);
+  border-block-start: 1px solid var(--c-warm-grey);
+  padding-block: var(--space-lg);
 }
 
-.homepage-coda__inner {
-  display: grid;
-  gap: var(--space-lg);
+.homepage-coda__bar {
+  display: flex;
   align-items: center;
-  padding-block: clamp(2.5rem, 5vw, 4rem);
-  border-top: 1px solid var(--c-warm-grey);
-}
-
-.homepage-coda__inner--with-visual {
-  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.72fr);
-}
-
-.homepage-coda__inner--text-only {
-  max-width: 46rem;
-}
-
-.homepage-coda__content {
-  max-width: 35rem;
-}
-
-.homepage-coda__label {
-  font-size: 0.75rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--c-accent);
-  margin-block-end: 0.85rem;
+  justify-content: space-between;
+  gap: var(--space-lg);
 }
 
 .homepage-coda__title {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 4vw, 3.15rem);
+  font-size: clamp(1.75rem, 2.8vw, 2.6rem);
   font-weight: 300;
-  line-height: 1.08;
-  max-width: 13ch;
-}
-
-.homepage-coda__body {
-  max-width: 34ch;
-  margin-block: 1rem 1.75rem;
-  color: var(--c-text-muted);
-}
-
-.homepage-coda__visual {
-  width: min(100%, 420px);
-  margin-inline-start: auto;
-  aspect-ratio: 5 / 4;
-  overflow: hidden;
-  background-color: var(--c-stone);
-}
-
-.homepage-coda__visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  line-height: 1.15;
+  max-width: 26ch;
 }
 
 
@@ -467,15 +427,6 @@
 
   .home .homepage-projects .section__footer {
     margin-block-start: 1.75rem;
-  }
-
-  .home .homepage-coda__inner {
-    gap: 5rem;
-    padding-block: 3.5rem 4.5rem;
-  }
-
-  .home .homepage-coda__visual {
-    width: min(100%, 440px);
   }
 
   .home .homepage-philosophy {
@@ -604,25 +555,14 @@
 }
 
 @media (max-width: 900px) {
-  .homepage-coda__inner,
-  .homepage-coda__inner--with-visual {
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
+  .homepage-coda__bar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .homepage-coda__content,
-  .homepage-coda__body,
-  .homepage-coda__title,
-  .homepage-coda__visual,
   .privacy-note__inner,
   .privacy-note__text {
     max-width: none;
-  }
-
-  .homepage-coda__visual {
-    margin-inline-start: 0;
-    width: 100%;
-    max-height: 18rem;
   }
 
   .privacy-reading-block__layout {
@@ -636,14 +576,6 @@
 }
 
 @media (max-width: 600px) {
-  .homepage-coda__inner {
-    padding-block: 2rem 2.5rem;
-  }
-
-  .homepage-coda__body {
-    margin-block-end: 1.5rem;
-  }
-
   .privacy-reading {
     font-size: 1rem;
   }

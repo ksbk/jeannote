@@ -21,9 +21,6 @@ class HomeView(TemplateView):
         homepage_projects = featured_projects + supporting_projects
         ctx["homepage_projects"] = homepage_projects
         ctx["hero_project"] = homepage_projects[0] if homepage_projects else None
-        ctx["home_coda_project"] = (
-            homepage_projects[-1] if len(homepage_projects) > 1 else ctx["hero_project"]
-        )
         ctx["about"] = AboutProfile.load()
         return ctx
 
