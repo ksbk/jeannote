@@ -2,7 +2,7 @@
    21. Services page
    --------------------------------------------------------- */
 .service-section {
-  padding-block: var(--space-lg);
+  padding-block: var(--space-md);
 }
 
 .service-section--tinted {
