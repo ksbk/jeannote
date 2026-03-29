@@ -179,9 +179,11 @@ uv run python manage.py seed_demo
 ```
 
 Seeds a complete set of generic starter content — SiteSettings, AboutProfile,
-six service definitions, and four placeholder projects — so the site renders
-fully on first load. Use this as your starting point and replace content via
-admin. Safe to re-run (idempotent). Does not create any user accounts.
+six service definitions, and eight placeholder projects (six featured) — so
+the site renders fully on first load. If a `media/demo_seed/` directory is
+present, cover images are attached automatically (see DEMO.md). Use this as
+your starting point and replace content via admin. Safe to re-run (idempotent).
+Does not create any user accounts.
 
 ### 6. Start the dev server
 

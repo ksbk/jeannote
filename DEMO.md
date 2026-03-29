@@ -29,9 +29,15 @@ uv run python manage.py runserver
 
 Open **<http://127.0.0.1:8000>**.
 
-The site renders immediately with starter content — four example projects,
-six service descriptions, and a populated About page. Log in to
-**<http://127.0.0.1:8000/admin>** to explore the content management interface.
+The site renders immediately with starter content — projects, services,
+and a populated About page. Log in to **<http://127.0.0.1:8000/admin>**
+to explore the content management interface.
+
+> **Demo media package (optional):** A separate `media/demo_seed/` directory
+> can be placed alongside the repo to enable the full 6-project showcase with
+> real cover images. When present, `seed_demo` auto-discovers and attaches it.
+> Without it, the seed still runs cleanly — projects render without cover images.
+> The demo media package is intentionally external to the git repository.
 
 ---
 
@@ -96,13 +102,14 @@ After running `seed_demo`, the site contains:
 ### Home page
 
 - Practice tagline
-- Three featured projects in the portfolio grid
+- Up to six featured projects in the portfolio grid (three shown by default on mobile; requires demo media package for cover images)
 - Services summary section
 - Three client testimonials
 
 ### Projects
 
-- Four complete project records across residential, cultural, commercial, and interior categories
+- Eight project records across residential, cultural, commercial, and civic categories
+- Six are marked featured and appear in the homepage grid
 - Each project has a full narrative: overview, challenge, concept, and outcome
 - Category filter works on the list page
 
