@@ -488,3 +488,61 @@ def test_nav_name_absent_renders_site_name(client, site_settings):
     site_settings.save()
     response = client.get(reverse("pages:home"))
     assert b"Strand Architecture" in response.content
+
+
+# ---------------------------------------------------------------------------
+# Navbar brand — monogram fallback (spec v2)
+# ---------------------------------------------------------------------------
+
+@pytest.mark.django_db
+def test_nav_renders_full_text_when_site_name_fits(client, site_settings):
+    """site_name ≤ 24 chars and no logo/nav_name → full text in nav__name span."""
+    site_settings.site_name = "Strand Architecture"   # 19 chars
+    site_settings.nav_name = ""
+    site_settings.save()
+    response = client.get(reverse("pages:home"))
+    assert b'class="nav__name">Strand Architecture</span>' in response.content
+    assert b"nav__monogram" not in response.content
+
+
+@pytest.mark.django_db
+def test_nav_renders_monogram_when_site_name_too_long(client, site_settings):
+    """site_name > 24 chars, no logo, no nav_name → monogram span rendered."""
+    site_settings.site_name = "Beaumont Whitfield Kellerman Partnership"
+    site_settings.nav_name = ""
+    site_settings.save()
+    response = client.get(reverse("pages:home"))
+    assert b'class="nav__monogram">BWK</span>' in response.content
+    assert b'class="nav__name">Beaumont Whitfield' not in response.content
+
+
+@pytest.mark.django_db
+def test_nav_monogram_has_aria_label(client, site_settings):
+    """Brand anchor always carries aria-label with full site_name."""
+    site_settings.site_name = "Beaumont Whitfield Kellerman Partnership"
+    site_settings.nav_name = ""
+    site_settings.save()
+    response = client.get(reverse("pages:home"))
+    assert b'aria-label="Beaumont Whitfield Kellerman Partnership"' in response.content
+
+
+@pytest.mark.django_db
+def test_nav_nav_name_suppresses_monogram(client, site_settings):
+    """nav_name set → nav_name text rendered; monogram path not entered."""
+    site_settings.site_name = "Beaumont Whitfield Kellerman Partnership"
+    site_settings.nav_name = "BWK Partnership"
+    site_settings.save()
+    response = client.get(reverse("pages:home"))
+    assert b'class="nav__name">BWK Partnership</span>' in response.content
+    assert b"nav__monogram" not in response.content
+
+
+@pytest.mark.django_db
+def test_nav_full_text_has_aria_label(client, site_settings):
+    """aria-label is present even when rendering the full short name as text."""
+    site_settings.site_name = "Strand Architecture"
+    site_settings.nav_name = ""
+    site_settings.save()
+    response = client.get(reverse("pages:home"))
+    assert b'aria-label="Strand Architecture"' in response.content
+

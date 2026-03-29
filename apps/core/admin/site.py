@@ -1,6 +1,7 @@
 from django.contrib import admin, messages
 
 from ..models import AboutProfile, SiteSettings
+from ..templatetags.core_tags import NAV_TEXT_MAX_CHARS, _compute_monogram
 
 # ---------------------------------------------------------------------------
 # SiteSettings
@@ -19,7 +20,11 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                     "hero_label appears above the studio name in the homepage hero; leave blank to omit it. "
                     "Enable hero_compact if the hero looks crowded with a long name or tagline. "
                     "nav_name is a shortened form of your practice name for the navigation bar — "
-                    "leave blank to use the full name; a logo supersedes both."
+                    "leave blank to let the system choose: names up to 24 characters are shown in full; "
+                    "longer names automatically display as a derived monogram (e.g. 'BWK' for "
+                    "'Beaumont Whitfield Kellerman Partnership'). "
+                    "Set nav_name to override the automatic result with a specific abbreviation. "
+                    "A logo supersedes all text options."
                 ),
             },
         ),
@@ -108,6 +113,18 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                     "Navigation Name, or uploading a logo, to ensure it fits on narrow screens.",
                     level=messages.INFO,
                 )
+            # Warn when the auto-computed monogram collapses to a single letter.
+            if len(site_name_val) > NAV_TEXT_MAX_CHARS and not nav_name_val and not logo_val:
+                monogram = _compute_monogram(site_name_val)
+                if len(monogram) == 1:
+                    self.message_user(
+                        request,
+                        f"The automatic nav monogram for this name would be a single letter "
+                        f"(\u2018{monogram}\u2019). Consider setting a Nav Name to give visitors "
+                        f"more context\u2014for example, an abbreviation like "
+                        f"\u2018{monogram}CA\u2019 or a shortened version of the practice name.",
+                        level=messages.WARNING,
+                    )
         return super().changeform_view(request, object_id, form_url, extra_context)
 
     def has_add_permission(self, request):

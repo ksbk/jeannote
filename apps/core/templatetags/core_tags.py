@@ -1,6 +1,85 @@
+import re
+
 from django import template
 
 register = template.Library()
+
+# ---------------------------------------------------------------------------
+# Navbar monogram — spec v2
+# ---------------------------------------------------------------------------
+
+# Design-system threshold: site_name at or below this length renders as full
+# text in the nav. Above it the monogram path is triggered.  Named constant
+# so a type-scale revision can locate and update it in one place.
+NAV_TEXT_MAX_CHARS = 24
+
+# Universal syntactic connectors — never carry identity value.
+# Conservative by design; culturally specific particles are NOT included.
+_STOP_WORDS: frozenset[str] = frozenset({"and", "&", "of", "the", "for", "a", "an", "+"})
+
+# Profession descriptors stripped only for monogram generation.
+# They remain visible in aria-label, title, hero, footer, and all other contexts.
+_DESCRIPTOR_WORDS: frozenset[str] = frozenset({
+    "architects", "architecture", "architectural",
+    "studio", "studios",
+    "design", "designers",
+    "partners", "partnership",
+    "associates",
+    "group",
+    "practice",
+    "workshop",
+    "office",
+})
+
+
+def _compute_monogram(site_name: str) -> str:
+    """
+    Derive an identity monogram from *site_name* using the v2 algorithm.
+
+    Returns 1–3 uppercase letters.  Never truncates — the result is always
+    a clean, intentional string.
+    """
+    if not site_name:
+        return ""
+
+    # Step 1 — normalise
+    name = " ".join(site_name.split())
+
+    # Step 2 — tokenise on spaces and + (hyphens are NOT token boundaries)
+    tokens = re.split(r"[ +]+", name)
+
+    # Step 3 — hyphens: compound tokens yield only the first component's initial
+    # (handled implicitly: we take token[0] regardless of internal hyphens)
+
+    # Step 4/5 — filter stop words and profession descriptors
+    filtered = [
+        t for t in tokens
+        if t.lower() not in _STOP_WORDS and t.lower() not in _DESCRIPTOR_WORDS
+    ]
+
+    # Step 6 — extract initials (first char of each surviving token, uppercased)
+    initials = [t[0].upper() for t in filtered if t]
+
+    # Step 7 — letter count cap
+    if not initials:
+        # Last-resort: take first character of the original name
+        return name[0].upper()
+    if len(initials) <= 3:
+        return "".join(initials)
+    # 4+ tokens: first, second, last
+    return initials[0] + initials[1] + initials[-1]
+
+
+@register.filter
+def nav_monogram(site_name: str | None) -> str:
+    """Template filter: return the computed monogram for *site_name*."""
+    return _compute_monogram(site_name or "")
+
+
+@register.filter
+def nav_needs_monogram(site_name: str | None) -> bool:
+    """Return True when site_name is long enough to trigger the monogram path."""
+    return len(site_name or "") > NAV_TEXT_MAX_CHARS
 
 
 @register.filter

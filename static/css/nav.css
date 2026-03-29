@@ -53,7 +53,25 @@
   white-space: nowrap;
 }
 
-.home .site-header:not(.scrolled):not(.nav-open) .nav__name { color: var(--c-white); }
+/*
+ * Monogram — intentional identity mark, visually distinct from the text path.
+ * Never truncated: the content is always 1–3 characters.
+ * Larger size and wider tracking make it read as a deliberate mark, not clipped text.
+ */
+.nav__monogram {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--c-text);
+  transition: color var(--dur-sm);
+  white-space: nowrap;
+}
+
+.home .site-header:not(.scrolled):not(.nav-open) .nav__name,
+.home .site-header:not(.scrolled):not(.nav-open) .nav__monogram { color: var(--c-white); }
 
 /*
  * Transparent hero state: invert logo to white for visibility.
@@ -173,7 +191,8 @@
    * Text name: color override. Logo image: invert to white.
    * Brand raised above the overlay (z-index 99) same as the toggle. */
   .site-header.nav-open .nav__brand { position: relative; z-index: 101; }
-  .site-header.nav-open .nav__name { color: var(--c-white); }
+  .site-header.nav-open .nav__name,
+  .site-header.nav-open .nav__monogram { color: var(--c-white); }
   .site-header.nav-open .nav__logo { filter: brightness(0) invert(1); }
 
   .nav__toggle {

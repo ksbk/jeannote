@@ -53,9 +53,11 @@ class SiteSettings(SingletonModel):
         blank=True,
         default="",
         help_text=(
-            "Shortened form of your practice name for the navigation bar — e.g. 'Strand Architecture' or "
-            "'BWK Partnership'. Use this only if your full practice name is long and crowds the header. "
-            "Leave blank to use the full name. A logo supersedes both."
+            "Overrides the automatic nav brand. Leave blank to let the system choose: "
+            "names up to 24 characters are shown in full; longer names display as a "
+            "derived monogram (e.g. \u2018BWK\u2019 for \u2018Beaumont Whitfield Kellerman Partnership\u2019). "
+            "Set this field to an abbreviation like \u2018Strand Architecture\u2019 or \u2018BWK Partnership\u2019 "
+            "if the automatic monogram is not what you want. A logo supersedes all text options."
         ),
     )
     logo = models.ImageField(upload_to="site/", blank=True, null=True)
