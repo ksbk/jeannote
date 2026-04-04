@@ -108,8 +108,8 @@
   outline-offset: 0.18em;
 }
 
-/* Inline location shown only on mobile; block version shown only on desktop/tablet */
-.footer__location-inline { display: none; }
+/* Location stays inline with legal/meta by default to keep the footer ending compact. */
+.footer__location-inline { display: inline; }
 
 /* When the contact column is absent (no email, no socials set in admin)
    the 3-col footer__inner would show a prominent dead zone on the right.
@@ -150,9 +150,6 @@
   .footer__brand,
   .footer__contact { text-align: center; }
   .footer__social { justify-content: center; }
-  /* Location folded inline into copyright — hide the standalone block line */
-  .footer__location-block { display: none; }
-  .footer__location-inline { display: inline; }
   /* Social links: lift to a more usable 44px-ish tap target */
   .footer__social a { padding-block: 0.75rem; }
   .footer__bottom a { min-height: 44px; }
