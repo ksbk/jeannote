@@ -1,3 +1,8 @@
+<!--
+  Footer hierarchy: identity → contact → social → legal/meta
+  Nav is secondary-only — kept for desktop convenience, hidden on mobile (≤768px).
+  Do not promote footer nav to primary weight or rebuild as a sitemap.
+-->
 <footer class="site-footer">
   <div class="container footer__inner">
     <div class="footer__brand">
@@ -6,15 +11,6 @@
       <p class="footer__tagline">{{ site_settings.tagline }}</p>
       {% endif %}
     </div>
-
-    <nav class="footer__nav" aria-label="Footer navigation">
-      <ul>
-        <li><a href="{% url 'projects:list' %}">Projects</a></li>
-        <li><a href="{% url 'pages:about' %}">About</a></li>
-        <li><a href="{% url 'services:list' %}">Services</a></li>
-        <li><a href="{% url 'contact:contact' %}">Contact</a></li>
-      </ul>
-    </nav>
 
     {% if site_settings.contact_email or site_settings.instagram_url or site_settings.linkedin_url or site_settings.facebook_url or site_settings.behance_url or site_settings.issuu_url %}
     <div class="footer__contact">
@@ -40,6 +36,15 @@
       </div>
     </div>
     {% endif %}
+
+    <nav class="footer__nav" aria-label="Footer navigation">
+      <ul>
+        <li><a href="{% url 'projects:list' %}">Projects</a></li>
+        <li><a href="{% url 'pages:about' %}">About</a></li>
+        <li><a href="{% url 'services:list' %}">Services</a></li>
+        <li><a href="{% url 'contact:contact' %}">Contact</a></li>
+      </ul>
+    </nav>
   </div>
 
   <div class="footer__bottom container">

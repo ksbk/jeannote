@@ -9,7 +9,7 @@
 
 .footer__inner {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr; /* brand | contact | nav (nav is secondary — last col) */
   gap: var(--space-lg);
   padding-block-end: var(--space-lg);
   border-block-end: 1px solid rgba(255,255,255,0.08);
