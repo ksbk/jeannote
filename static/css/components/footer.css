@@ -30,7 +30,7 @@
   font-size: var(--text-sm);
   line-height: 1.6;
   color: rgba(255,255,255,0.5); /* bumped from 0.4 → passes WCAG AA at ~4.9:1 */
-  max-width: 280px;
+  /* No max-width: the 1fr grid column controls line length — buyer-neutral default */
 }
 
 .footer__nav ul {
@@ -61,6 +61,7 @@
 
 .footer__social {
   display: flex;
+  flex-wrap: wrap; /* safety net: buyers with all 5 socials at small viewports */
   gap: 1rem;
 }
 
@@ -104,6 +105,9 @@
   outline-offset: 0.18em;
 }
 
+/* Inline location shown only on mobile; block version shown only on desktop/tablet */
+.footer__location-inline { display: none; }
+
 /* When the contact column is absent (no email, no socials set in admin)
    the 3-col footer__inner would show a prominent dead zone on the right.
    Reset to 2-col so brand + nav fill the space evenly. */
@@ -116,22 +120,34 @@
     grid-template-columns: 1fr 1fr;
     gap: var(--space-lg) var(--space-md); /* row-gap stays lg; column-gap tightens to md */
   }
-  .footer__brand { grid-column: span 2; text-align: center; }
-  .footer__tagline { max-width: none; }
+  /* Nav is always reachable via the hamburger — remove the duplicate column */
+  .footer__nav { display: none; }
+  /* Brand sits in col-1, contact in col-2 — no spanning needed */
+  .footer__brand { grid-column: auto; }
+  /* If buyer has no email or socials, contact column is absent — span brand full width */
+  .footer__inner:not(:has(.footer__contact)) .footer__brand { grid-column: span 2; }
   .footer__bottom { flex-direction: column; align-items: center; text-align: center; }
 }
 
+@media (max-width: 600px) {
+  /* Tagline earns space on tablet; below 600px the hero already says it */
+  .footer__tagline { display: none; }
+}
+
 @media (max-width: 480px) {
-  /* Phone portrait: tighten vertical rhythm — footer was drawing 19rem of whitespace */
+  /* Phone portrait: single-column stack — name → email → socials → legal */
   .site-footer { padding-block-start: var(--space-lg); }   /* 7rem → 4rem */
-  .footer__nav a,
   .footer__email { padding-block: 0.4rem; }
   .footer__inner {
     grid-template-columns: 1fr;
-    gap: var(--space-md);                /* row-gap 4rem → 2rem, halves inter-block space */
+    gap: var(--space-md);                /* row-gap 4rem → 2rem */
     padding-block-end: var(--space-md);  /* 4rem → 2rem before divider */
   }
-  .footer__brand { grid-column: auto; }
+  /* grid-column: auto already set at 768px; restore centre for the 1-col stack */
+  .footer__brand { text-align: center; }
+  /* Location folded inline into copyright — hide the standalone block line */
+  .footer__location-block { display: none; }
+  .footer__location-inline { display: inline; }
   /* Social links: lift to a more usable 44px-ish tap target */
   .footer__social a { padding-block: 0.75rem; }
 }

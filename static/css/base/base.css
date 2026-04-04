@@ -1,4 +1,13 @@
 /* ---------------------------------------------------------
+   Browser support baseline: late 2022+ (floor: 100svh)
+   Chrome 108 / Firefox 108 / Safari 15.4 and newer.
+   :has() is used for structural layout variants (e.g. footer
+   fallback when contact column is absent). Degradation is cosmetic
+   only. To support older browsers, replace :has() rules with an
+   explicit utility class on the element instead.
+   --------------------------------------------------------- */
+
+/* ---------------------------------------------------------
    2. Reset & base
    --------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
