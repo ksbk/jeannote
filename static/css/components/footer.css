@@ -92,6 +92,7 @@
 }
 
 .footer__bottom a {
+  display: inline-block;
   color: inherit;
   text-decoration: underline;
   text-decoration-color: rgba(255,255,255,0.2);
@@ -139,19 +140,22 @@
 @media (max-width: 480px) {
   /* Phone portrait: single-column stack — name → email → socials → legal */
   .site-footer { padding-block-start: var(--space-lg); }   /* 7rem → 4rem */
-  .footer__email { padding-block: 0.4rem; }
+  .footer__email { padding-block: 0.625rem; }
   .footer__inner {
     grid-template-columns: 1fr;
     gap: var(--space-md);                /* row-gap 4rem → 2rem */
     padding-block-end: var(--space-md);  /* 4rem → 2rem before divider */
   }
   /* grid-column: auto already set at 768px; restore centre for the 1-col stack */
-  .footer__brand { text-align: center; }
+  .footer__brand,
+  .footer__contact { text-align: center; }
+  .footer__social { justify-content: center; }
   /* Location folded inline into copyright — hide the standalone block line */
   .footer__location-block { display: none; }
   .footer__location-inline { display: inline; }
   /* Social links: lift to a more usable 44px-ish tap target */
   .footer__social a { padding-block: 0.75rem; }
+  .footer__bottom a { min-height: 44px; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
