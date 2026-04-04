@@ -18,6 +18,7 @@ import urllib.request
 ROUTES = [
     ("/", "home"),
     ("/about/", "about"),
+    ("/privacy/", "privacy"),
     ("/services/", "services"),
     ("/contact/", "contact"),
     ("/projects/", "projects list"),

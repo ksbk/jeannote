@@ -29,6 +29,7 @@ Thumbs.db
 # on this repo. Add personal/machine-specific overrides to
 # .vscode/*.code-workspace or your global VS Code settings instead.
 .idea/
+.trunk/
 *.swp
 *.swo
 
@@ -46,6 +47,7 @@ coverage.xml
 # Visual audit output (screenshots are large binaries — keep locally only)
 artifacts/
 screenshots/
+scripts/_*.py
 
 # uv
 .uv/

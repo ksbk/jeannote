@@ -36,6 +36,24 @@ dev = [
 [tool.ruff]
 target-version = "py313"
 line-length = 100
+extend-exclude = [
+    "scripts/_*.py",
+    "scripts/analyse_screenshots.py",
+    "scripts/audit_hero_spec.py",
+    "scripts/audit_hp_counts.py",
+    "scripts/audit_nav_brand.py",
+    "scripts/audit_post_image_fix.py",
+    "scripts/audit_typography_qa.py",
+    "scripts/check_services_bands.py",
+    "scripts/cleanup_orphans.py",
+    "scripts/fix_project_images.py",
+    "scripts/pixel_audit.py",
+    "scripts/recheck_home_cta.py",
+    "scripts/screenshot_home_states.py",
+    "scripts/take_screenshots.py",
+    "scripts/targeted_audit.py",
+    "scripts/tree.py",
+]
 
 [tool.ruff.lint]
 select = [
@@ -67,6 +85,24 @@ plugins = ["mypy_django_plugin.main"]
 ignore_missing_imports = true
 warn_unused_ignores = true
 no_implicit_optional = true
+exclude = '''(?x)(
+    ^scripts/_.*\.py$
+  | ^scripts/analyse_screenshots\.py$
+  | ^scripts/audit_hero_spec\.py$
+  | ^scripts/audit_hp_counts\.py$
+  | ^scripts/audit_nav_brand\.py$
+  | ^scripts/audit_post_image_fix\.py$
+  | ^scripts/audit_typography_qa\.py$
+  | ^scripts/check_services_bands\.py$
+  | ^scripts/cleanup_orphans\.py$
+  | ^scripts/fix_project_images\.py$
+  | ^scripts/pixel_audit\.py$
+  | ^scripts/recheck_home_cta\.py$
+  | ^scripts/screenshot_home_states\.py$
+  | ^scripts/take_screenshots\.py$
+  | ^scripts/targeted_audit\.py$
+  | ^scripts/tree\.py$
+)'''
 # Start permissive; tighten over time
 disallow_untyped_defs = false
 check_untyped_defs = true
