@@ -6,7 +6,7 @@
 }
 
 .service-section--tinted {
-  background-color: var(--color-stone);
+  background-color: var(--surface-muted);
 }
 
 .service-detail {
@@ -81,7 +81,7 @@
 
 .service-deliverables li::before {
   content: '· ';
-  color: var(--color-accent);
+  color: var(--accent-primary);
 }
 
 /* Quiet per-service enquiry link replaces btn--outline */
@@ -89,20 +89,20 @@
   display: inline-block;
   font-size: var(--text-sm);
   letter-spacing: 0.04em;
-  color: var(--color-accent);
+  color: var(--accent-primary);
   margin-block-start: var(--space-md);
   text-decoration: none;
 }
 
 .service-enquiry-link:hover {
-  color: var(--color-text);
+  color: var(--color-text-primary);
 }
 
 /* End strip — horizontal, authoritative */
 .services-end-strip {
   padding-block: var(--space-lg);
-  border-block-start: 1px solid var(--color-warm-grey);
-  background-color: var(--color-stone);
+  border-block-start: 1px solid var(--border-subtle);
+  background-color: var(--surface-muted);
 }
 
 .services-end-strip__inner {

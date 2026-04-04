@@ -8,8 +8,6 @@
   z-index: 100;
   background-color: rgba(250, 250, 248, 0.88);
   box-shadow: 0 1px 0 rgba(221, 217, 211, 0.85);
-  transition: background-color var(--dur-sm) var(--ease),
-              box-shadow var(--dur-sm) var(--ease);
 }
 
 .home .site-header:not(.scrolled):not(.nav-open) {
@@ -21,20 +19,21 @@
   background-color: rgba(250, 250, 248, 0.95);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  box-shadow: 0 1px 0 var(--c-warm-grey);
+  box-shadow: 0 1px 0 var(--border-subtle);
 }
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 4.5rem;
+  height: var(--header-height);
 }
 
 .nav__brand {
   min-width: 0;       /* allow flex item to shrink below intrinsic content width */
   flex: 0 1 auto;     /* shrinkable but never growing */
   overflow: hidden;   /* clip at brand boundary before child's ellipsis fires */
+  text-decoration: none;
 }
 
 .nav__name {
@@ -44,8 +43,7 @@
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--c-text);
-  transition: color var(--dur-sm);
+  color: var(--color-text-primary);
   /* safety net — a well-set nav_name (≤24 chars) will never trigger this */
   max-width: clamp(120px, 38vw, 240px);
   overflow: hidden;
@@ -65,13 +63,12 @@
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--c-text);
-  transition: color var(--dur-sm);
+  color: var(--color-text-primary);
   white-space: nowrap;
 }
 
 .home .site-header:not(.scrolled):not(.nav-open) .nav__name,
-.home .site-header:not(.scrolled):not(.nav-open) .nav__monogram { color: var(--c-white); }
+.home .site-header:not(.scrolled):not(.nav-open) .nav__monogram { color: var(--color-text-inverse); }
 
 /*
  * Transparent hero state: invert logo to white for visibility.
@@ -93,15 +90,17 @@
   display: flex;
   align-items: center;
   gap: var(--space-md);
+  list-style: none;
 }
 
 .nav__link {
   font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-weight: 400;
   letter-spacing: 0.04em;
-  color: var(--c-text-muted);
-  transition: color var(--dur-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--duration-sm);
   position: relative;
 }
 
@@ -111,39 +110,38 @@
   inset-block-end: -2px;
   inset-inline: 0;
   height: 1px;
-  background-color: var(--c-accent);
+  background-color: var(--accent-primary);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--dur-sm) var(--ease);
 }
 
 .nav__link:hover,
-.nav__link.is-active { color: var(--c-text); }
+.nav__link.is-active { color: var(--color-text-primary); }
 
 .nav__link:hover::after,
 .nav__link.is-active::after { transform: scaleX(1); }
 
 .home .site-header:not(.scrolled):not(.nav-open) .nav__link { color: rgba(250,250,248,0.75); }
 .home .site-header:not(.scrolled):not(.nav-open) .nav__link:hover,
-.home .site-header:not(.scrolled):not(.nav-open) .nav__link.is-active { color: var(--c-white); }
+.home .site-header:not(.scrolled):not(.nav-open) .nav__link.is-active { color: var(--color-text-inverse); }
 
 .nav__cta {
-  color: var(--c-text) !important;
+  color: var(--color-text-primary);
   border: 1px solid currentColor;
   padding: 0.45rem 1.1rem;
   border-radius: 2px;
-  transition: background-color var(--dur-sm), color var(--dur-sm);
+  text-decoration: none;
 }
 
 .nav__cta:hover {
-  background-color: var(--c-text);
-  color: var(--c-white) !important;
+  background-color: var(--color-text-primary);
+  color: var(--color-text-inverse);
 }
 
 .nav__cta::after { display: none; }
 
 .home .site-header:not(.scrolled):not(.nav-open) .nav__cta {
-  color: var(--c-white) !important;
+  color: var(--color-text-inverse) !important;
   border-color: rgba(250,250,248,0.5);
 }
 
@@ -160,6 +158,9 @@
   height: 44px;
   align-items: center;
   justify-content: center;
+  border: none;
+  background: none;
+  cursor: pointer;
   padding: 0;
 }
 
@@ -167,11 +168,10 @@
   display: block;
   width: 22px;
   height: 1.5px;
-  background-color: var(--c-text);
-  transition: transform var(--dur-sm), opacity var(--dur-sm);
+  background-color: var(--color-text-primary);
 }
 
-.home .site-header:not(.scrolled):not(.nav-open) .nav__toggle span { background-color: var(--c-white); }
+.home .site-header:not(.scrolled):not(.nav-open) .nav__toggle span { background-color: var(--color-text-inverse); }
 
 @media (max-width: 767px) {
   /*
@@ -181,7 +181,7 @@
    * so .nav__links can fill the full screen.
    */
   .site-header.nav-open {
-    background-color: var(--c-black); /* join the overlay — removes light/dark seam */
+    background-color: var(--surface-inverse); /* join the overlay — removes light/dark seam */
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     box-shadow: none; /* suppress scrolled box-shadow if present */
@@ -192,7 +192,7 @@
    * Brand raised above the overlay (z-index 99) same as the toggle. */
   .site-header.nav-open .nav__brand { position: relative; z-index: 101; }
   .site-header.nav-open .nav__name,
-  .site-header.nav-open .nav__monogram { color: var(--c-white); }
+  .site-header.nav-open .nav__monogram { color: var(--color-text-inverse); }
   .site-header.nav-open .nav__logo { filter: brightness(0) invert(1); }
 
   .nav__toggle {
@@ -220,14 +220,14 @@
    * light nav-open header background, making the × invisible.
    */
   .site-header.nav-open .nav__toggle span {
-    background-color: var(--c-white);
+    background-color: var(--color-text-inverse);
   }
 
   .nav__links {
     display: flex;
     position: fixed;
     inset: 0;
-    background-color: var(--c-black);
+    background-color: var(--surface-inverse);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -238,12 +238,10 @@
        content read as too low. */
     padding-block-start: 3rem;
     z-index: 99;
-    /* Animatable closed state — transitions on opacity/visibility, not display */
+    /* Animatable closed state — hidden state; transitions → prefers-reduced-motion block below */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity var(--dur-sm) var(--ease),
-                visibility var(--dur-sm) var(--ease);
   }
 
   .nav__links.is-open {
@@ -255,11 +253,11 @@
   .nav__link {
     font-family: var(--font-serif);
     font-size: 2rem;
-    color: var(--c-warm-grey) !important;
+    color: var(--color-text-inverse-muted) !important;
   }
 
   .nav__link:hover,
-  .nav__link.is-active { color: var(--c-white) !important; }
+  .nav__link.is-active { color: var(--color-text-inverse) !important; }
 
   /* On the overlay, Contact reads as part of the same serif link system.
    * Reset all desktop CTA chrome: border, sans-serif, small size.
@@ -267,7 +265,7 @@
   .nav__cta {
     font-family: var(--font-serif);
     font-size: 2rem;
-    color: var(--c-warm-grey) !important;
+    color: var(--color-text-inverse-muted) !important;
     border: none;
     padding: 0;
     border-radius: 0;
@@ -276,6 +274,20 @@
 
   .nav__cta:hover {
     background-color: transparent;
-    color: var(--c-white) !important;
+    color: var(--color-text-inverse) !important;
   }
+}
+
+/* All transitions gated: reduced-motion users get instant state changes */
+@media (prefers-reduced-motion: no-preference) {
+  .site-header      { transition: background-color var(--duration-sm) var(--easing-standard), box-shadow var(--duration-sm) var(--easing-standard); }
+  .nav__name        { transition: color var(--duration-sm); }
+  .nav__monogram    { transition: color var(--duration-sm); }
+  .nav__link::after { transition: transform var(--duration-sm) var(--easing-standard); }
+  .nav__cta         { transition: background-color var(--duration-sm), color var(--duration-sm); }
+  .nav__toggle span { transition: transform var(--duration-sm), opacity var(--duration-sm); }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .nav__links { transition: opacity var(--duration-sm) var(--easing-standard), visibility var(--duration-sm) var(--easing-standard); }
 }

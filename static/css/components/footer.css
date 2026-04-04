@@ -2,8 +2,8 @@
    23. Footer
    --------------------------------------------------------- */
 .site-footer {
-  background-color: var(--c-black);
-  color: var(--c-mid-grey);
+  background-color: var(--surface-inverse);
+  color: var(--color-text-inverse-muted);
   padding-block-start: var(--space-xl);
 }
 
@@ -21,12 +21,13 @@
   font-size: 1.1rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--c-white);
+  color: var(--color-text-inverse);
   margin-block-end: 0.75rem;
+  text-decoration: none;
 }
 
 .footer__tagline {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   line-height: 1.6;
   color: rgba(255,255,255,0.5); /* bumped from 0.4 → passes WCAG AA at ~4.9:1 */
   max-width: 280px;
@@ -36,26 +37,27 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  list-style: none;
 }
 
 .footer__nav a {
   font-size: 0.85rem;
   color: rgba(255,255,255,0.5);
   padding-block: 0.3rem; /* tap-target comfort: lifts effective area to ~32px */
-  transition: color var(--dur-sm);
+  text-decoration: none;
 }
 
-.footer__nav a:hover { color: var(--c-white); }
+.footer__nav a:hover { color: var(--color-text-inverse); }
 
 .footer__email {
   display: block;
   font-size: 0.9rem;
   color: rgba(255,255,255,0.7);
   margin-block-end: var(--space-sm);
-  transition: color var(--dur-sm);
+  text-decoration: none;
 }
 
-.footer__email:hover { color: var(--c-white); }
+.footer__email:hover { color: var(--color-text-inverse); }
 
 .footer__social {
   display: flex;
@@ -63,15 +65,15 @@
 }
 
 .footer__social a {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.5); /* bumped from 0.45 (4.4:1 fail at --text-xs) → 0.5 (~4.9:1 passes WCAG AA) */
   padding-block: 0.4rem; /* tap-target comfort: lifts effective area to ~25px */
-  transition: color var(--dur-sm);
   font-weight: 500;
+  text-decoration: none;
 }
 
-.footer__social a:hover { color: var(--c-accent-lt); }
+.footer__social a:hover { color: var(--accent-on-dark); }
 
 .footer__bottom {
   display: flex;
@@ -91,13 +93,10 @@
   text-decoration: underline;
   text-decoration-color: rgba(255,255,255,0.2);
   text-underline-offset: 0.18em;
-  transition:
-    color var(--dur-sm),
-    text-decoration-color var(--dur-sm);
 }
 
 .footer__bottom a:hover {
-  color: var(--c-white);
+  color: var(--color-text-inverse);
   text-decoration-color: rgba(255,255,255,0.45);
 }
 
@@ -137,3 +136,9 @@
   .footer__social a { padding-block: 0.75rem; }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .footer__nav a      { transition: color var(--duration-sm); }
+  .footer__email      { transition: color var(--duration-sm); }
+  .footer__social a   { transition: color var(--duration-sm); }
+  .footer__bottom a   { transition: color var(--duration-sm), text-decoration-color var(--duration-sm); }
+}

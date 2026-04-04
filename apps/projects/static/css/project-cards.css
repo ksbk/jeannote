@@ -1,6 +1,10 @@
 /* ---------------------------------------------------------
    8. Project cards & grid
    --------------------------------------------------------- */
+.section--archive {
+  padding-block: var(--space-md);
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -52,7 +56,7 @@
 .project-card__media {
   aspect-ratio: 4/3;
   overflow: hidden;
-  background-color: var(--c-warm-grey);
+  background-color: var(--color-warm-grey); /* image-loading placeholder; no semantic surface alias maps to this mid-tone — using justified local primitive */
   position: relative;
 }
 
@@ -62,10 +66,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--dur-lg) var(--ease);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .project-card__link:hover .project-card__media img {
     transform: scale(1.04);
   }
@@ -74,7 +77,7 @@
 .project-card__placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, var(--c-warm-grey), var(--c-stone));
+  background: linear-gradient(135deg, var(--color-warm-grey), var(--color-stone));
 }
 
 .project-card__info {
@@ -82,10 +85,10 @@
 }
 
 .project-card__meta {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--c-text-muted);
+  color: var(--color-text-secondary);
   display: block;
   margin-block-end: 0.4rem;
 }
@@ -95,14 +98,13 @@
   font-size: clamp(1.25rem, 1.8vw, 1.5rem);
   font-weight: 400;
   margin-block-end: 0.5rem;
-  transition: color var(--dur-sm);
 }
 
-.project-card__link:hover .project-card__title { color: var(--c-accent); }
+.project-card__link:hover .project-card__title { color: var(--accent-primary); }
 
 .project-card__desc {
-  font-size: 0.875rem;
-  color: var(--c-text-muted);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
   margin-block-end: 0.75rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -111,12 +113,11 @@
 }
 
 .project-card__cta {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--c-accent);
+  color: var(--accent-primary);
   opacity: 0;
-  transition: opacity var(--dur-sm);
 }
 
 .project-card__link:hover .project-card__cta { opacity: 1; }
@@ -186,10 +187,10 @@
    15. Filter bar
    --------------------------------------------------------- */
 .filter-bar {
-  background-color: var(--c-white);
-  border-block-end: 1px solid var(--c-warm-grey);
+  background-color: var(--surface-page);
+  border-block-end: 1px solid var(--border-subtle);
   position: sticky;
-  top: 4.5rem;
+  top: var(--header-height);
   z-index: 50;
 }
 
@@ -199,7 +200,6 @@
   gap: 0.2rem;
   padding-block: 0.2rem;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 
@@ -209,19 +209,19 @@
   font-size: 0.8rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--c-text-muted);
+  color: var(--color-text-secondary);
   padding: 0.8rem 1rem;
   border-block-end: 2px solid transparent;
   white-space: nowrap;
-  transition: color var(--dur-sm), border-color var(--dur-sm);
   flex-shrink: 0;
+  text-decoration: none;
 }
 
-.filter-btn:hover { color: var(--c-text); }
+.filter-btn:hover { color: var(--color-text-primary); }
 
 .filter-btn--active {
-  color: var(--c-text);
-  border-block-end-color: var(--c-accent);
+  color: var(--color-text-primary);
+  border-block-end-color: var(--accent-primary);
 }
 
 
@@ -240,21 +240,21 @@
   font-size: 0.85rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--c-accent);
-  transition: color var(--dur-sm);
+  color: var(--accent-primary);
+  text-decoration: none;
 }
 
-.pagination__link:hover { color: var(--c-text); }
+.pagination__link:hover { color: var(--color-text-primary); }
 
 .pagination__info {
   font-size: 0.8rem;
-  color: var(--c-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .empty-state {
   text-align: center;
   padding: var(--space-xl);
-  color: var(--c-text-muted);
+  color: var(--color-text-secondary);
   font-style: italic;
 }
 
@@ -262,8 +262,8 @@
    Projects list close strip
    --------------------------------------------------------- */
 .projects-close {
-  background-color: var(--c-stone);
-  border-block-start: 1px solid var(--c-warm-grey);
+  background-color: var(--surface-muted);
+  border-block-start: 1px solid var(--border-subtle);
   padding-block: var(--space-lg);
 }
 
@@ -279,7 +279,7 @@
   font-style: italic;
   font-weight: 300;
   font-size: 1.15rem;
-  color: var(--c-text-muted);
+  color: var(--color-text-secondary);
   max-width: 32ch;
 }
 
@@ -288,4 +288,12 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-card__media img { transition: transform var(--duration-lg) var(--easing-standard); }
+  .project-card__title     { transition: color var(--duration-sm); }
+  .project-card__cta       { transition: opacity var(--duration-sm); }
+  .filter-btn              { transition: color var(--duration-sm), border-color var(--duration-sm); }
+  .pagination__link        { transition: color var(--duration-sm); }
 }

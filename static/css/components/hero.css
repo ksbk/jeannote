@@ -8,7 +8,7 @@
   align-items: flex-end;
   padding-block-end: var(--space-xl);
   overflow: hidden;
-  color: var(--c-white);
+  color: var(--color-text-inverse);
 }
 
 .hero__media,
@@ -19,7 +19,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  transition: transform 8s var(--ease);
+  transition: transform 8s var(--easing-standard);
 }
 
 .hero__bg--placeholder {
@@ -45,10 +45,10 @@
 
 .hero__label {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--c-accent-lt);
+  color: var(--accent-on-dark);
   margin-block-end: 1rem;
 }
 
@@ -90,6 +90,7 @@
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .hero__scroll-line {
@@ -97,7 +98,7 @@
   width: 1px;
   height: 48px;
   background: linear-gradient(to bottom, rgba(250,250,248,0.1), rgba(250,250,248,0.5));
-  animation: scroll-pulse 1.8s var(--ease) infinite;
+  animation: scroll-pulse 1.8s var(--easing-standard) infinite;
 }
 
 @keyframes scroll-pulse {
@@ -111,18 +112,18 @@
    14. Page hero
    --------------------------------------------------------- */
 .page-hero {
-  background-color: var(--c-stone);
+  background-color: var(--surface-muted);
 }
 
 .page-hero--short {
-  padding-block: calc(4.5rem + var(--space-md)) var(--space-md);
+  padding-block: calc(var(--header-height) + var(--space-md)) var(--space-md);
 }
 
 .page-hero__label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--c-accent);
+  color: var(--accent-primary);
   margin-block-end: 0.75rem;
 }
 
@@ -137,7 +138,7 @@
 .page-hero__subtitle {
   margin-block-start: 1.25rem;
   font-size: clamp(1rem, 1.5vw, 1.15rem);
-  color: var(--c-text-muted);
+  color: var(--color-text-secondary);
   max-width: 580px;
   line-height: 1.7;
 }
@@ -149,14 +150,6 @@
   margin-block-start: var(--space-md);
 }
 
-/* On narrow phones (≤480px): prevent buttons from overflowing their containers
-   at 320 px where the content area is only ~272 px wide. Allow text to wrap. */
-@media (max-width: 480px) {
-  .btn {
-    max-width: 100%;
-    white-space: normal;
-  }
-}
 
 /* Compact modifier — reduces title scale ceiling for long names or taglines */
 .hero--compact .hero__title {

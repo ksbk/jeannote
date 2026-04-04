@@ -1,10 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Contact{% endblock %}
 {% block og_title %}Contact — {{ site_settings.site_name }}{% endblock %}
 {% block meta_description %}{{ site_settings.contact_meta_description|default:site_settings.meta_description }}{% endblock %}
 {% block og_description %}{{ site_settings.contact_meta_description|default:site_settings.meta_description }}{% endblock %}
 {% block twitter_description %}{{ site_settings.contact_meta_description|default:site_settings.meta_description }}{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
 
 {% block content %}
 

@@ -1,5 +1,10 @@
 /* ---------------------------------------------------------
    6. Section spacing and surface variants
+
+   .section is the repo's default section rhythm contract.
+   All shared page sections should use it. Strong opinion by design —
+   padding-block intentionally jumps from --space-lg (mobile) to
+   --space-xl (768px+) for visual air on larger viewports.
    --------------------------------------------------------- */
 .section {
   padding-block: var(--space-lg);
@@ -26,6 +31,7 @@
 
 .section__header--inline {
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
 }
@@ -59,6 +65,7 @@
   max-width: 560px;
 }
 
+/* Light-surface default — overrides needed for inverse/dark contexts */
 .section__subheading {
   color: var(--color-text-secondary);
   max-width: 640px;
@@ -73,10 +80,12 @@
 
 /* ---------------------------------------------------------
    13. CTA section
+
+   Always used with .section on the same element — inherits
+   the shared section rhythm. Do not add padding-block here.
    --------------------------------------------------------- */
 .cta-section {
   text-align: center;
-  padding-block: var(--space-lg);
 }
 
 .cta-section__inner {
@@ -92,6 +101,7 @@
   font-weight: 300;
 }
 
+/* Light-surface default — overrides needed for inverse/dark contexts */
 .cta-section__body {
   color: var(--color-text-secondary);
   max-width: 480px;

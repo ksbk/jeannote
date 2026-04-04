@@ -1,0 +1,43 @@
+/* ---------------------------------------------------------
+   13b. Homepage coda — ruled close
+   --------------------------------------------------------- */
+.homepage-coda {
+  background-color: var(--surface-muted);
+  border-block-start: 1px solid var(--border-subtle);
+  padding-block: var(--space-md);
+}
+
+.homepage-coda__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.homepage-coda__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  font-weight: 300;
+  line-height: 1.25;
+  max-width: 42ch;
+}
+
+
+/* ---------------------------------------------------------
+   14. Homepage desktop composition
+   --------------------------------------------------------- */
+@media (min-width: 960px) {
+  .home .homepage-projects {
+    padding-block: 5.5rem 4.75rem;
+  }
+
+  .home .homepage-projects .section__header {
+    margin-block-end: 2.75rem;
+  }
+
+  .home .homepage-projects .section__footer {
+    margin-block-start: 1.75rem;
+  }
+
+}

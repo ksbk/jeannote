@@ -1,38 +1,34 @@
 /* =========================================================
    Jeannot Tsirenge Architecture Portfolio
-   Design System — main.css (entry point)
+   Shared shell CSS entrypoint
 
-   Import order matters: tokens → base → then components.
-   Edit the file that owns the styles you need to change:
+   Import order matters: base → components → utilities.
+   The shared root CSS is grouped by ownership:
 
-     tokens.css      — CSS custom properties (:root)
-     base.css        — reset, base elements, layout utilities
-     nav.css         — site header & navigation
-     buttons.css     — button variants
-     hero.css            — home hero, page hero
-     components.css      — section headers, philosophy, services
-                           home list, trust, testimonials, CTA
-     project-cards.css   — project cards, grid, filter bar, pagination
-     project-detail.css  — project hero, metadata, story, gallery,
-                           navigation, project testimonials
-     about.css           — about page
-     services.css    — services detail page
-     contact.css     — contact form & page layout
-     footer.css      — site footer
-     utilities.css   — scroll reveal, skip link, visually-hidden
+     base/
+       tokens.css     — primitive palette/source values + semantic shared-UI aliases
+       base.css       — reset and element-level defaults
+       layout.css     — shared container and section rhythm rules
+
+     components/
+       nav.css        — site header and navigation shell
+       buttons.css    — shared button treatments
+       components.css — shared section-header and CTA patterns
+       hero.css       — homepage and page-hero shared patterns
+       footer.css     — shared site footer
+
+     utilities/
+       utilities.css  — skip link, reveal helpers, visually-hidden
    ========================================================= */
 
-@import url('tokens.css');
-@import url('base.css');
-@import url('nav.css');
-@import url('buttons.css');
-@import url('hero.css');
-@import url('components.css');
-@import url('project-cards.css');
-@import url('project-detail.css');
-@import url('about.css');
-@import url('services.css');
-@import url('contact.css');
-@import url('footer.css');
-@import url('utilities.css');
+@import url('base/tokens.css');
+@import url('base/base.css');
+@import url('base/layout.css');
 
+@import url('components/nav.css');
+@import url('components/buttons.css');
+@import url('components/components.css');
+@import url('components/hero.css');
+@import url('components/footer.css');
+
+@import url('utilities/utilities.css');
