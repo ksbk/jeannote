@@ -14,7 +14,7 @@ Use this file to answer three questions:
 
 | Surface | Current owner |
 | --- | --- |
-| Site shell | `templates/base.html`, `templates/includes/nav.html`, `templates/includes/footer.html` |
+| Site shell | `templates/base.html`, `templates/includes/header.html`, `templates/includes/footer.html` |
 | Homepage composition | `apps/pages/views.py`, `apps/pages/templates/pages/home.html` |
 | Shared styling entrypoint | `static/css/main.css` |
 | Shared interaction JS | `static/js/main.js` |

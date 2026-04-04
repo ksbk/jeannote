@@ -8,7 +8,7 @@ This spec covers the shared top navigation only. It documents brand fallback ord
 
 Implemented in:
 
-- `templates/includes/nav.html`
+- `templates/includes/header.html`
 - `static/css/components/nav.css`
 - `static/js/main.js`
 - `apps/core/templatetags/core_tags.py`

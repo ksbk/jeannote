@@ -54,7 +54,7 @@ Testing policy and scenario coverage belong in:
 ### Current implementation sources
 Implemented in:
 - `templates/base.html`
-- `templates/includes/nav.html`
+- `templates/includes/header.html`
 - `templates/includes/footer.html`
 - `static/css/base/base.css`
 - `static/css/utilities/utilities.css`
