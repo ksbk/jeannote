@@ -20,7 +20,7 @@ SERVICES = [
         "title": "Housing",
         "slug": "housing",
         "summary": (
-            "Housing projects shaped by site conditions, planning constraints, and long-term liveability."
+            "Apartment buildings, housing blocks, and residential projects designed for clear planning, durable use, and long-term liveability."
         ),
         "description": "",
         "who_for": (

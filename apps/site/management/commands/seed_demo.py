@@ -140,6 +140,7 @@ SERVICES = [
         "value_proposition": "Clear housing design that balances site conditions, planning constraints, and day-to-day use without overstatement.",
         "deliverables": "Site and massing studies\nPlanning package\nDeveloped design\nTechnical coordination\nConstruction information",
         "order": 1,
+        "active": True,
     },
     {
         "title": "Civic",
@@ -150,6 +151,7 @@ SERVICES = [
         "value_proposition": "Buildings that support everyday public use with clarity, resilience, and a calm architectural presence.",
         "deliverables": "Brief development\nConcept design\nPublic consultation support\nTechnical package\nConsultant coordination",
         "order": 2,
+        "active": True,
     },
     {
         "title": "Workplace",
@@ -160,6 +162,7 @@ SERVICES = [
         "value_proposition": "A design process that keeps the building useful, robust, and recognisable without forcing an unnecessary brand layer onto the architecture.",
         "deliverables": "Feasibility and frontage studies\nDeveloped design\nEnvelope coordination\nTechnical documentation",
         "order": 3,
+        "active": True,
     },
 ]
 

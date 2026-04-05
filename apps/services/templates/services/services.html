@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Architectural Services{% endblock %}
+{% block title %}Services{% endblock %}
 {% block og_title %}Services — {{ site_settings.site_name }}{% endblock %}
 {% block meta_description %}{{ site_settings.services_meta_description|default:site_settings.meta_description }}{% endblock %}
 {% block og_description %}{{ site_settings.services_meta_description|default:site_settings.meta_description }}{% endblock %}
@@ -16,7 +16,7 @@
   <div class="container">
     <p class="page-hero__label">Capabilities</p>
     <h1 class="page-hero__title">Services</h1>
-    <p class="page-hero__subtitle">Architectural services for housing, civic, and workplace projects, from early feasibility to developed design.</p>
+    <p class="page-hero__subtitle">Professional support for complex projects, from early planning through defined delivery.</p>
   </div>
 </section>
 
@@ -64,7 +64,7 @@
         </dl>
         {% endif %}
 
-        <a href="{% url 'contact:contact' %}?project_type={{ service.contact_project_type|urlencode }}" class="service-enquiry-link">Discuss this service →</a>
+        <a href="{% url 'contact:contact' %}?project_type={{ service.contact_project_type|urlencode }}" class="btn btn--outline service-enquiry-link">Enquire About This Service →</a>
       </div>
     </article>
   </div>
@@ -73,9 +73,9 @@
 <section class="service-section service-section--light">
   <div class="container">
     <div class="prose">
-      <p>The practice works across housing, civic, and workplace projects, from early feasibility through developed design and technical coordination.</p>
-      <p>Services are structured to help clients understand the type of project being taken on, while leaving room to define the right scope as the brief develops.</p>
-      <p>If your project does not fit neatly into one category yet, getting in touch with the project context is still the right place to begin.</p>
+      <p>The practice works across planning, design, and delivery support, with scope shaped around the needs of each project.</p>
+      <p>Services are structured to help clients understand the type of support available while leaving room to define the right scope as the brief develops.</p>
+      <p>If your project does not fit neatly into one category yet, getting in touch with a short outline is still the right place to begin.</p>
     </div>
   </div>
 </section>
@@ -86,7 +86,7 @@
     <div class="services-end-strip__inner">
       <div class="services-end-strip__copy">
         <h2 class="services-end-strip__title">Not sure where your project fits?</h2>
-        <p>Whether you have a clear brief or an early-stage question, get in touch with the project context.</p>
+        <p>Whether you have a clear brief or an early-stage question, get in touch with a short outline.</p>
       </div>
       <a href="{% url 'contact:contact' %}" class="btn btn--primary">Get in Touch</a>
     </div>

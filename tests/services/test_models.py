@@ -4,7 +4,9 @@ Model tests for apps.services: Service.
 
 import pytest
 
+from apps.services.management.commands.seed_services import SERVICES as SEEDED_SERVICES
 from apps.services.models import Service
+from apps.site.management.commands.seed_demo import SERVICES as DEMO_SERVICES
 
 
 @pytest.mark.django_db
@@ -58,3 +60,7 @@ def test_service_contact_project_type_mapping():
     assert housing.contact_project_type == "Housing"
     assert civic.contact_project_type == "Civic"
     assert workplace.contact_project_type == "Workplace"
+
+
+def test_seed_service_content_matches_demo_seed_bundle():
+    assert SEEDED_SERVICES == DEMO_SERVICES

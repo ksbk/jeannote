@@ -17,5 +17,5 @@ class ServiceAdmin(admin.ModelAdmin):
                 "classes": ("collapse",),
             },
         ),
-        ("Display", {"fields": ("icon_name", "order", "active")}),
+        ("Display", {"fields": ("order", "active")}),
     )

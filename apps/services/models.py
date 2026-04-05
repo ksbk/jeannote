@@ -25,11 +25,6 @@ class Service(models.Model):
         blank=True,
         help_text="One deliverable per line.",
     )
-    icon_name = models.CharField(
-        max_length=60,
-        blank=True,
-        help_text="Optional icon identifier (e.g. 'pen-ruler', 'building').",
-    )
     order = models.PositiveIntegerField(default=0)
     active = models.BooleanField(default=True)
 

@@ -22,10 +22,10 @@ def test_services_page_uses_seeded_services_and_prefills_contact_form(
         has=page.get_by_role("heading", name="Housing")
     )
     expect(
-        housing_service.get_by_text("Housing projects shaped by site conditions")
+        housing_service.get_by_text("Apartment buildings, housing blocks, and residential projects")
     ).to_be_visible()
 
-    housing_service.get_by_role("link", name=re.compile(r"Discuss this service")).click()
+    housing_service.get_by_role("link", name=re.compile(r"Enquire About This Service")).click()
 
     expect(page).to_have_url(re.compile(r"/contact/\?project_type=Housing$"))
     expect(page.get_by_label("Project type")).to_have_value("Housing")

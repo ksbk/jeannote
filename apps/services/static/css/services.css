@@ -84,18 +84,20 @@
   color: var(--accent-primary);
 }
 
-/* Quiet per-service enquiry link replaces btn--outline */
+/* Per-service enquiry link — stronger action styling on top of btn--outline */
 .service-enquiry-link {
-  display: inline-block;
-  font-size: var(--text-sm);
-  letter-spacing: 0.04em;
-  color: var(--accent-primary);
   margin-block-start: var(--space-md);
-  text-decoration: none;
+  align-self: flex-start;
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 500;
 }
 
-.service-enquiry-link:hover {
-  color: var(--color-text-primary);
+.service-enquiry-link:hover,
+.service-enquiry-link:focus-visible {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--color-text-inverse);
 }
 
 /* End strip — horizontal, authoritative */
@@ -142,6 +144,3 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .service-enquiry-link { transition: color var(--duration-sm); }
-}
