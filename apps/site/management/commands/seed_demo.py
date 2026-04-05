@@ -570,11 +570,14 @@ class Command(BaseCommand):
         settings.site_name = "Demo Architecture Studio"
         settings.tagline = "Architectural design shaped by context, clarity, and identity."
         settings.contact_email = "hello@demo-architecture.example"
-        settings.location = "Your City, Your Country"
+        settings.location = "Reykjavik, Iceland"
         settings.meta_description = (
             "An architecture practice whose work combines spatial clarity, "
             "contextual sensitivity, and thoughtful design to create places with identity, "
             "purpose, and lasting value."
+        )
+        settings.about_meta_description = (
+            "About Demo Architecture Studio, the practice approach, experience, and professional profile."
         )
         settings.save()
         action = "Created" if created else "Updated"
@@ -694,8 +697,6 @@ class Command(BaseCommand):
 
         with portrait_file.open("rb") as fh:
             profile.portrait.save(portrait_file.name, File(fh), save=True)
-        profile.portrait_mode = AboutProfile.PortraitMode.PORTRAIT
-        profile.save(update_fields=["portrait_mode"])
         self.stdout.write(f"  Attached portrait → {profile.portrait.name}")
         return True, 0
 

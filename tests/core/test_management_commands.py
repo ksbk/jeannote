@@ -444,6 +444,26 @@ def test_seed_demo_populates_signed_off_project_preview_states_from_tracked_bund
 
 
 @pytest.mark.django_db
+def test_seed_demo_sets_coherent_about_demo_defaults_without_forcing_non_portrait_image_publicly(
+    settings, tmp_path
+):
+    settings.MEDIA_ROOT = tmp_path
+
+    call_command("seed_demo")
+
+    site = SiteSettings.load()
+    about = AboutProfile.load()
+
+    assert site.location == "Reykjavik, Iceland"
+    assert (
+        site.about_meta_description
+        == "About Demo Architecture Studio, the practice approach, experience, and professional profile."
+    )
+    assert about.portrait
+    assert about.portrait_mode == AboutProfile.PortraitMode.TEXT_ONLY
+
+
+@pytest.mark.django_db
 @override_settings(CONTACT_EMAIL="")
 def test_readiness_warns_when_internal_contact_notification_inbox_is_missing(service, project):
     _populate_minimum_ready_site_and_about()
