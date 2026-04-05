@@ -35,7 +35,7 @@ class SiteSettings(SingletonModel):
     tagline = models.CharField(
         max_length=220,
         blank=True,
-        default="Architectural design shaped by context, clarity, and identity.",
+        default="Design shaped by purpose, context, and enduring quality.",
         help_text="One or two sentences describing your practice. Under 140 characters fits most hero layouts cleanly.",
     )
     hero_label = models.CharField(
@@ -112,6 +112,13 @@ class SiteSettings(SingletonModel):
         max_length=30,
         blank=True,
         help_text="GA4 Measurement ID, e.g. G-XXXXXXXXXX.",
+    )
+
+    homepage_closing_text = models.CharField(
+        max_length=220,
+        blank=True,
+        default="Ready to discuss a project? Bring a brief, a question, or an early idea.",
+        help_text="Short closing invitation shown above the contact CTA on the homepage. Keep it under 120 characters.",
     )
 
     # Homepage featured projects — per-breakpoint visibility limits

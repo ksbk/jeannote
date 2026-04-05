@@ -72,7 +72,7 @@ def test_home_page_title_uses_template_neutral_practice_language(client, site_se
     response = client.get(reverse("pages:home"))
 
     assert response.status_code == 200
-    assert b"<title>Test Site \xe2\x80\x94 Architecture Practice</title>" in response.content
+    assert b"<title>Test Site \xe2\x80\x94 Professional Portfolio</title>" in response.content
 
 
 @pytest.mark.django_db
@@ -216,7 +216,8 @@ def test_homepage_closing_coda_uses_compact_invitation_language(client, site_set
     response = client.get(reverse("pages:home"))
 
     assert response.status_code == 200
-    assert b"Bring a site, a brief in progress, or an early question." in response.content
+    assert b"Ready to discuss a project?" in response.content
+    assert b"Bring a site, a brief in progress, or an early question." not in response.content
     assert b"Who We Work With" not in response.content
     assert b"Project Types" not in response.content
     assert b"How Work Starts" not in response.content

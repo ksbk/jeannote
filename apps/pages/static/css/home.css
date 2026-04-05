@@ -1,4 +1,70 @@
 /* ---------------------------------------------------------
+   13a. Homepage services strip — compact capability bridge
+   hero → what you do → proof/projects → coda
+   --------------------------------------------------------- */
+.homepage-services__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .homepage-services__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .homepage-services__list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.homepage-services__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+  font-weight: 300;
+  margin-block-end: 0.5rem;
+}
+
+.homepage-services__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.homepage-services__title a:hover {
+  text-decoration: underline;
+}
+
+.homepage-services__summary {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.homepage-services__footer {
+  margin-block-start: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.homepage-services__link {
+  font-size: var(--text-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.homepage-services__link:hover {
+  text-decoration: underline;
+}
+
+
+/* ---------------------------------------------------------
    13b. Homepage coda — ruled close
    --------------------------------------------------------- */
 .homepage-coda {
