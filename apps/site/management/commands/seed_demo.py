@@ -119,6 +119,22 @@ PROJECTS = [
         "challenge": "The site presented both an opportunity and a constraint. The slope made conventional construction expensive, but it also offered the possibility of layering the programme vertically — allowing each space to find its own horizon. The challenge was to use this sectional complexity architecturally rather than treating it as a problem to overcome.",
         "concept": "The design concept resolves around a single spine wall that runs parallel to the contours and anchors the building to the hillside. From this wall, a series of platforms step down the slope — living above, sleeping below, landscape everywhere. Each level is connected by a continuous internal stair that also functions as the organisational core of the house.",
         "outcome": "The completed house feels both specific to its site and quietly universal in its spatial logic. The clients describe it as a home that feels larger than its footprint because every room opens directly to the outside.",
+        "featured": False,
+        "order": 9,
+    },
+    {
+        "slug": "coastline-civic-centre",
+        "title": "Coastline Civic Centre",
+        "short_description": "A public building on an exposed waterfront site, organised around clear circulation, sheltered thresholds, and durable civic presence.",
+        "category": "civic",
+        "status": "completed",
+        "location": "Coastal City",
+        "year": 2023,
+        "area": "2 150 m²",
+        "overview": "Coastline Civic Centre was commissioned as a compact public building serving community events, reading rooms, and neighbourhood services on a prominent coastal site. The project combines a durable outer shell with a calm internal circulation sequence, giving the building a public identity that feels welcoming rather than ceremonial.",
+        "challenge": "The site was highly exposed to wind and shifting weather, and the brief combined different public uses that needed to coexist without the building feeling over-programmed. The project also needed to read clearly from a distance in a sparse waterfront setting.",
+        "concept": "The building is organised around a sheltered public threshold and a clear internal route that links the main civic rooms. Rather than relying on formal complexity, the project uses proportion, depth, and daylight to make movement through the building intuitive.",
+        "outcome": "The completed building functions as a stable civic anchor: visible from the waterfront, easy to enter, and flexible enough to support different kinds of public use across the week.",
         "featured": True,
         "order": 1,
     },
@@ -137,6 +153,22 @@ PROJECTS = [
         "outcome": "The pavilion has become a well-used public space. Usage data from the first year showed significantly higher visitor numbers than comparable libraries in the region. The courtyard has been informally adopted as an after-school gathering space.",
         "featured": True,
         "order": 2,
+    },
+    {
+        "slug": "harbour-court-apartments",
+        "title": "Harbour Court Apartments",
+        "short_description": "A multi-unit housing project that balances exposed urban-edge conditions with clear circulation, durable materials, and sheltered shared space.",
+        "category": "housing",
+        "status": "completed",
+        "location": "Harbour District",
+        "year": 2024,
+        "area": "4 200 m²",
+        "overview": "Harbour Court Apartments is a housing project on a newly developed urban-edge site close to the waterfront. The brief called for robust apartment buildings with clear access, practical layouts, and a strong street presence without resorting to a singular formal gesture.",
+        "challenge": "The exposed site required a durable envelope and carefully considered entrances, while the housing layouts needed to feel generous despite tight efficiency targets. The project also had to contribute positively to a district still taking shape.",
+        "concept": "The design is based on a simple, legible building form with repeated housing bays, deep openings, and sheltered shared edges. Material decisions were kept restrained so the building could feel settled within a changing urban context.",
+        "outcome": "The completed apartments provide efficient housing within a calm and durable shell. The building has helped establish a stronger residential edge to the district while maintaining a clear, understated architectural language.",
+        "featured": True,
+        "order": 3,
     },
     {
         "slug": "ridgeline-housing",
@@ -171,7 +203,23 @@ PROJECTS = [
             "heating demand noticeably in the first winter of occupancy."
         ),
         "featured": True,
-        "order": 3,
+        "order": 4,
+    },
+    {
+        "slug": "harbour-glass-offices",
+        "title": "Harbour Glass Offices",
+        "short_description": "A contemporary workplace building designed around clear frontage, efficient floorplates, and a restrained commercial identity.",
+        "category": "workplace",
+        "status": "completed",
+        "location": "Harbour District",
+        "year": 2022,
+        "area": "2 800 m²",
+        "overview": "Harbour Glass Offices is a mid-scale workplace project in a new commercial quarter close to the harbour. The brief called for a building that could project a clear professional identity while remaining efficient, adaptable, and durable in an exposed setting.",
+        "challenge": "The client needed a building with commercial presence but not excessive branding. The facade had to carry the project's identity while supporting practical floorplates, daylight access, and straightforward servicing.",
+        "concept": "The project uses a simple glazed volume with a disciplined structural rhythm and a clear ground-level threshold. Rather than relying on elaborate formal moves, the design focuses on proportion, transparency, and the relationship between the building and the street.",
+        "outcome": "The resulting building feels precise and commercially legible without becoming generic. Its strongest quality is the clarity with which structure, frontage, and use align.",
+        "featured": True,
+        "order": 5,
     },
     {
         "slug": "urban-apartment-retrofit",
@@ -230,8 +278,8 @@ PROJECTS = [
             "space used regularly by tenants and has been featured in regional architecture and "
             "property media."
         ),
-        "featured": True,
-        "order": 4,
+        "featured": False,
+        "order": 10,
     },
     {
         "slug": "civic-waterfront-square",
@@ -267,7 +315,7 @@ PROJECTS = [
             "and has been adopted for informal performances."
         ),
         "featured": True,
-        "order": 5,
+        "order": 6,
     },
     {
         "slug": "housing-block-north-quarter",
@@ -303,7 +351,7 @@ PROJECTS = [
             "with children and older residents."
         ),
         "featured": True,
-        "order": 6,
+        "order": 7,
     },
     {
         "slug": "school-extension-timber-frame",
@@ -596,16 +644,15 @@ class Command(BaseCommand):
         covers_dir = media_dir / "covers"
         attached = 0
         warnings = 0
-        # Projects with a dedicated cover file in covers/<slug>.*
-        cover_slugs = ["house-on-the-hillside", "commercial-office-conversion", "ridgeline-housing"]
 
-        for slug in cover_slugs:
-            cover_file = _find_file(covers_dir, slug) if covers_dir.is_dir() else None
-            if cover_file is None:
-                path_hint = covers_dir / slug
-                warnings += self._warn(f"cover not found: {path_hint}.*")
+        if not covers_dir.is_dir():
+            return attached, warnings
+
+        # Attach any cover file whose stem matches a project slug
+        for cover_file in sorted(covers_dir.iterdir()):
+            if cover_file.suffix.lower() not in (".jpg", ".jpeg", ".png", ".webp"):
                 continue
-
+            slug = _stem_clean(cover_file.name)
             try:
                 project = Project.objects.get(slug=slug)
             except Project.DoesNotExist:
