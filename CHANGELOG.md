@@ -21,6 +21,27 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - **Nav mobile overlay:** Link group optical centering adjusted (`padding-block-start: 3 rem`) so the menu items sit at ~48 % of the visible dark area rather than appearing low.
 
+### Hardened (release lock pass — 2026-04-12)
+
+- **Brand logic extracted:** `apps/core/brand.py` is now the single source of truth for `compute_monogram()`, `nav_needs_monogram()`, and `NAV_TEXT_MAX_CHARS`/`NAV_TEXT_MAX_WORDS`. Template tags, admin, and management commands all import from here rather than duplicating the logic.
+- **Enquiry vocabulary consolidated:** `apps/core/enquiry_types.py` centralises `PROJECT_TYPE_CHOICES`, `LEGACY_PROJECT_TYPE_MAP`, `SERVICE_SLUG_TO_ENQUIRY_TYPE`, and `PROJECT_CATEGORY_TO_ENQUIRY_TYPE`. Previous duplicates in `contact/forms.py`, `contact/views.py`, `services/models.py`, and `projects/models.py` removed.
+- **Duplicate system check ID fixed:** Non-HTTPS CSRF origins check was `core.W002` (duplicate of the empty-CSRF check). Renamed to `core.W007`.
+- **Model help_text additions:** `SiteSettings.nav_name` (migration 0010), `SiteSettings.address` (0011), and `Testimonial.project` (projects 0004) now carry help_text clarifying their template-product context to buyers.
+- **Version consistency:** Version string aligned to `1.0.1` across `pyproject.toml`, `LICENSE.md`, and `uv.lock`.
+- **Static file header residue removed:** Personal name references removed from comment headers in `static/css/main.css`, `static/js/main.js`, `static/js/header.js`.
+- **`make check-reqs` fixed:** `uv export` errors are no longer silenced; failures surface cleanly.
+- **URLField deprecation warning suppressed:** `RemovedInDjango60Warning` for URLField default scheme filtered via `filterwarnings` in `pyproject.toml` rather than via the deprecated transitional setting.
+- **`make check-content` reclassified:** Moved from the CI-safe automated gate to an explicit buyer pre-launch gate in `docs/qa/RELEASE_CHECKLIST.md`. The command requires a populated database and is not CI-safe.
+- **Test coverage closed:** View tests added for H-07 (hero placeholder background) and N-01 (logo override suppresses text/monogram). N-06 (transparent home state) signed off via CSS review. G-10 (horizontal overflow) documented as known debt requiring browser render.
+- **Privacy policy wording:** Clarified that analytics/error-monitoring services are optional and buyer-enabled.
+- **Module docstrings:** "Jeannote" product-name residue replaced with neutral "template repo" language throughout `apps/*/` and `docs/`.
+
+### Known debt — carried forward explicitly
+
+- **G-10 (horizontal overflow):** No automated assertion possible without a browser render viewport. Carry to buyer QA.
+- **Branded 404 smoke path:** Dev-server smoke (`DEBUG=True`) cannot prove the custom 404 template. Requires a prod-like instance with `DEBUG=False`.
+- **Buyer pre-launch gates:** `make check-content`, `make check-deploy`, and `make smoke-prod` are buyer responsibilities against their customized deployment database; they are outside the template release scope.
+
 ---
 
 ## [1.0.0] — 2026-03-22
