@@ -30,7 +30,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - No runtime code changes.
 - No migration changes.
-- No change to the locked `1.0.1` baseline other than documentation corrections.
+- Runtime/application code is unchanged; only onboarding docs and release metadata were updated.
 - Fresh-install drill (`clone → uv sync → .env → migrate → seed_demo → runserver`)
   confirmed all routes return HTTP 200 with no errors on a clean machine.
 
