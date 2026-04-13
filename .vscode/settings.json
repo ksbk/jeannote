@@ -16,12 +16,17 @@
   // Exclude the virtualenv from Pylance analysis — it is not project code.
   // Without this, Django internal type errors in .venv surface in the Problems
   // panel and obscure real issues in the actual codebase.
+  // Includes the Pylance default patterns so they are not lost when this array
+  // overrides the built-in defaults.
   "python.analysis.exclude": [
-    ".venv/**",
-    ".trunk/**",
-    "**/__pycache__/**",
-    "**/node_modules/**",
-    "**/.git/**"
+    "**/.git",
+    "**/.hg",
+    "**/.svn",
+    "**/.venv",
+    "**/.trunk",
+    "**/__pycache__",
+    "**/node_modules",
+    "**/.*"
   ],
   // .trunk/ contains vendored linter test fixtures, many intentionally invalid.
   // Exclude from file watching, search, and explorer to prevent editor noise.
