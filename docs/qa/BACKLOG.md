@@ -18,9 +18,11 @@ configure → migrate → seed → run, executed as a buyer with no prior contex
 **Origin:** Fresh-install drill 2026-04-12.
 **Issue:** SETUP.md, DEMO.md, README.md, `.env.example`, and `docs/recovery-runbook.md`
 all instructed buyers to run:
-```
+
+```bash
 python -c "from django.core.management.utils import get_random_secret_key; ..."
 ```
+
 This fails with `ModuleNotFoundError: No module named 'django'` on any machine
 where Django is not installed globally (the common case after `uv sync`).
 **Fix applied:** All occurrences updated to `uv run python -c "..."` (2026-04-12).

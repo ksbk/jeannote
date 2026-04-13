@@ -9,6 +9,12 @@
   // numbering is intentional and correct for human readers.
   "MD029": false,
 
+  // MD024: allow duplicate heading text across different parent sections.
+  // Changelogs intentionally repeat ### Fixed / ### Changed / ### Added
+  // under each versioned ## [x.y.z] heading. siblings_only restricts the
+  // check to headings within the same parent section only.
+  "MD024": { "siblings_only": true },
+
   // MD060: use compact table style — cells do not need to be padded to equal
   // widths. Aligned-style enforcement fights with tables whose content is
   // naturally uneven (e.g. short variable names vs long descriptions).

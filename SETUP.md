@@ -161,7 +161,7 @@ For each service:
 | `who_for` | Who this is best suited to, e.g. "Homeowners planning a new build" |
 | `value_proposition` | What the client gains |
 | `deliverables` | One deliverable per line, e.g. "Concept drawings", "Planning submission" |
-| `slug` | Usually leave the prepopulated slug alone | The Services page uses it for section anchors and contact-form prefill mapping |
+| `slug` | Usually leave the prepopulated slug alone — the Services page uses it for section anchors and contact-form prefill mapping |
 | `order` | Controls display order; lower numbers appear first |
 | `active` | Uncheck to hide a service without deleting it |
 
