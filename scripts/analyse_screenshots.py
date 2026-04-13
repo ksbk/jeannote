@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import datetime
 from pathlib import Path
+from typing import Any, cast
 
 from PIL import Image
 
@@ -27,13 +28,13 @@ def load(name: str) -> Image.Image:
     return Image.open(AUDIT / name).convert("RGB")
 
 
-def near(px: tuple, ref: tuple, tol: int = TOLERANCE) -> bool:
+def near(px: Any, ref: tuple, tol: int = TOLERANCE) -> bool:
     return all(abs(a - b) <= tol for a, b in zip(px, ref))
 
 
-def sample_row(img: Image.Image, y: int, x_fraction: float = 0.5) -> tuple:
+def sample_row(img: Image.Image, y: int, x_fraction: float = 0.5) -> tuple[int, int, int]:
     x = int(img.width * x_fraction)
-    return img.getpixel((x, y))
+    return cast(tuple[int, int, int], img.getpixel((x, y)))
 
 
 def first_bright_row(img: Image.Image, x_fraction: float = 0.5,
@@ -71,7 +72,7 @@ def hero_height_px(img: Image.Image) -> int | None:
     x = int(img.width * 0.5)
     found_stone = False
     for y in range(80, img.height):
-        px = img.getpixel((x, y))
+        px: tuple[int, int, int] = img.getpixel((x, y))  # type: ignore[assignment]
         is_stone = near(px, C_STONE, 28)
         # Strict tolerance for white — C_STONE is close to C_WHITE
         is_white = (

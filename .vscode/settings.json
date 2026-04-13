@@ -9,13 +9,16 @@
   "css.validate": false,
 
   "python.analysis.typeCheckingMode": "basic",
-  "python.analysis.useLibraryCodeForTypes": true,
+  "python.analysis.useLibraryCodeForTypes": false,
   // Exclude the virtualenv from Pylance analysis — it is not project code.
   // Without this, Django internal type errors in .venv surface in the Problems
   // panel and obscure real issues in the actual codebase.
   "python.analysis.exclude": [
     ".venv/**",
-    ".trunk/**"
+    ".trunk/**",
+    "**/__pycache__/**",
+    "**/node_modules/**",
+    "**/.git/**"
   ],
   // .trunk/ contains vendored linter test fixtures, many intentionally invalid.
   // Exclude from file watching, search, and explorer to prevent editor noise.
@@ -23,10 +26,16 @@
     ".trunk": true
   },
   "search.exclude": {
-    ".trunk/**": true
+    ".trunk/**": true,
+    "**/__pycache__/**": true,
+    "**/node_modules/**": true
   },
   "files.watcherExclude": {
-    "**/.trunk/**": true
+    "**/.trunk/**": true,
+    "**/__pycache__/**": true,
+    "**/node_modules/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true
   },
   "python.analysis.diagnosticSeverityOverrides": {
     "reportMissingModuleSource": "none",

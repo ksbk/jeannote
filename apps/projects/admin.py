@@ -32,8 +32,8 @@ class ProjectImageInline(admin.TabularInline):
             ),
         }
         for name, help_text in field_help.items():
-            if name in formset.form.base_fields:
-                formset.form.base_fields[name].help_text = help_text
+            if name in formset.form.base_fields:  # type: ignore[misc]
+                formset.form.base_fields[name].help_text = help_text  # type: ignore[misc]
         return formset
 
 
