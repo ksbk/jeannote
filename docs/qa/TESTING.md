@@ -69,4 +69,4 @@ The repository CI job currently runs:
 - `make check-deploy`
 - `make check-reqs`
 
-There is also a post-deploy smoke job in `.github/workflows/ci.yml` that runs on pushes to `main` when `DEPLOY_URL` is configured.
+There is no separate CI smoke workflow. Run `DEPLOY_URL=https://your-domain.com make smoke-prod` locally after deployment.
