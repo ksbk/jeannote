@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import contextlib
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from django.db import models
 from django.db.models import Prefetch
@@ -29,7 +29,7 @@ def get_safe_image_dimensions(image) -> dict[str, int] | None:
 
 
 class ProjectQuerySet(models.QuerySet):
-    def with_preview_media(self):
+    def with_preview_media(self) -> ProjectQuerySet:
         return self.prefetch_related(
             Prefetch(
                 "images",
@@ -37,6 +37,14 @@ class ProjectQuerySet(models.QuerySet):
                 to_attr="_preview_gallery_images",
             )
         )
+
+
+class ProjectManager(models.Manager):
+    def get_queryset(self) -> ProjectQuerySet:
+        return ProjectQuerySet(self.model, using=self._db)
+
+    def with_preview_media(self) -> ProjectQuerySet:
+        return self.get_queryset().with_preview_media()
 
 
 class Project(models.Model):
@@ -116,7 +124,7 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects = ProjectQuerySet.as_manager()
+    objects: ClassVar[ProjectManager] = ProjectManager()
 
     class Meta:
         ordering = ["order", "-year", "title"]
