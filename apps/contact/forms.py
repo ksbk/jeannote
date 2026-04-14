@@ -112,10 +112,13 @@ class ContactForm(forms.ModelForm):
         return cleaned_data
 
     def focus_first_error(self) -> None:
+        first = True
         for name, field in self.fields.items():
             if name in self.errors and not field.widget.is_hidden:
-                field.widget.attrs["autofocus"] = "autofocus"
-                break
+                field.widget.attrs["aria-invalid"] = "true"
+                if first:
+                    field.widget.attrs["autofocus"] = "autofocus"
+                    first = False
 
     def clean_name(self) -> str:
         name = self.cleaned_data.get("name", "").strip()
