@@ -324,9 +324,13 @@ The command exits with code `1` if any blocker is present (CI-friendly).
 
 ## Phase 8 — Production environment
 
-Set these variables in your hosting environment (e.g. Railway → Variables). See [README.md §Environment variables](README.md#environment-variables) for the full annotated reference including all optional variables (Sentry, Cloudinary, GA4).
+Set these variables in your hosting environment (e.g. Railway → Variables). See [README.md §Environment variables](README.md#environment-variables) for the full annotated reference.
 
 The minimum required production variables are: `SECRET_KEY`, `DEBUG=False`, `DJANGO_SETTINGS_MODULE=config.settings.prod`, `ALLOWED_HOSTS`, `DATABASE_URL`, `CSRF_TRUSTED_ORIGINS`, `CONTACT_EMAIL`, and the SMTP email settings.
+
+**Media storage (required for uploads):** The production settings module unconditionally routes all uploaded media through Cloudinary. Set `CLOUDINARY_URL` (format: `cloudinary://api_key:api_secret@cloud_name`) before accepting any uploaded content. Without it, all image uploads — project covers, gallery images, the About portrait — will fail silently. Run `make check-deploy` after setting variables; system check W003 confirms the credential is present.
+
+**Truly optional:** `SENTRY_DSN` (error tracking) and `google_analytics_id` in Site Settings (analytics) can be added at any time after launch without affecting core functionality.
 
 After setting variables and deploying, verify production Django settings:
 
