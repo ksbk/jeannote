@@ -3,7 +3,9 @@ View tests for apps.contact: contact page and success page.
 """
 
 import pytest
+from django.test import override_settings
 from django.urls import reverse
+from unittest.mock import patch
 
 
 @pytest.mark.django_db
@@ -94,3 +96,75 @@ def test_contact_ignores_invalid_project_type_query_param(client, site_settings)
     assert response.status_code == 200
     form = response.context["form"]
     assert form.initial.get("project_type", "") == ""
+
+
+# ---------------------------------------------------------------------------
+# Contact form POST — email delivery path tests
+# ---------------------------------------------------------------------------
+
+
+def _get_post_data(client, site_settings):
+    """Obtain a valid submission_token via GET, then build a minimal valid POST payload."""
+    get_response = client.get(reverse("contact:contact"))
+    token = get_response.context["form"].initial.get("submission_token", "")
+    return {
+        "name": "Test Buyer",
+        "email": "buyer@example.com",
+        "company": "",
+        "project_type": "Housing",
+        "location": "",
+        "budget_range": "",
+        "timeline": "",
+        "message": "Interested in a housing project.",
+        "website": "",  # honeypot — must be blank
+        "submission_token": token,
+    }
+
+
+@pytest.mark.django_db
+@override_settings(
+    CONTACT_EMAIL="studio@example.com",
+    EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+    CONTACT_FORM_MIN_AGE_SECONDS=0,
+)
+def test_contact_post_sends_email_and_redirects_to_sent(client, site_settings):
+    """Happy path: valid POST with CONTACT_EMAIL set saves inquiry and sends notification."""
+    from django.core import mail
+
+    data = _get_post_data(client, site_settings)
+    response = client.post(reverse("contact:contact"), data)
+
+    assert response.status_code == 302
+    assert "delivery=sent" in response["Location"]
+    assert len(mail.outbox) == 1
+    assert mail.outbox[0].to == ["studio@example.com"]
+
+
+@pytest.mark.django_db
+@override_settings(
+    CONTACT_EMAIL="",
+    EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+    CONTACT_FORM_MIN_AGE_SECONDS=0,
+)
+def test_contact_post_saved_only_when_contact_email_blank(client, site_settings):
+    """Degraded path: blank CONTACT_EMAIL skips email and redirects to saved-only."""
+    from django.core import mail
+
+    data = _get_post_data(client, site_settings)
+    response = client.post(reverse("contact:contact"), data)
+
+    assert response.status_code == 302
+    assert "delivery=saved-only" in response["Location"]
+    assert len(mail.outbox) == 0  # no send attempt made
+
+
+@pytest.mark.django_db
+@override_settings(CONTACT_EMAIL="studio@example.com", CONTACT_FORM_MIN_AGE_SECONDS=0)
+def test_contact_post_saved_only_when_email_send_raises(client, site_settings):
+    """Degraded path: email send exception is caught and redirects to saved-only."""
+    data = _get_post_data(client, site_settings)
+    with patch("apps.contact.views.EmailMessage.send", side_effect=Exception("SMTP down")):
+        response = client.post(reverse("contact:contact"), data)
+
+    assert response.status_code == 302
+    assert "delivery=saved-only" in response["Location"]
