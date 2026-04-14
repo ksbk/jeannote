@@ -1,17 +1,20 @@
-# Railway deployment configuration.
-#
-# NOTE: The `releaseCommand` key (for running migrate/collectstatic separately
-# from the web process) is *not* used here intentionally for the first deploy.
-# Migrations and collectstatic are inlined in the Procfile web command instead,
-# which is unambiguous and has no Railway-specific syntax risk.
-#
-# After the first deploy is verified working, consider switching to a proper
-# releaseCommand here to decouple the release phase from boot. At that point
-# verify the exact Railway releaseCommand behaviour against their current docs:
+# Railway deployment configuration for jat21.com
 # https://docs.railway.com/reference/config-as-code
 #
-# This file currently exists only to ensure Railway picks up the Procfile
-# and sets DJANGO_SETTINGS_MODULE correctly via environment (set in dashboard).
+# Build:      Railpack (Railway default) auto-installs from requirements.txt,
+#             then bakes static files into the image via buildCommand.
+#             builder is omitted — Railway defaults to Railpack.
+# Pre-deploy: migrations run once before the new container goes live.
+# Start:      gunicorn only — no collectstatic or migrate at boot.
+#
+# NOTE: preDeployCommand runs in a separate ephemeral container. Do NOT use it
+# for filesystem-persistent tasks (collectstatic belongs in buildCommand).
 
 [build]
-builder = "nixpacks"
+buildCommand = "python manage.py collectstatic --noinput"
+
+[deploy]
+preDeployCommand = "python manage.py migrate --noinput"
+startCommand = "gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60"
+healthcheckPath = "/health/"
+healthcheckTimeout = 300
