@@ -19,7 +19,8 @@
 
 @media (min-width: 960px) {
   .homepage-services__list {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.75rem;
   }
 }
 
@@ -63,6 +64,20 @@
   text-decoration: underline;
 }
 
+@media (min-width: 960px) {
+  .homepage-services__footer {
+    margin-block-start: 1.4rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .homepage-services__link {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
 
 /* ---------------------------------------------------------
    13b. Homepage coda — ruled close
@@ -87,6 +102,72 @@
   font-weight: 300;
   line-height: 1.25;
   max-width: 42ch;
+}
+
+
+/* ---------------------------------------------------------
+   13c. Homepage featured cards — description display
+   --------------------------------------------------------- */
+
+/* Allow 3 lines so descriptions end at a natural clause boundary
+   rather than clipping mid-sentence at the 2-line default. */
+.projects-grid--home .project-card__desc {
+  -webkit-line-clamp: 3;
+}
+
+/* Homepage cards should disclose their action at rest; hover can still enhance
+   the image/title, but it must not be the first moment the navigation cue appears. */
+.projects-grid--home .project-card__cta {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .projects-grid--home .project-card__info {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "meta meta"
+      "title cue"
+      "desc desc";
+    column-gap: 0.6rem;
+    row-gap: 0.5rem;
+    align-items: end;
+  }
+
+  .projects-grid--home .project-card__meta {
+    grid-area: meta;
+    margin-block-end: 0;
+  }
+
+  .projects-grid--home .project-card__title {
+    grid-area: title;
+    margin-block-end: 0;
+  }
+
+  .projects-grid--home .project-card__desc {
+    grid-area: desc;
+    margin-block-end: 0;
+  }
+
+  .projects-grid--home .project-card__cta {
+    grid-area: cue;
+    font-size: 0;
+    letter-spacing: 0;
+    line-height: 1;
+    align-self: center;
+    white-space: nowrap;
+  }
+
+  .projects-grid--home .project-card__cta > span {
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 1;
+    transform: translateX(0);
+  }
+
+  .projects-grid--home .project-card__link:hover .project-card__cta > span {
+    transform: translateX(0.22rem);
+  }
 }
 
 
