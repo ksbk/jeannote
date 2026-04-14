@@ -64,7 +64,7 @@
         </dl>
         {% endif %}
 
-        <a href="{% url 'contact:contact' %}?project_type={{ service.contact_project_type|urlencode }}" class="btn btn--outline service-enquiry-link">Enquire About This Service →</a>
+        <a href="{% url 'contact:contact' %}?project_type={{ service.contact_project_type|urlencode }}" class="btn btn--outline service-enquiry-link">Enquire About This Service <span aria-hidden="true">→</span></a>
       </div>
     </article>
   </div>

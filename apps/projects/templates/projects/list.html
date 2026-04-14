@@ -68,11 +68,11 @@
     {% if is_paginated %}
     <nav class="pagination" aria-label="Project pages">
       {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}{% if active_category %}&category={{ active_category }}{% endif %}" class="pagination__link pagination__link--prev">← Previous</a>
+      <a href="?page={{ page_obj.previous_page_number }}{% if active_category %}&category={{ active_category }}{% endif %}" class="pagination__link pagination__link--prev"><span aria-hidden="true">←</span> Previous</a>
       {% endif %}
       <span class="pagination__info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
       {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}{% if active_category %}&category={{ active_category }}{% endif %}" class="pagination__link pagination__link--next">Next →</a>
+      <a href="?page={{ page_obj.next_page_number }}{% if active_category %}&category={{ active_category }}{% endif %}" class="pagination__link pagination__link--next">Next <span aria-hidden="true">→</span></a>
       {% endif %}
     </nav>
     {% endif %}
