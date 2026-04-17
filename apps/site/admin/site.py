@@ -12,7 +12,7 @@ from apps.core.brand import (
 )
 
 from ..management.commands.check_content_readiness import collect_readiness_issues
-from ..models import AboutProfile, SiteSettings
+from ..models import AboutProfile, SiteSettings, SocialLink
 
 # ---------------------------------------------------------------------------
 # Admin site identity
@@ -319,3 +319,18 @@ class AboutProfileAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return not AboutProfile.objects.exists()
+
+
+# ---------------------------------------------------------------------------
+# SocialLink
+# ---------------------------------------------------------------------------
+
+
+@admin.register(SocialLink)
+class SocialLinkAdmin(admin.ModelAdmin):
+    list_display = ("label", "url", "icon_slug", "order", "active")
+    list_editable = ("order", "active")
+    fieldsets = (
+        ("Identity", {"fields": ("label", "url", "icon_slug")}),
+        ("Display", {"fields": ("order", "active")}),
+    )
