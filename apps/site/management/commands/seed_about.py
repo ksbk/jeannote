@@ -12,8 +12,8 @@ Usage:
 
 Fields NOT set by this command (must be set in admin):
     - identity_mode      (choose person-led or studio-led if the default is wrong)
-    - principal_name     (required for person-led practices)
-    - principal_title    (required for person-led practices)
+    - principal_name     (required for person-led profiles)
+    - principal_title    (required for person-led profiles)
     - experience_years   (enter your real number)
     - portrait           (upload file if using portrait mode)
     - cv_file            (upload file if genuinely useful)
@@ -34,14 +34,14 @@ from apps.site.about_defaults import (
 from apps.site.models import AboutProfile
 
 CONTENT = {
-    "practice_structure": PRACTICE_STRUCTURE_PROMPT,
-    "one_line_practice_description": (
-        "[Add a one-line public description of the practice]"
+    "professional_context": PRACTICE_STRUCTURE_PROMPT,
+    "one_line_bio": (
+        "[Add a one-line public description of yourself or your work]"
     ),
-    "practice_summary": (
-        "[Describe what the practice does, where it is based, and the kinds of projects it takes on.]"
+    "bio_summary": (
+        "[Describe who you are, where you are based, and the kinds of projects you take on.]"
     ),
-    "project_leadership": PROJECT_LEADERSHIP_PROMPT,
+    "work_approach": PROJECT_LEADERSHIP_PROMPT,
     "professional_standing": PROFESSIONAL_STANDING_PROMPT,
     "education": (
         "[Add education details, one per line]"

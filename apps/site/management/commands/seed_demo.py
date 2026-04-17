@@ -588,11 +588,11 @@ class Command(BaseCommand):
         profile.identity_mode = AboutProfile.IdentityMode.STUDIO
         profile.principal_name = ""
         profile.principal_title = ""
-        profile.practice_structure = "Independent architecture studio"
-        profile.one_line_practice_description = (
+        profile.professional_context = "Independent studio"
+        profile.one_line_bio = (
             "Architecture shaped by context, use, and urban climate."
         )
-        profile.practice_summary = (
+        profile.bio_summary = (
             "Demo Architecture Studio is a practice working across housing, civic buildings, "
             "and workplace projects in northern urban settings. The work is defined by clear "
             "massing, durable materials, careful daylighting, and legible circulation.\n\n"
@@ -601,7 +601,7 @@ class Command(BaseCommand):
             "Rather than treating architecture as image-making, the emphasis is on performance, "
             "clarity, and how buildings hold up over time."
         )
-        profile.project_leadership = (
+        profile.work_approach = (
             "Projects are led by a compact studio team, with specialist consultants involved as "
             "needed for structure, building services, and planning coordination."
         )

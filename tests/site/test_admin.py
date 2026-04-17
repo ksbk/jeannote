@@ -30,10 +30,10 @@ def _populate_minimum_ready_site_and_about():
 
     about = AboutProfile.load()
     about.identity_mode = AboutProfile.IdentityMode.STUDIO
-    about.practice_structure = "Small studio"
-    about.one_line_practice_description = "Architecture for housing, civic, and workplace projects."
-    about.practice_summary = "A Reykjavik-based practice working across public and private projects."
-    about.project_leadership = (
+    about.professional_context = "Small studio"
+    about.one_line_bio = "Design for housing, civic, and workplace projects."
+    about.bio_summary = "A Reykjavik-based practice working across public and private projects."
+    about.work_approach = (
         "Projects are led directly with specialist consultants involved as needed."
     )
     about.professional_standing = "Registered architectural practice"

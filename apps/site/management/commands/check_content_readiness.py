@@ -252,43 +252,43 @@ def collect_readiness_issues() -> tuple[list[str], list[str]]:
             "Set the public role/title before launch."
         )
 
-    if not public_text(about.practice_structure):
+    if not public_text(about.professional_context):
         warnings.append(
-            "AboutProfile.practice_structure is omitted or still a starter prompt. "
-            "The About hero will hide this line until real practice-structure wording is available."
+            "AboutProfile.professional_context is omitted or still a starter prompt. "
+            "The About hero will hide this line until real context wording is available."
         )
 
-    if not about.one_line_practice_description:
+    if not about.one_line_bio:
         blockers.append(
-            "AboutProfile.one_line_practice_description is blank. "
-            "Add the public one-line practice description for the About hero."
+            "AboutProfile.one_line_bio is blank. "
+            "Add the public one-line bio for the About hero."
         )
-    elif about.one_line_practice_description == _DEMO_ABOUT_ONE_LINE:
+    elif about.one_line_bio == _DEMO_ABOUT_ONE_LINE:
         blockers.append(
-            "AboutProfile.one_line_practice_description is still demo/reference copy. "
-            "Replace it with your real public practice description."
+            "AboutProfile.one_line_bio is still demo/reference copy. "
+            "Replace it with your real public description."
         )
 
-    if not about.practice_summary:
+    if not about.bio_summary:
         blockers.append(
-            "AboutProfile.practice_summary is blank. "
-            "Add a factual summary of what the practice does and the kind of work it takes on."
+            "AboutProfile.bio_summary is blank. "
+            "Add a factual summary of who you are and the kind of work you do."
         )
-    elif _DEMO_ABOUT_PRACTICE_SUMMARY in about.practice_summary:
+    elif _DEMO_ABOUT_PRACTICE_SUMMARY in about.bio_summary:
         blockers.append(
-            "AboutProfile.practice_summary is still demo/reference copy. "
+            "AboutProfile.bio_summary is still demo/reference copy. "
             "Replace it with your own About summary before launch."
         )
 
-    if not public_text(about.project_leadership):
+    if not public_text(about.work_approach):
         warnings.append(
-            "AboutProfile.project_leadership is omitted or still a starter prompt. "
-            "The About page will hide this section until real project-leadership wording is available."
+            "AboutProfile.work_approach is omitted or still a starter prompt. "
+            "The About page will hide this section until real work-approach wording is available."
         )
-    elif about.project_leadership == _DEMO_ABOUT_PROJECT_LEADERSHIP:
+    elif about.work_approach == _DEMO_ABOUT_PROJECT_LEADERSHIP:
         blockers.append(
-            "AboutProfile.project_leadership is still demo/reference copy. "
-            "Replace it with your real project leadership statement."
+            "AboutProfile.work_approach is still demo/reference copy. "
+            "Replace it with your real work approach statement."
         )
 
     if not public_text(about.professional_standing):
@@ -336,8 +336,8 @@ def collect_readiness_issues() -> tuple[list[str], list[str]]:
     if _contains_placeholder_marker(
         about.principal_name,
         about.principal_title,
-        about.one_line_practice_description,
-        about.practice_summary,
+        about.one_line_bio,
+        about.bio_summary,
         about.approach,
         about.closing_invitation,
     ):

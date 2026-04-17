@@ -41,10 +41,10 @@ def _populate_minimum_ready_site_and_about():
 
     about = AboutProfile.load()
     about.identity_mode = AboutProfile.IdentityMode.STUDIO
-    about.practice_structure = "Small studio"
-    about.one_line_practice_description = "Architecture for housing, civic, and workplace projects."
-    about.practice_summary = "A Reykjavik-based practice working across public and private projects."
-    about.project_leadership = (
+    about.professional_context = "Small studio"
+    about.one_line_bio = "Design for housing, civic, and workplace projects."
+    about.bio_summary = "A Reykjavik-based practice working across public and private projects."
+    about.work_approach = (
         "Projects are led directly with specialist consultants involved as needed."
     )
     about.professional_standing = "Registered architectural practice"
@@ -139,8 +139,8 @@ def test_warns_when_about_contains_placeholder_markers():
     site.save()
 
     about = AboutProfile.load()
-    about.practice_structure = "Small studio"
-    about.one_line_practice_description = "[Add a one-line public description of the practice]"
+    about.professional_context = "Small studio"
+    about.one_line_bio = "[Add a one-line public description of yourself]"
     about.save()
 
     warnings = collect_warnings()
@@ -202,8 +202,8 @@ def test_seed_about_sets_safe_default_invitation_and_truth_prompts():
     call_command("seed_about")
     about.refresh_from_db()
 
-    assert about.practice_structure == PRACTICE_STRUCTURE_PROMPT
-    assert about.project_leadership == PROJECT_LEADERSHIP_PROMPT
+    assert about.professional_context == PRACTICE_STRUCTURE_PROMPT
+    assert about.work_approach == PROJECT_LEADERSHIP_PROMPT
     assert about.professional_standing == PROFESSIONAL_STANDING_PROMPT
     assert about.closing_invitation == CLOSING_INVITATION_DEFAULT
 
@@ -211,18 +211,18 @@ def test_seed_about_sets_safe_default_invitation_and_truth_prompts():
 @pytest.mark.django_db
 def test_about_readiness_warns_when_truth_fields_are_omitted_or_starter_prompts(service, project):
     _, about = _populate_minimum_ready_site_and_about()
-    about.practice_structure = PRACTICE_STRUCTURE_PROMPT
-    about.project_leadership = ""
+    about.professional_context = PRACTICE_STRUCTURE_PROMPT
+    about.work_approach = ""
     about.professional_standing = PROFESSIONAL_STANDING_PROMPT
     about.save()
 
     blockers, warnings = collect_readiness_issues()
 
-    assert not any("practice_structure" in blocker for blocker in blockers)
-    assert not any("project_leadership" in blocker for blocker in blockers)
+    assert not any("professional_context" in blocker for blocker in blockers)
+    assert not any("work_approach" in blocker for blocker in blockers)
     assert not any("professional_standing" in blocker for blocker in blockers)
-    assert any("practice_structure is omitted or still a starter prompt" in warning for warning in warnings)
-    assert any("project_leadership is omitted or still a starter prompt" in warning for warning in warnings)
+    assert any("professional_context is omitted or still a starter prompt" in warning for warning in warnings)
+    assert any("work_approach is omitted or still a starter prompt" in warning for warning in warnings)
     assert any("professional_standing is omitted or still a starter prompt" in warning for warning in warnings)
 
 
@@ -267,14 +267,14 @@ def test_about_readiness_blocks_when_optional_proof_fields_contain_only_starter_
     ("field", "value", "expected_message"),
     [
         (
-            "practice_structure",
+            "professional_context",
             PRACTICE_STRUCTURE_PROMPT,
-            "AboutProfile.practice_structure is omitted or still a starter prompt.",
+            "AboutProfile.professional_context is omitted or still a starter prompt.",
         ),
         (
-            "project_leadership",
+            "work_approach",
             PROJECT_LEADERSHIP_PROMPT,
-            "AboutProfile.project_leadership is omitted or still a starter prompt.",
+            "AboutProfile.work_approach is omitted or still a starter prompt.",
         ),
         (
             "professional_standing",

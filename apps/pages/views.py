@@ -60,8 +60,8 @@ class AboutView(TemplateView):
             hero_meta = ", ".join(
                 part for part in [profile.principal_title, site.site_name] if part
             )
-        elif profile.public_practice_structure:
-            hero_meta = profile.public_practice_structure
+        elif profile.public_professional_context:
+            hero_meta = profile.public_professional_context
 
         show_professional_profile = bool(
             site.location

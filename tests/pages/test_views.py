@@ -99,10 +99,10 @@ def _populate_minimum_about(site_settings, **overrides):
     profile = AboutProfile.load()
     defaults = {
         "identity_mode": AboutProfile.IdentityMode.STUDIO,
-        "practice_structure": "Small studio",
-        "one_line_practice_description": "Architecture for housing, civic, and workplace projects.",
-        "practice_summary": "A practice working across public and private projects.",
-        "project_leadership": "Projects are led directly with specialist consultants brought in as needed.",
+        "professional_context": "Small studio",
+        "one_line_bio": "Design for housing, civic, and workplace projects.",
+        "bio_summary": "A practice working across public and private projects.",
+        "work_approach": "Projects are led directly with specialist consultants brought in as needed.",
         "professional_standing": "Registered architectural practice",
         "education": "Master of Architecture",
         "supporting_facts": "",
@@ -164,8 +164,8 @@ def test_about_page_hides_professional_profile_without_minimum_fact_set(client, 
 def test_about_page_hides_starter_prompt_fields_from_public_render(client, site_settings):
     _populate_minimum_about(
         site_settings,
-        practice_structure=PRACTICE_STRUCTURE_PROMPT,
-        project_leadership=PROJECT_LEADERSHIP_PROMPT,
+        professional_context=PRACTICE_STRUCTURE_PROMPT,
+        work_approach=PROJECT_LEADERSHIP_PROMPT,
         professional_standing=PROFESSIONAL_STANDING_PROMPT,
         education="[Add education details, one per line]",
         supporting_facts="Registered architectural practice\nPlanning, technical design, and consultant coordination",
@@ -194,7 +194,7 @@ def test_about_page_shows_professional_profile_with_minimum_fact_set(client, sit
     assert b"Professional Profile" in response.content
     assert b"Based in Reykjavik, Iceland" in response.content
     assert b"Registered architectural practice" in response.content
-    assert b"12+ years in practice" in response.content
+    assert b"12+ years of experience" in response.content
     assert b"Housing and civic project experience" in response.content
 
 

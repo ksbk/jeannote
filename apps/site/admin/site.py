@@ -271,8 +271,8 @@ class AboutProfileAdmin(admin.ModelAdmin):
                     "identity_mode",
                     "principal_name",
                     "principal_title",
-                    "practice_structure",
-                    "one_line_practice_description",
+                    "professional_context",
+                    "one_line_bio",
                 )
             },
         ),
@@ -280,8 +280,8 @@ class AboutProfileAdmin(admin.ModelAdmin):
             "Content",
             {
                 "fields": (
-                    "practice_summary",
-                    "project_leadership",
+                    "bio_summary",
+                    "work_approach",
                     "approach",
                     "closing_invitation",
                 ),

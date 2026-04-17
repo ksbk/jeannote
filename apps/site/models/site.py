@@ -206,23 +206,23 @@ class AboutProfile(SingletonModel):
         blank=True,
         help_text="Examples: Founder and Registered Architect, Principal Architect.",
     )
-    practice_structure = models.CharField(
+    professional_context = models.CharField(
         max_length=120,
         blank=True,
-        help_text="A short truthful descriptor such as 'Solo practice' or 'Small studio'.",
+        help_text="A short truthful descriptor such as 'Solo practitioner' or 'Small studio'.",
     )
-    one_line_practice_description = models.CharField(
+    one_line_bio = models.CharField(
         max_length=220,
         blank=True,
         help_text="Short public description shown in the hero.",
     )
-    practice_summary = models.TextField(
+    bio_summary = models.TextField(
         blank=True,
-        help_text="Short factual summary of what the practice does, where it is based, and the kind of work it takes on.",
+        help_text="Short factual summary of who you are, where you are based, and the kind of work you do.",
     )
-    project_leadership = models.TextField(
+    work_approach = models.TextField(
         blank=True,
-        help_text="Explain how projects are led and how consultants or collaborators are involved.",
+        help_text="Explain how you work and how collaborators or consultants are involved.",
     )
     professional_standing = models.CharField(
         max_length=220,
@@ -283,12 +283,12 @@ class AboutProfile(SingletonModel):
         return bool(self.education_lines or self.supporting_fact_lines)
 
     @property
-    def public_practice_structure(self) -> str:
-        return public_text(self.practice_structure)
+    def public_professional_context(self) -> str:
+        return public_text(self.professional_context)
 
     @property
-    def public_project_leadership(self) -> str:
-        return public_text(self.project_leadership)
+    def public_work_approach(self) -> str:
+        return public_text(self.work_approach)
 
     @property
     def public_professional_standing(self) -> str:

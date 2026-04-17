@@ -19,8 +19,8 @@
     {% if about_hero_meta %}
     <p class="about-hero__meta">{{ about_hero_meta }}</p>
     {% endif %}
-    {% if profile.one_line_practice_description %}
-    <p class="page-hero__subtitle">{{ profile.one_line_practice_description }}</p>
+    {% if profile.one_line_bio %}
+    <p class="page-hero__subtitle">{{ profile.one_line_bio }}</p>
     {% endif %}
   </div>
 </section>
@@ -47,15 +47,15 @@
   <!-- Bio content -->
   <div class="about-content">
 
-    {% if profile.practice_summary %}
+    {% if profile.bio_summary %}
     <div class="prose about-intro">
-      {{ profile.practice_summary|linebreaks }}
+      {{ profile.bio_summary|linebreaks }}
     </div>
     {% endif %}
 
-    {% if profile.public_project_leadership %}
+    {% if profile.public_work_approach %}
     <div class="prose about-bio">
-      {{ profile.public_project_leadership|linebreaks }}
+      {{ profile.public_work_approach|linebreaks }}
     </div>
     {% endif %}
 
@@ -74,7 +74,7 @@
       <ul>
         <li>Based in {{ about_public_location }}</li>
         <li>{{ profile.public_professional_standing }}</li>
-        <li>{{ profile.experience_years }}+ years in practice</li>
+        <li>{{ profile.experience_years }}+ years of experience</li>
         {% for line in profile.education_lines %}
         <li>{{ line }}</li>
         {% endfor %}
