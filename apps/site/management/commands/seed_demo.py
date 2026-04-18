@@ -541,6 +541,7 @@ class Command(BaseCommand):
         settings.about_meta_description = (
             "About Demo Portfolio Studio, the studio approach, experience, and professional profile."
         )
+        settings.blog_enabled = True
         settings.save()
         action = "Created" if created else "Updated"
         self.stdout.write(f"  {action} SiteSettings")

@@ -698,7 +698,6 @@ def test_nav_full_text_has_aria_label(client, site_settings):
     [
         ("projects:list", b'class="nav__link is-active" aria-current="page">Projects</a>'),
         ("pages:about", b'class="nav__link is-active" aria-current="page">About</a>'),
-        ("blog:list", b'class="nav__link is-active" aria-current="page">Writing</a>'),
         ("contact:contact", b'class="nav__link nav__cta is-active" aria-current="page">Contact</a>'),
     ],
 )
@@ -708,6 +707,17 @@ def test_nav_marks_current_route_active(client, site_settings, route_name, expec
 
     assert response.status_code == 200
     assert expected_fragment in response.content
+
+
+@pytest.mark.django_db
+def test_nav_marks_blog_active_when_enabled(client, site_settings):
+    """Blog nav item shows as active on blog:list only when blog_enabled=True."""
+    site_settings.blog_enabled = True
+    site_settings.save()
+    response = client.get(reverse("blog:list"))
+
+    assert response.status_code == 200
+    assert b'class="nav__link is-active" aria-current="page">Blog</a>' in response.content
 
 
 # ---------------------------------------------------------------------------

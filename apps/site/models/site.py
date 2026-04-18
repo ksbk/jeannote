@@ -143,6 +143,12 @@ class SiteSettings(SingletonModel):
         help_text="Max featured projects shown on desktop (960px+). Between 1 and 6, at least tablet count.",
     )
 
+    # Optional modules
+    blog_enabled = models.BooleanField(
+        default=False,
+        help_text="Show the optional Blog section in public navigation.",
+    )
+
     class Meta:
         verbose_name = "Site Settings"
         verbose_name_plural = "Site Settings"
