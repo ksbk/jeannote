@@ -348,7 +348,7 @@ def test_readiness_warns_when_homepage_hero_project_has_no_cover_image(service):
         title="Featured Without Cover",
         slug="featured-without-cover",
         short_description=".",
-        category="housing",
+        tags="housing",
         status="completed",
         featured=True,
         order=1,
@@ -413,7 +413,7 @@ def test_readiness_blocks_when_demo_projects_remain(service):
         title="House on the Hillside",
         slug="house-on-the-hillside",
         short_description=".",
-        category="housing",
+        tags="housing",
         status="completed",
     )
 

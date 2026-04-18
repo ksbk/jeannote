@@ -46,19 +46,6 @@ class ProjectManager(models.Manager):
 
 
 class Project(models.Model):
-    CATEGORY_CHOICES = [
-        ("housing", "Housing"),
-        ("civic", "Civic"),
-        ("workplace", "Workplace"),
-    ]
-    CATEGORY_ORDER = tuple(value for value, _ in CATEGORY_CHOICES)
-    CANONICAL_CATEGORY_VALUES = frozenset(CATEGORY_ORDER)
-    LEGACY_CATEGORY_REDIRECTS = {
-        "residential": "housing",
-        "commercial": "workplace",
-        "cultural": "civic",
-    }
-    REMOVED_CATEGORY_PARAMS = frozenset({"interior", "renovation"})
     STATUS_CHOICES = [
         ("completed", "Completed"),
         ("in_progress", "In Progress"),
@@ -72,7 +59,12 @@ class Project(models.Model):
         max_length=300,
         help_text="One or two clear sentences shown on project cards and in search results. Under 160 characters is ideal.",
     )
-    category = models.CharField(max_length=40, choices=CATEGORY_CHOICES, default="housing")
+    tags = models.CharField(
+        max_length=200,
+        blank=True,
+        default="",
+        help_text="Comma-separated tags, e.g. \"housing, residential\". Used to group and filter projects.",
+    )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="completed")
 
     # Location & metadata
@@ -145,6 +137,11 @@ class Project(models.Model):
 
     def get_seo_description(self):
         return self.seo_description or self.short_description
+
+    @property
+    def tag_list(self) -> list[str]:
+        """Return a stripped list of individual tags."""
+        return [t.strip() for t in self.tags.split(",") if t.strip()]
 
     @cached_property
     def preview_gallery_image(self):

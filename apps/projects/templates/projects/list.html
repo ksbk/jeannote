@@ -21,14 +21,14 @@
     </div>
 </section>
 
-{% if show_category_filters %}
-<!-- Category filter -->
+{% if show_tag_filters %}
+<!-- Tag filter -->
 <div class="filter-bar">
   <div class="container">
-    <nav class="filter-bar__nav" aria-label="Filter projects by category">
-      <a href="{% url 'projects:list' %}" class="filter-btn {% if not active_category %}filter-btn--active{% endif %}" {% if not active_category %}aria-current="page"{% endif %}>All</a>
-      {% for value, label in categories %}
-      <a href="?category={{ value }}" class="filter-btn {% if active_category == value %}filter-btn--active{% endif %}" {% if active_category == value %}aria-current="page"{% endif %}>{{ label }}</a>
+    <nav class="filter-bar__nav" aria-label="Filter projects by tag">
+      <a href="{% url 'projects:list' %}" class="filter-btn {% if not active_tag %}filter-btn--active{% endif %}" {% if not active_tag %}aria-current="page"{% endif %}>All</a>
+      {% for tag in available_tags %}
+      <a href="?tag={{ tag }}" class="filter-btn {% if active_tag == tag %}filter-btn--active{% endif %}" {% if active_tag == tag %}aria-current="page"{% endif %}>{{ tag|title }}</a>
       {% endfor %}
     </nav>
   </div>
@@ -51,7 +51,7 @@
           </div>
           <div class="project-card__info">
             <span class="project-card__meta">
-              {{ project.get_category_display }}
+              {% with project.tag_list as tags %}{% if tags %}{{ tags|first|title }}{% endif %}{% endwith %}
               {% if project.year %} · {{ project.year }}{% endif %}
               {% if project.location %} · {{ project.location }}{% endif %}
             </span>
@@ -68,17 +68,17 @@
     {% if is_paginated %}
     <nav class="pagination" aria-label="Project pages">
       {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}{% if active_category %}&category={{ active_category }}{% endif %}" class="pagination__link pagination__link--prev"><span aria-hidden="true">←</span> Previous</a>
+      <a href="?page={{ page_obj.previous_page_number }}{% if active_tag %}&tag={{ active_tag }}{% endif %}" class="pagination__link pagination__link--prev"><span aria-hidden="true">←</span> Previous</a>
       {% endif %}
       <span class="pagination__info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
       {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}{% if active_category %}&category={{ active_category }}{% endif %}" class="pagination__link pagination__link--next">Next <span aria-hidden="true">→</span></a>
+      <a href="?page={{ page_obj.next_page_number }}{% if active_tag %}&tag={{ active_tag }}{% endif %}" class="pagination__link pagination__link--next">Next <span aria-hidden="true">→</span></a>
       {% endif %}
     </nav>
     {% endif %}
 
     {% else %}
-    <p class="empty-state">No projects found in this category.</p>
+    <p class="empty-state">No projects found for this tag.</p>
     {% endif %}
   </div>
 </section>

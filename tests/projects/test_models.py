@@ -17,7 +17,19 @@ def test_project_str(project):
 def test_project_slug_auto_generated():
     p = Project.objects.create(title="My New House")
     assert p.slug == "my-new-house"
-    assert p.category == "housing"
+    assert p.tags == ""
+
+
+@pytest.mark.django_db
+def test_project_tag_list_splits_and_strips():
+    p = Project.objects.create(title="Tagged Project", tags="housing, civic,  residential")
+    assert p.tag_list == ["housing", "civic", "residential"]
+
+
+@pytest.mark.django_db
+def test_project_tag_list_empty_when_no_tags():
+    p = Project.objects.create(title="Untagged Project")
+    assert p.tag_list == []
 
 
 @pytest.mark.django_db

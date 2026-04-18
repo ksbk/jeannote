@@ -49,7 +49,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = (
         "cover_thumb",
         "title",
-        "category",
+        "tags",
         "status",
         "year",
         "location",
@@ -58,13 +58,13 @@ class ProjectAdmin(admin.ModelAdmin):
     )
     list_display_links = ("cover_thumb", "title")
     list_editable = ("featured", "order", "year", "status")
-    list_filter = ("category", "status", "featured")
+    list_filter = ("status", "featured")
     search_fields = ("title", "location", "client")
     prepopulated_fields = {"slug": ("title",)}
     inlines = [ProjectImageInline, TestimonialInline]
     fieldsets = (
         ("Identity", {"fields": ("title", "slug", "short_description", "cover_image")}),
-        ("Classification", {"fields": ("category", "status", "featured", "order")}),
+        ("Classification", {"fields": ("tags", "status", "featured", "order")}),
         ("Metadata", {"fields": ("location", "year", "client", "area", "services_provided")}),
         ("Story", {"fields": ("overview", "challenge", "concept", "process", "outcome")}),
         ("SEO", {"fields": ("seo_title", "seo_description"), "classes": ("collapse",)}),

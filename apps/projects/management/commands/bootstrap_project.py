@@ -8,16 +8,16 @@ One project per invocation — intentional.
 
 Usage examples
 --------------
-Dry run — title + category only:
+Dry run — title + tags only:
     python manage.py bootstrap_project \\
         --title "Harbour Housing — Reykjavík" \\
-        --category housing \\
+        --tags housing \\
         --dry-run
 
 Dry run — full:
     python manage.py bootstrap_project \\
         --title "Harbour Housing — Reykjavík" \\
-        --category housing \\
+        --tags housing \\
         --short-description "Multi-family housing project." \\
         --cover path/to/cover.jpg \\
         --gallery path/to/gallery-01.jpg \\
@@ -29,7 +29,7 @@ Dry run — full:
 Live run (remove --dry-run when satisfied):
     python manage.py bootstrap_project \\
         --title "Harbour Housing — Reykjavík" \\
-        --category housing \\
+        --tags housing \\
         --cover path/to/cover.jpg \\
         --gallery path/to/gallery-01.jpg \\
                   path/to/gallery-02.jpg \\
@@ -54,9 +54,6 @@ from django.utils.text import slugify
 from apps.projects.models import Project, ProjectImage
 
 _PLACEHOLDER_DESCRIPTION = "[Placeholder — update in admin]"
-
-# Valid category keys derived from the model's CATEGORY_CHOICES
-_VALID_CATEGORIES = {key for key, _ in Project.CATEGORY_CHOICES}
 
 # Strips Django's collision-avoidance suffix, e.g. "img_vFlUiiN" → "img"
 _DJANGO_SUFFIX_RE = re.compile(r"_[A-Za-z0-9]{7}$")
@@ -87,14 +84,10 @@ class Command(BaseCommand):
             help="Project title. The slug is generated automatically via slugify().",
         )
         parser.add_argument(
-            "--category",
-            required=True,
-            metavar="CATEGORY",
-            choices=sorted(_VALID_CATEGORIES),
-            help=(
-                "Project category. "
-                f"Valid values: {', '.join(sorted(_VALID_CATEGORIES))}."
-            ),
+            "--tags",
+            default="",
+            metavar="TAGS",
+            help="Comma-separated tags, e.g. 'housing' or 'housing, residential'.",
         )
         parser.add_argument(
             "--short-description",
@@ -165,7 +158,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         dry_run: bool = options["dry_run"]
         title: str = options["title"]
-        category: str = options["category"]
+        tags: str = options["tags"]
         short_description: str = options["short_description"]
         cover_path: str | None = options["cover"]
         gallery_paths: list[str] = options["gallery"] or []
@@ -217,7 +210,7 @@ class Command(BaseCommand):
         )
         self.stdout.write(f"  Title    : {title}")
         self.stdout.write(f"  Slug     : {slug}")
-        self.stdout.write(f"  Category : {category}")
+        self.stdout.write(f"  Tags     : {tags or '(none)'}")
         self.stdout.write(f"  Featured : {featured}")
         self.stdout.write(f"  Order    : {order}")
         self.stdout.write(f"  Short desc: {short_description}")
@@ -265,7 +258,7 @@ class Command(BaseCommand):
         project = Project(
             title=title,
             slug=slug,
-            category=category,
+            tags=tags,
             short_description=short_description,
             featured=featured,
             order=order,

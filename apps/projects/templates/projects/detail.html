@@ -29,7 +29,7 @@
       <span aria-hidden="true">›</span>
       <span aria-current="page">{{ project.title }}</span>
     </nav>
-    <p class="project-hero__category">{{ project.get_category_display }}</p>
+    <p class="project-hero__category">{% with project.tag_list as tags %}{% if tags %}{{ tags|first|title }}{% endif %}{% endwith %}</p>
     <h1 class="project-hero__title">{{ project.title }}</h1>
     <p class="project-hero__desc">{{ project.short_description }}</p>
   </div>
@@ -218,7 +218,7 @@
             {% endif %}
           </div>
           <div class="project-card__info">
-            <span class="project-card__meta">{{ p.get_category_display }} {% if p.year %}· {{ p.year }}{% endif %}</span>
+            <span class="project-card__meta">{% with p.tag_list as tags %}{% if tags %}{{ tags|first|title }}{% endif %}{% endwith %} {% if p.year %}· {{ p.year }}{% endif %}</span>
             <h3 class="project-card__title">{{ p.title }}</h3>
           </div>
         </a>

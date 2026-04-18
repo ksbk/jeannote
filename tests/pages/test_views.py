@@ -40,7 +40,7 @@ def test_homepage_hero_and_featured_cards_emit_image_dimensions_and_priority(
         title="Hero Project",
         slug="hero-project",
         short_description="Hero project.",
-        category="housing",
+        tags="housing",
         status="completed",
         featured=True,
         order=1,
@@ -50,7 +50,7 @@ def test_homepage_hero_and_featured_cards_emit_image_dimensions_and_priority(
         title="Card Project",
         slug="card-project",
         short_description="Card project.",
-        category="civic",
+        tags="civic",
         status="completed",
         featured=True,
         order=2,
@@ -275,15 +275,15 @@ def test_homepage_shows_featured_projects_only_when_any_featured_exist(client, s
     """When featured projects exist, homepage shows only featured — never non-featured."""
     featured_a = Project.objects.create(
         title="Featured A", slug="featured-a", short_description=".",
-        category="housing", status="completed", featured=True, order=1,
+        tags="housing", status="completed", featured=True, order=1,
     )
     featured_b = Project.objects.create(
         title="Featured B", slug="featured-b", short_description=".",
-        category="civic", status="completed", featured=True, order=2,
+        tags="civic", status="completed", featured=True, order=2,
     )
     non_featured = Project.objects.create(
         title="Non-Featured", slug="non-featured", short_description=".",
-        category="workplace", status="completed", featured=False, order=3,
+        tags="workplace", status="completed", featured=False, order=3,
     )
 
     response = client.get(reverse("pages:home"))
@@ -301,7 +301,7 @@ def test_homepage_caps_featured_projects_at_six(client, site_settings):
     for i in range(8):
         Project.objects.create(
             title=f"Featured {i}", slug=f"featured-{i}", short_description=".",
-            category="housing", status="completed", featured=True, order=i,
+            tags="housing", status="completed", featured=True, order=i,
         )
 
     response = client.get(reverse("pages:home"))
@@ -316,7 +316,7 @@ def test_homepage_falls_back_to_recent_projects_when_none_are_featured(client, s
     """When no projects are marked featured, homepage falls back to recent published projects."""
     recent = Project.objects.create(
         title="Recent Project", slug="recent-project", short_description=".",
-        category="housing", status="completed", featured=False, order=1,
+        tags="housing", status="completed", featured=False, order=1,
     )
 
     response = client.get(reverse("pages:home"))
@@ -332,7 +332,7 @@ def test_homepage_context_exposes_hero_project(client, site_settings):
         title="First Selected",
         slug="first-selected",
         short_description="First project.",
-        category="housing",
+        tags="housing",
         status="completed",
         featured=True,
         order=1,
@@ -341,7 +341,7 @@ def test_homepage_context_exposes_hero_project(client, site_settings):
         title="Second Selected",
         slug="second-selected",
         short_description="Second project.",
-        category="civic",
+        tags="civic",
         status="completed",
         featured=True,
         order=2,
@@ -359,7 +359,7 @@ def test_home_project_cards_fall_back_to_first_gallery_image(client, site_settin
         title="Hero Project",
         slug="hero-project",
         short_description="Lead project.",
-        category="workplace",
+        tags="workplace",
         status="completed",
         featured=True,
         cover_image=SimpleUploadedFile("hero.jpg", b"hero-image", content_type="image/jpeg"),
@@ -368,7 +368,7 @@ def test_home_project_cards_fall_back_to_first_gallery_image(client, site_settin
         title="Gallery Preview Project",
         slug="gallery-preview-project",
         short_description="Uses a gallery image on cards.",
-        category="housing",
+        tags="housing",
         status="completed",
         featured=True,
     )
@@ -394,7 +394,7 @@ def test_homepage_uses_featured_projects_strip_and_updated_cta(client, site_sett
         title="Selected Project",
         slug="selected-project",
         short_description="Homepage project.",
-        category="workplace",
+        tags="workplace",
         status="completed",
         featured=True,
         order=1,
@@ -451,7 +451,7 @@ def test_homepage_query_respects_desktop_count(client, site_settings):
     for i in range(6):
         Project.objects.create(
             title=f"Featured {i}", slug=f"feat-dc-{i}", short_description=".",
-            category="housing", status="completed", featured=True, order=i,
+            tags="housing", status="completed", featured=True, order=i,
         )
 
     response = client.get(reverse("pages:home"))
@@ -470,7 +470,7 @@ def test_homepage_grid_has_breakpoint_count_classes(client, site_settings):
 
     Project.objects.create(
         title="Grid Class Project", slug="grid-class-proj", short_description=".",
-        category="housing", status="completed", featured=True, order=1,
+        tags="housing", status="completed", featured=True, order=1,
     )
 
     response = client.get(reverse("pages:home"))
@@ -543,7 +543,7 @@ def test_homepage_hero_renders_selected_cover_image_as_eager_background(
         title="Hero Cover Project",
         slug="hero-cover-project",
         short_description="Hero image project.",
-        category="housing",
+        tags="housing",
         status="completed",
         featured=True,
         order=1,
@@ -568,7 +568,7 @@ def test_hero_placeholder_background_renders_when_no_cover_image(client, site_se
         title="No Image Project",
         slug="no-image-project",
         short_description="Project without a cover image.",
-        category="housing",
+        tags="housing",
         status="completed",
         featured=True,
         order=1,

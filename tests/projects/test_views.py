@@ -26,8 +26,8 @@ def test_project_list_page(client, site_settings):
 
 
 @pytest.mark.django_db
-def test_project_list_with_category_filter(client, site_settings, project):
-    url = reverse("projects:list") + "?category=housing"
+def test_project_list_with_tag_filter(client, site_settings, project):
+    url = reverse("projects:list") + "?tag=housing"
     response = client.get(url)
     assert response.status_code == 200
 
@@ -38,7 +38,7 @@ def test_project_list_cards_fall_back_to_first_gallery_image(client, site_settin
         title="Gallery Fallback Project",
         slug="gallery-fallback-project",
         short_description="Uses gallery preview.",
-        category="housing",
+        tags="housing",
         status="completed",
     )
     gallery_image = ProjectImage.objects.create(
@@ -64,7 +64,7 @@ def test_project_list_preview_images_emit_real_dimensions_when_available(
         title="Sized Preview Project",
         slug="sized-preview-project",
         short_description="Uses gallery preview.",
-        category="housing",
+        tags="housing",
         status="completed",
     )
     gallery_image = ProjectImage.objects.create(
@@ -85,31 +85,27 @@ def test_project_list_preview_images_emit_real_dimensions_when_available(
 
 
 @pytest.mark.django_db
-def test_project_list_only_shows_populated_sector_filters(client, site_settings, project):
+def test_project_list_only_shows_populated_tag_filters(client, site_settings, project):
     Project.objects.create(
         title="Civic Hall",
         slug="civic-hall",
         short_description="Public-sector project.",
-        category="civic",
+        tags="civic",
         status="completed",
     )
     Project.objects.create(
         title="Studio Workplace",
         slug="studio-workplace",
         short_description="Workplace project.",
-        category="workplace",
+        tags="workplace",
         status="completed",
     )
 
     response = client.get(reverse("projects:list"))
 
     assert response.status_code == 200
-    assert response.context["categories"] == [
-        ("housing", "Housing"),
-        ("civic", "Civic"),
-        ("workplace", "Workplace"),
-    ]
-    assert response.context["show_category_filters"] is True
+    assert response.context["available_tags"] == ["civic", "housing", "workplace"]
+    assert response.context["show_tag_filters"] is True
 
 
 @pytest.mark.django_db
@@ -119,21 +115,21 @@ def test_project_list_four_cards_renders_uniform_grid(client, site_settings, pro
         title="Civic Hall",
         slug="civic-hall",
         short_description="Public-sector project.",
-        category="civic",
+        tags="civic",
         status="completed",
     )
     Project.objects.create(
         title="Studio Workplace",
         slug="studio-workplace",
         short_description="Workplace project.",
-        category="workplace",
+        tags="workplace",
         status="completed",
     )
     Project.objects.create(
         title="Housing Block",
         slug="housing-block",
         short_description="Housing project.",
-        category="housing",
+        tags="housing",
         status="completed",
     )
 
@@ -145,37 +141,22 @@ def test_project_list_four_cards_renders_uniform_grid(client, site_settings, pro
 
 
 @pytest.mark.django_db
-def test_project_list_hides_filter_bar_when_only_one_sector_exists(client, site_settings, project):
+def test_project_list_hides_filter_bar_when_only_one_tag_exists(client, site_settings, project):
     response = client.get(reverse("projects:list"))
 
     assert response.status_code == 200
-    assert response.context["categories"] == [("housing", "Housing")]
-    assert response.context["show_category_filters"] is False
-    assert b"Filter projects by category" not in response.content
+    assert response.context["available_tags"] == ["housing"]
+    assert response.context["show_tag_filters"] is False
+    assert b"Filter projects by tag" not in response.content
 
 
 @pytest.mark.django_db
-def test_project_list_redirects_legacy_category_param_to_canonical(client, site_settings, project):
-    response = client.get(reverse("projects:list") + "?category=residential")
+def test_project_list_redirects_category_param_to_tag_param(client, site_settings, project):
+    """?category=X is a backward-compat alias that redirects to ?tag=X."""
+    response = client.get(reverse("projects:list") + "?category=housing")
 
     assert response.status_code == 302
-    assert response["Location"] == reverse("projects:list") + "?category=housing"
-
-
-@pytest.mark.django_db
-def test_project_list_redirects_removed_category_param_to_unfiltered_page(client, site_settings, project):
-    response = client.get(reverse("projects:list") + "?category=interior")
-
-    assert response.status_code == 302
-    assert response["Location"] == reverse("projects:list")
-
-
-@pytest.mark.django_db
-def test_project_list_redirects_unknown_category_param_to_unfiltered_page(client, site_settings, project):
-    response = client.get(reverse("projects:list") + "?category=competition")
-
-    assert response.status_code == 302
-    assert response["Location"] == reverse("projects:list")
+    assert response["Location"] == reverse("projects:list") + "?tag=housing"
 
 
 @pytest.mark.django_db
@@ -249,7 +230,7 @@ def test_project_detail_related_cards_fall_back_to_first_gallery_image(client, s
         title="Related Housing",
         slug="related-housing",
         short_description="Related housing project.",
-        category=project.category,
+        tags=project.tags,
         status="completed",
     )
     gallery_image = ProjectImage.objects.create(
@@ -276,7 +257,7 @@ def test_project_detail_related_preview_images_emit_real_dimensions_when_availab
         title="Related Sized Housing",
         slug="related-sized-housing",
         short_description="Related housing project.",
-        category=project.category,
+        tags=project.tags,
         status="completed",
     )
     gallery_image = ProjectImage.objects.create(

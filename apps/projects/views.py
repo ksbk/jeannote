@@ -1,5 +1,6 @@
 from typing import Any, TypedDict
 
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
@@ -20,57 +21,57 @@ class ProjectListView(ListView):
     def get_public_queryset(self):
         return Project.objects.with_preview_media().all().order_by("order", "-year")
 
-    def get_available_categories(self, queryset):
-        available_values = set(queryset.values_list("category", flat=True))
-        return [
-            (value, label)
-            for value, label in Project.CATEGORY_CHOICES
-            if value in available_values
-        ]
+    def get_available_tags(self, queryset):
+        """Return sorted list of unique tags present in the queryset."""
+        all_tags_raw = queryset.values_list("tags", flat=True)
+        seen: dict[str, int] = {}
+        for raw in all_tags_raw:
+            for tag in (t.strip() for t in raw.split(",") if t.strip()):
+                seen[tag] = seen.get(tag, 0) + 1
+        return sorted(seen.keys())
 
-    def build_category_redirect(self, category=""):
+    def build_tag_redirect(self, tag=""):
         base_url = reverse("projects:list")
-        if not category:
+        if not tag:
             return HttpResponseRedirect(base_url)
-
         params = self.request.GET.copy()
-        params["category"] = category
+        params["tag"] = tag
+        params.pop("category", None)
         return HttpResponseRedirect(f"{base_url}?{params.urlencode()}")
 
     def dispatch(self, request, *args, **kwargs):
         self.public_projects = self.get_public_queryset()
-        self.available_categories = self.get_available_categories(self.public_projects)
-        self.available_category_values = {value for value, _ in self.available_categories}
+        self.available_tags = self.get_available_tags(self.public_projects)
 
-        requested_category = request.GET.get("category", "")
-        if requested_category in Project.LEGACY_CATEGORY_REDIRECTS:
-            canonical_category = Project.LEGACY_CATEGORY_REDIRECTS[requested_category]
-            if canonical_category in self.available_category_values:
-                return self.build_category_redirect(canonical_category)
-            return self.build_category_redirect()
+        # Backward-compat: ?category= → redirect to ?tag=
+        legacy_category = request.GET.get("category", "").strip()
+        if legacy_category:
+            return self.build_tag_redirect(legacy_category)
 
-        if requested_category:
-            if requested_category in Project.REMOVED_CATEGORY_PARAMS:
-                return self.build_category_redirect()
-            if requested_category not in Project.CANONICAL_CATEGORY_VALUES:
-                return self.build_category_redirect()
-            if requested_category not in self.available_category_values:
-                return self.build_category_redirect()
-
-        self.active_category = requested_category
+        self.active_tag = request.GET.get("tag", "").strip()
         return super().dispatch(request, *args, **kwargs)
+
+    @staticmethod
+    def _tag_filter(qs, tag: str):
+        """Exact-match a single tag in a comma-separated tags field."""
+        return qs.filter(
+            Q(tags=tag)
+            | Q(tags__startswith=f"{tag},")
+            | Q(tags__endswith=f",{tag}")
+            | Q(tags__contains=f",{tag},")
+        )
 
     def get_queryset(self):
         qs = self.public_projects.all()
-        if self.active_category:
-            qs = qs.filter(category=self.active_category)
+        if self.active_tag:
+            qs = self._tag_filter(qs, self.active_tag)
         return qs
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["categories"] = self.available_categories
-        ctx["active_category"] = self.active_category
-        ctx["show_category_filters"] = len(self.available_categories) > 1
+        ctx["available_tags"] = self.available_tags
+        ctx["active_tag"] = self.active_tag
+        ctx["show_tag_filters"] = len(self.available_tags) > 1
         return ctx
 
 
@@ -119,12 +120,18 @@ class ProjectDetailView(DetailView):
         ctx["gallery"] = gallery
         ctx["drawings"] = drawings
         ctx["detail_media"] = detail_media
-        ctx["related"] = (
-            Project.objects.with_preview_media()
-            .filter(category=project.category)
-            .exclude(pk=project.pk)
-            .order_by("order")[:3]
-        )
+        first_tag = project.tag_list[0] if project.tag_list else None
+        if first_tag:
+            related_qs = (
+                ProjectListView._tag_filter(
+                    Project.objects.with_preview_media(), first_tag
+                )
+                .exclude(pk=project.pk)
+                .order_by("order")
+            )
+        else:
+            related_qs = Project.objects.with_preview_media().exclude(pk=project.pk).order_by("order")
+        ctx["related"] = related_qs[:3]
         ctx["testimonials"] = project.testimonials.filter(active=True)
         if detail_media["image"]:
             ctx["og_image"] = detail_media["image"].url
