@@ -85,4 +85,27 @@
   /* Shared edges / focus */
   --border-subtle:       var(--color-warm-grey); /* light-surface hairlines and dividers only — not for dark/inverse contexts */
   --focus-ring:          var(--color-accent);
+
+  /* -------------------------------------------------------
+     Brand customization seams — overridden at runtime by
+     BrandSettings CSS var injection (see brand_css_vars tag)
+     ------------------------------------------------------- */
+
+  /* Typography — semantic aliases used by base.css and components.
+     Preset: balanced (mirrors primitive defaults above). */
+  --font-heading:  var(--font-serif);   /* heading font family — maps to typography_preset */
+  --font-body:     var(--font-sans);    /* body font family — maps to typography_preset */
+  --font-accent:   var(--font-sans);    /* accent/caption font family — maps to typography_preset */
+
+  /* Brand color — semantic alias for the primary accent.
+     Preset: neutral (mirrors --color-accent above). */
+  --color-brand:         var(--color-accent);       /* primary brand/accent color */
+  --color-brand-strong:  var(--color-black);        /* strong/dark brand variant */
+  --color-brand-soft:    var(--color-stone);        /* soft/light brand tint */
+
+  /* Border radius — maps to visual_style_preset.
+     Preset: balanced. */
+  --radius-card:    0.375rem;  /* card / panel corner radius */
+  --radius-button:  0.25rem;   /* button corner radius */
+  --radius-image:   0;         /* image corner radius */
 }

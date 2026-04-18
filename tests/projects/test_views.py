@@ -385,20 +385,26 @@ def test_project_detail_query_count(client, site_settings, project, django_asser
 
     Expected queries for a project with no cover_image, no gallery/drawings,
     no testimonials, no related projects:
-      1. SiteSettings (context_processor)
-      2. SocialLink active entries (context_processor)
-      3. Project.objects.get(slug=...)
-      4. gallery images
-      5. drawings images
-      6. related projects
-      7. testimonials
+      1.  SiteSettings SELECT (context_processor — row exists from fixture)
+      2.  BrandSettings SELECT (context_processor — miss, not in fixture)
+      3.  SAVEPOINT before BrandSettings INSERT
+      4.  BrandSettings INSERT (row created on first access)
+      5.  RELEASE SAVEPOINT
+      6.  SocialLink active entries SELECT (context_processor)
+      7.  Project SELECT by slug (view)
+      8.  Gallery images SELECT (view)
+      9.  Drawings images SELECT (view)
+      10. Testimonials SELECT (view)
+      11. Related projects SELECT (view)
 
-    Note: queries 1 and 2 come from apps.core.context_processors.site_settings,
+    Note: queries 1–6 come from apps.core.context_processors.site_settings,
     which runs on every request. If new global context-processor queries are added,
     this count must be updated — that is the expected maintenance cost.
+    BrandSettings contributes 4 queries on first request (SELECT miss + SAVEPOINT +
+    INSERT + RELEASE); on subsequent requests with a cached row it contributes 1.
     """
     url = reverse("projects:detail", kwargs={"slug": project.slug})
-    with django_assert_num_queries(7):
+    with django_assert_num_queries(11):
         client.get(url)
 
 

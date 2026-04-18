@@ -80,6 +80,20 @@ class SiteSettings(SingletonModel):
         ),
     )
 
+    # Contact visibility controls
+    show_email = models.BooleanField(
+        default=True,
+        help_text="Show the contact email address in the footer and contact sections.",
+    )
+    show_phone = models.BooleanField(
+        default=False,
+        help_text="Show the phone number in the footer and contact sections.",
+    )
+    show_location = models.BooleanField(
+        default=True,
+        help_text="Show the location in the footer identity and legal line.",
+    )
+
     # Social links
     linkedin_url = models.URLField(blank=True)
     instagram_url = models.URLField(blank=True)

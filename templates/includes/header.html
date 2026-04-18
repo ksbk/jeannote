@@ -6,7 +6,14 @@
        aria-label="{{ site_settings.site_name|default:'Studio Name' }}"
        title="{{ site_settings.site_name|default:'Studio Name' }}">
       {% if site_settings.logo %}
-        <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" class="nav__logo">
+        <span class="nav__logo-wrap nav__logo-wrap--{{ brand_settings.logo_display_mode|default:'auto' }}">
+          <img src="{{ site_settings.logo.url }}"
+               alt="{{ site_settings.site_name }}"
+               class="nav__logo"
+               style="max-width: {{ brand_settings.logo_max_width|default:160 }}px"
+               width="{{ brand_settings.logo_max_width|default:160 }}"
+               loading="eager">
+        </span>
       {% elif site_settings.nav_name %}
         <span class="nav__name">{{ site_settings.nav_name }}</span>
       {% elif site_settings.site_name|nav_needs_monogram %}

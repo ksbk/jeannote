@@ -273,3 +273,42 @@ def test_client_profile_package_type_choices():
     assert "starter" in valid_types
     assert "pro" in valid_types
 
+
+# ---------------------------------------------------------------------------
+# SiteSettings — contact visibility controls (v1.4.0)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_site_settings_show_email_defaults_true():
+    s = SiteSettings.load()
+    assert s.show_email is True
+
+
+@pytest.mark.django_db
+def test_site_settings_show_phone_defaults_false():
+    s = SiteSettings.load()
+    assert s.show_phone is False
+
+
+@pytest.mark.django_db
+def test_site_settings_show_location_defaults_true():
+    s = SiteSettings.load()
+    assert s.show_location is True
+
+
+@pytest.mark.django_db
+def test_site_settings_show_phone_can_be_enabled():
+    s = SiteSettings.load()
+    s.show_phone = True
+    s.save()
+    assert SiteSettings.load().show_phone is True
+
+
+@pytest.mark.django_db
+def test_site_settings_show_location_can_be_disabled():
+    s = SiteSettings.load()
+    s.show_location = False
+    s.save()
+    assert SiteSettings.load().show_location is False
+

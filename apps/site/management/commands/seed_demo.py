@@ -43,7 +43,7 @@ from apps.publications.models import Publication
 from apps.research.models import ResearchProject
 from apps.resume.models import ResumeProfile
 from apps.services.models import ServiceItem
-from apps.site.models import AboutProfile, SiteSettings
+from apps.site.models import AboutProfile, BrandSettings, SiteSettings
 
 _IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp"}
 
@@ -555,9 +555,24 @@ class Command(BaseCommand):
         settings.publications_enabled = True
         settings.resume_enabled = True
         settings.testimonials_enabled = True
+        settings.show_email = True
+        settings.show_phone = False
+        settings.show_location = True
         settings.save()
         action = "Created" if created else "Updated"
         self.stdout.write(f"  {action} SiteSettings")
+
+        brand, b_created = BrandSettings.objects.get_or_create(pk=1)
+        brand.typography_preset = "balanced"
+        brand.color_preset = "neutral"
+        brand.visual_style = "balanced"
+        brand.social_links_display = "text"
+        brand.logo_display_mode = "auto"
+        brand.logo_max_width = 160
+        brand.logo_max_width_mobile = 120
+        brand.save()
+        b_action = "Created" if b_created else "Updated"
+        self.stdout.write(f"  {b_action} BrandSettings")
 
     def _seed_services(self):
         DEMO_SERVICES = [

@@ -12,31 +12,46 @@
       {% endif %}
     </div>
 
-    {% if site_settings.contact_email or social_links or site_settings.instagram_url or site_settings.linkedin_url or site_settings.facebook_url or site_settings.behance_url or site_settings.issuu_url %}
+    {% if site_settings.show_email and site_settings.contact_email or site_settings.show_phone and site_settings.phone or social_links or site_settings.instagram_url or site_settings.linkedin_url or site_settings.facebook_url or site_settings.behance_url or site_settings.issuu_url %}
     <div class="footer__contact">
-      {% if site_settings.contact_email %}
+      {% if site_settings.show_email and site_settings.contact_email %}
       <a href="mailto:{{ site_settings.contact_email }}" class="footer__email">{{ site_settings.contact_email }}</a>
+      {% endif %}
+      {% if site_settings.show_phone and site_settings.phone %}
+      <a href="tel:{{ site_settings.phone }}" class="footer__phone">{{ site_settings.phone }}</a>
       {% endif %}
       <div class="footer__social">
         {% if social_links %}
           {% for link in social_links %}
-          <a href="{{ link.url }}" target="_blank" rel="noopener" aria-label="{{ link.label }}">{{ link.label }}</a>
+            {% if brand_settings.social_links_display == "icons" %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener" aria-label="{{ link.label }}" class="footer__social-link footer__social-link--icon-only">
+              <span class="social-icon social-icon--{{ link.icon_slug }}" aria-hidden="true"></span>
+              <span class="visually-hidden">{{ link.label }}</span>
+            </a>
+            {% elif brand_settings.social_links_display == "icons_text" %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener" aria-label="{{ link.label }}" class="footer__social-link footer__social-link--icons-text">
+              <span class="social-icon social-icon--{{ link.icon_slug }}" aria-hidden="true"></span>
+              {{ link.label }}
+            </a>
+            {% else %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener" aria-label="{{ link.label }}" class="footer__social-link">{{ link.label }}</a>
+            {% endif %}
           {% endfor %}
         {% else %}
           {% if site_settings.instagram_url %}
-          <a href="{{ site_settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+          <a href="{{ site_settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram" class="footer__social-link">Instagram</a>
           {% endif %}
           {% if site_settings.linkedin_url %}
-          <a href="{{ site_settings.linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+          <a href="{{ site_settings.linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn" class="footer__social-link">LinkedIn</a>
           {% endif %}
           {% if site_settings.facebook_url %}
-          <a href="{{ site_settings.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+          <a href="{{ site_settings.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook" class="footer__social-link">Facebook</a>
           {% endif %}
           {% if site_settings.behance_url %}
-          <a href="{{ site_settings.behance_url }}" target="_blank" rel="noopener" aria-label="Behance">Behance</a>
+          <a href="{{ site_settings.behance_url }}" target="_blank" rel="noopener" aria-label="Behance" class="footer__social-link">Behance</a>
           {% endif %}
           {% if site_settings.issuu_url %}
-          <a href="{{ site_settings.issuu_url }}" target="_blank" rel="noopener" aria-label="Issuu">Issuu</a>
+          <a href="{{ site_settings.issuu_url }}" target="_blank" rel="noopener" aria-label="Issuu" class="footer__social-link">Issuu</a>
           {% endif %}
         {% endif %}
       </div>
@@ -58,6 +73,6 @@
   </div>
 
   <div class="footer__bottom container">
-    <p>&copy; {% now "Y" %} {{ site_settings.site_name|default:"Studio Name" }}{% if site_settings.location %}<span class="footer__location-inline"> · {{ site_settings.location }}</span>{% endif %}. All rights reserved. <a href="{% url 'pages:privacy' %}">Privacy</a></p>
+    <p>&copy; {% now "Y" %} {{ site_settings.site_name|default:"Studio Name" }}{% if site_settings.show_location and site_settings.location %}<span class="footer__location-inline"> · {{ site_settings.location }}</span>{% endif %}. All rights reserved. <a href="{% url 'pages:privacy' %}">Privacy</a></p>
   </div>
 </footer>

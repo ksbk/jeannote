@@ -1,6 +1,7 @@
 from urllib.parse import urlsplit
 
 from django import template
+from django.utils.safestring import mark_safe
 
 from apps.core.brand import compute_monogram
 from apps.core.brand import nav_needs_monogram as _brand_nav_needs_monogram
@@ -55,3 +56,23 @@ def absolute_url(request, value: str | None) -> str:
     if parsed.scheme and parsed.netloc:
         return value
     return request.build_absolute_uri(value)
+
+
+@register.simple_tag
+def brand_css_vars(brand_settings) -> str:
+    """Render an inline <style> block that overrides CSS custom properties.
+
+    Consumes the ``css_vars()`` dict from a BrandSettings instance and emits
+    a ``<style>:root{...}</style>`` block suitable for placement in <head>.
+    Returns an empty string when brand_settings is None.
+
+    Values come from fixed preset maps (brand_presets.py) or validated hex
+    strings — they are not escaped because they are never user free-text.
+    """
+    if brand_settings is None:
+        return mark_safe("")
+    css_vars = brand_settings.css_vars()
+    if not css_vars:
+        return mark_safe("")
+    declarations = "\n    ".join(f"{k}: {v};" for k, v in css_vars.items())
+    return mark_safe(f"<style>:root {{\n    {declarations}\n}}</style>")
