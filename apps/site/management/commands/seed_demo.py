@@ -39,6 +39,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand, CommandError
 
 from apps.projects.models import Project, ProjectImage, Testimonial
+from apps.services.models import ServiceItem
 from apps.site.models import AboutProfile, SiteSettings
 
 _IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp"}
@@ -493,6 +494,7 @@ class Command(BaseCommand):
 
         self._seed_settings()
         self._seed_about()
+        self._seed_services()
         self._seed_projects()
         self._seed_testimonials()
 
@@ -542,9 +544,60 @@ class Command(BaseCommand):
             "About Demo Portfolio Studio, the studio approach, experience, and professional profile."
         )
         settings.blog_enabled = True
+        settings.services_enabled = True
+        settings.testimonials_enabled = True
         settings.save()
         action = "Created" if created else "Updated"
         self.stdout.write(f"  {action} SiteSettings")
+
+    def _seed_services(self):
+        DEMO_SERVICES = [
+            {
+                "name": "Briefing & Feasibility",
+                "short_description": (
+                    "Early-stage clarity on scope, programme, and budget. "
+                    "We review your brief, identify constraints, and outline realistic options."
+                ),
+                "order": 1,
+            },
+            {
+                "name": "Concept & Design",
+                "short_description": (
+                    "Developed concept proposals from sketch to resolved design intent. "
+                    "We explore options, make recommendations, and present a clear direction."
+                ),
+                "order": 2,
+            },
+            {
+                "name": "Technical Documentation",
+                "short_description": (
+                    "Detailed drawings, specifications, and coordination documents "
+                    "ready for planning, tender, or construction."
+                ),
+                "order": 3,
+            },
+            {
+                "name": "Site Oversight",
+                "short_description": (
+                    "On-site quality review, progress monitoring, and coordination "
+                    "to keep the project faithful to the design intent."
+                ),
+                "order": 4,
+            },
+        ]
+        created_count = 0
+        for svc in DEMO_SERVICES:
+            _, created = ServiceItem.objects.get_or_create(
+                name=svc["name"],
+                defaults={"short_description": svc["short_description"], "order": svc["order"]},
+            )
+            if created:
+                created_count += 1
+        existing = len(DEMO_SERVICES) - created_count
+        if created_count:
+            self.stdout.write(f"  Created {created_count} ServiceItem(s)")
+        if existing:
+            self.stdout.write(f"  Skipped {existing} ServiceItem(s) (already exist)")
 
     def _seed_about(self):
         profile, created = AboutProfile.objects.get_or_create(pk=1)

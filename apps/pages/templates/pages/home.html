@@ -68,6 +68,47 @@
 </section>
 {% endif %}
 
+<!-- ===== SERVICES PREVIEW ===== -->
+{% if site_settings.services_enabled %}
+<section class="section services-preview" id="services">
+  <div class="container">
+    <div class="section__header section__header--inline">
+      <h2 class="section__title">Services</h2>
+      <a href="{% url 'services:list' %}" class="section__header-link">All Services</a>
+    </div>
+    {% if homepage_services %}
+    <div class="services-preview__grid">
+      {% for service in homepage_services %}
+      <article class="service-card">
+        <h3 class="service-card__name">{{ service.name }}</h3>
+        <p class="service-card__desc">{{ service.short_description }}</p>
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+<!-- ===== TESTIMONIALS ===== -->
+{% if site_settings.testimonials_enabled and homepage_testimonials %}
+<section class="section testimonials-section" id="testimonials">
+  <div class="container">
+    <h2 class="section__title">What Clients Say</h2>
+    <div class="testimonials-grid">
+      {% for t in homepage_testimonials %}
+      <blockquote class="testimonial-card">
+        <p class="testimonial-card__quote">{{ t.quote }}</p>
+        <footer class="testimonial-card__credit">
+          <strong>{{ t.name }}</strong>{% if t.role %}, {{ t.role }}{% endif %}{% if t.company %} &mdash; {{ t.company }}{% endif %}
+        </footer>
+      </blockquote>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <!-- ===== HOMEPAGE CODA ===== -->
 <section class="homepage-coda">
   <div class="container">

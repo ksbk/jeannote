@@ -87,6 +87,26 @@ def test_site_settings_admin_optional_modules_fieldset_includes_blog_enabled():
     assert "blog_enabled" in optional_section["fields"]
 
 
+def test_site_settings_admin_optional_modules_fieldset_includes_services_enabled():
+    """'Optional modules' fieldset must expose services_enabled."""
+    a = SiteSettingsAdmin(SiteSettings, admin.site)
+    optional_section = next(
+        (options for name, options in a.fieldsets if name == "Optional modules"), None
+    )
+    assert optional_section is not None
+    assert "services_enabled" in optional_section["fields"]
+
+
+def test_site_settings_admin_optional_modules_fieldset_includes_testimonials_enabled():
+    """'Optional modules' fieldset must expose testimonials_enabled."""
+    a = SiteSettingsAdmin(SiteSettings, admin.site)
+    optional_section = next(
+        (options for name, options in a.fieldsets if name == "Optional modules"), None
+    )
+    assert optional_section is not None
+    assert "testimonials_enabled" in optional_section["fields"]
+
+
 # ---------------------------------------------------------------------------
 # SiteSettingsAdmin.changeform_view — site_name blank warning
 # ---------------------------------------------------------------------------

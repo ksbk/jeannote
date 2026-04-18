@@ -8,7 +8,8 @@ import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 
-from apps.projects.models import Project, ProjectImage
+from apps.projects.models import Project, ProjectImage, Testimonial
+from apps.services.models import ServiceItem
 from apps.site.about_defaults import (
     PRACTICE_STRUCTURE_PROMPT,
     PROFESSIONAL_STANDING_PROMPT,
@@ -765,3 +766,113 @@ def test_nav_logo_suppresses_text_and_monogram(client, site_settings, make_uploa
     assert b'class="nav__logo"' in response.content
     assert b"nav__name" not in response.content
     assert b"nav__monogram" not in response.content
+
+
+# ---------------------------------------------------------------------------
+# Homepage — services context (module flag guards)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_homepage_services_context_empty_when_disabled(client, site_settings):
+    site_settings.services_enabled = False
+    site_settings.save()
+    ServiceItem.objects.create(name="Active Svc", short_description="desc", order=1)
+    response = client.get(reverse("pages:home"))
+    assert response.status_code == 200
+    assert response.context["homepage_services"] == []
+
+
+@pytest.mark.django_db
+def test_homepage_services_context_populated_when_enabled(client, site_settings):
+    site_settings.services_enabled = True
+    site_settings.save()
+    ServiceItem.objects.create(name="Strategy Work", short_description="We help.", order=1)
+    response = client.get(reverse("pages:home"))
+    assert response.status_code == 200
+    names = [s.name for s in response.context["homepage_services"]]
+    assert "Strategy Work" in names
+
+
+@pytest.mark.django_db
+def test_homepage_services_excludes_inactive_when_enabled(client, site_settings):
+    site_settings.services_enabled = True
+    site_settings.save()
+    ServiceItem.objects.create(name="Hidden Svc", short_description="nope.", order=1, active=False)
+    response = client.get(reverse("pages:home"))
+    names = [s.name for s in response.context["homepage_services"]]
+    assert "Hidden Svc" not in names
+
+
+@pytest.mark.django_db
+def test_homepage_services_section_visible_when_enabled(client, site_settings):
+    site_settings.services_enabled = True
+    site_settings.save()
+    ServiceItem.objects.create(name="Consulting", short_description="desc.", order=1)
+    response = client.get(reverse("pages:home"))
+    assert b"Consulting" in response.content
+
+
+@pytest.mark.django_db
+def test_homepage_services_section_hidden_when_disabled(client, site_settings):
+    site_settings.services_enabled = False
+    site_settings.save()
+    ServiceItem.objects.create(name="Should Not Appear", short_description="desc.", order=1)
+    response = client.get(reverse("pages:home"))
+    assert b"Should Not Appear" not in response.content
+
+
+# ---------------------------------------------------------------------------
+# Homepage — testimonials context (module flag guards)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_homepage_testimonials_context_empty_when_disabled(client, site_settings):
+    site_settings.testimonials_enabled = False
+    site_settings.save()
+    Testimonial.objects.create(name="Jane", quote="Great work.", order=1, active=True)
+    response = client.get(reverse("pages:home"))
+    assert response.status_code == 200
+    assert response.context["homepage_testimonials"] == []
+
+
+@pytest.mark.django_db
+def test_homepage_testimonials_context_populated_when_enabled(client, site_settings):
+    site_settings.testimonials_enabled = True
+    site_settings.save()
+    Testimonial.objects.create(name="Alice Example", quote="Superb results.", order=1, active=True, project=None)
+    response = client.get(reverse("pages:home"))
+    names = [t.name for t in response.context["homepage_testimonials"]]
+    assert "Alice Example" in names
+
+
+@pytest.mark.django_db
+def test_homepage_testimonials_excludes_project_linked_testimonials(client, site_settings):
+    """Testimonials linked to a project must not appear in the homepage section."""
+    site_settings.testimonials_enabled = True
+    site_settings.save()
+    project = Project.objects.create(title="Bridge", slug="bridge", short_description="x", tags="civic")
+    Testimonial.objects.create(name="Bob", quote="Nice.", order=1, active=True, project=project)
+    response = client.get(reverse("pages:home"))
+    names = [t.name for t in response.context["homepage_testimonials"]]
+    assert "Bob" not in names
+
+
+@pytest.mark.django_db
+def test_homepage_testimonials_section_visible_when_enabled(client, site_settings):
+    site_settings.testimonials_enabled = True
+    site_settings.save()
+    Testimonial.objects.create(name="Claire Doe", quote="Transformative collaboration.", order=1, active=True, project=None)
+    response = client.get(reverse("pages:home"))
+    assert b"Claire Doe" in response.content
+    assert b"Transformative collaboration" in response.content
+
+
+@pytest.mark.django_db
+def test_homepage_testimonials_section_hidden_when_disabled(client, site_settings):
+    site_settings.testimonials_enabled = False
+    site_settings.save()
+    Testimonial.objects.create(name="Hidden Person", quote="Should not appear.", order=1, active=True, project=None)
+    response = client.get(reverse("pages:home"))
+    assert b"Should not appear." not in response.content

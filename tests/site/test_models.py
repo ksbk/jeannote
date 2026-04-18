@@ -168,3 +168,66 @@ def test_site_settings_blog_enabled_defaults_false():
     s = SiteSettings.load()
     assert s.blog_enabled is False
 
+
+# ---------------------------------------------------------------------------
+# SiteSettings — optional module flags
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_site_settings_services_enabled_defaults_false():
+    s = SiteSettings.load()
+    assert s.services_enabled is False
+
+
+@pytest.mark.django_db
+def test_site_settings_testimonials_enabled_defaults_false():
+    s = SiteSettings.load()
+    assert s.testimonials_enabled is False
+
+
+@pytest.mark.django_db
+def test_site_settings_services_enabled_can_be_set():
+    s = SiteSettings.load()
+    s.services_enabled = True
+    s.save()
+    refreshed = SiteSettings.load()
+    assert refreshed.services_enabled is True
+
+
+@pytest.mark.django_db
+def test_site_settings_testimonials_enabled_can_be_set():
+    s = SiteSettings.load()
+    s.testimonials_enabled = True
+    s.save()
+    refreshed = SiteSettings.load()
+    assert refreshed.testimonials_enabled is True
+
+
+# ---------------------------------------------------------------------------
+# ClientProfile
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_client_profile_can_be_created():
+    from apps.site.models import ClientProfile
+    cp = ClientProfile.objects.create(client_name="Acme Studio", website_domain="acme.example.com")
+    assert cp.pk is not None
+    assert cp.is_active is True
+
+
+@pytest.mark.django_db
+def test_client_profile_str():
+    from apps.site.models import ClientProfile
+    cp = ClientProfile.objects.create(client_name="Studio Bravo")
+    assert str(cp) == "Studio Bravo"
+
+
+@pytest.mark.django_db
+def test_client_profile_package_type_choices():
+    from apps.site.models import ClientProfile
+    valid_types = {c[0] for c in ClientProfile.PACKAGE_CHOICES}
+    assert "starter" in valid_types
+    assert "pro" in valid_types
+

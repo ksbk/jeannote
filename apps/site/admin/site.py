@@ -12,7 +12,7 @@ from apps.core.brand import (
 )
 
 from ..management.commands.check_content_readiness import collect_readiness_issues
-from ..models import AboutProfile, SiteSettings, SocialLink
+from ..models import AboutProfile, ClientProfile, SiteSettings, SocialLink
 
 # ---------------------------------------------------------------------------
 # Admin site identity
@@ -104,11 +104,13 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         ),        (
             "Optional modules",
             {
-                "fields": ("blog_enabled",),
+                "fields": ("blog_enabled", "services_enabled", "testimonials_enabled"),
                 "description": (
                     "Optional modules are off by default. Enable them to show the relevant section "
-                    "in public navigation. Only modules with live pages are listed here — additional "
-                    "modules will appear as they are implemented."
+                    "in public navigation, footer, and homepage. Only modules with live pages are "
+                    "listed here — additional modules will appear as they are implemented. "
+                    "Services: add Service items first. Testimonials: add standalone testimonials "
+                    "(without a project link) under Projects → Testimonials."
                 ),
             },
         ),
@@ -342,4 +344,43 @@ class SocialLinkAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Identity", {"fields": ("label", "url", "icon_slug")}),
         ("Display", {"fields": ("order", "active")}),
+    )
+
+
+# ---------------------------------------------------------------------------
+# ClientProfile
+# ---------------------------------------------------------------------------
+
+
+@admin.register(ClientProfile)
+class ClientProfileAdmin(admin.ModelAdmin):
+    list_display = ("client_name", "website_domain", "package_type", "handover_status", "support_status", "is_active")
+    list_filter = ("package_type", "handover_status", "support_status", "is_active")
+    fieldsets = (
+        (
+            "Client",
+            {
+                "fields": ("client_name", "contact_name", "contact_email", "website_domain", "is_active"),
+                "description": (
+                    "Metadata about the business or individual who owns this deployed site. "
+                    "This is for internal tracking only — nothing here appears on any public page."
+                ),
+            },
+        ),
+        (
+            "Package & Status",
+            {
+                "fields": ("package_type", "handover_status", "support_status"),
+                "description": (
+                    "Track which commercial package was purchased and where handover/support stands. "
+                    "Use this to manage ongoing client relationships without leaving the admin."
+                ),
+            },
+        ),
+        (
+            "Notes",
+            {
+                "fields": ("notes",),
+            },
+        ),
     )

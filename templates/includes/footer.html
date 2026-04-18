@@ -46,6 +46,7 @@
     <nav class="footer__nav" aria-label="Footer navigation">
       <ul>
         <li><a href="{% url 'projects:list' %}">Projects</a></li>
+        {% if site_settings.services_enabled %}<li><a href="{% url 'services:list' %}">Services</a></li>{% endif %}
         <li><a href="{% url 'pages:about' %}">About</a></li>
         {% if site_settings.blog_enabled %}<li><a href="{% url 'blog:list' %}">Blog</a></li>{% endif %}
         <li><a href="{% url 'contact:contact' %}">Contact</a></li>

@@ -148,6 +148,22 @@ class SiteSettings(SingletonModel):
         default=False,
         help_text="Show the optional Blog section in public navigation.",
     )
+    services_enabled = models.BooleanField(
+        default=False,
+        help_text=(
+            "Show the Services module in public navigation, footer, and homepage preview. "
+            "Enable this for client sites that offer clearly defined services. "
+            "Add Service items first so the page has content when you enable this."
+        ),
+    )
+    testimonials_enabled = models.BooleanField(
+        default=False,
+        help_text=(
+            "Show a testimonials section on the homepage. "
+            "Testimonials are managed under Projects → Testimonials. "
+            "Only active testimonials without a project association appear in the homepage section."
+        ),
+    )
 
     class Meta:
         verbose_name = "Site Settings"

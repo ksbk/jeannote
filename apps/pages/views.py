@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 
-from apps.projects.models import Project
+from apps.projects.models import Project, Testimonial
 from apps.site.models import AboutProfile, SiteSettings
 
 
@@ -33,6 +33,20 @@ class HomeView(TemplateView):
             site.homepage_closing_text
             or "Ready to discuss a project? Bring a brief, a question, or an early idea."
         )
+
+        if site.services_enabled:
+            from apps.services.models import ServiceItem
+            ctx["homepage_services"] = list(ServiceItem.objects.filter(active=True)[:6])
+        else:
+            ctx["homepage_services"] = []
+
+        if site.testimonials_enabled:
+            ctx["homepage_testimonials"] = list(
+                Testimonial.objects.filter(active=True, project__isnull=True).order_by("order")[:6]
+            )
+        else:
+            ctx["homepage_testimonials"] = []
+
         return ctx
 
 
