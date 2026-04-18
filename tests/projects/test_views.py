@@ -160,6 +160,54 @@ def test_project_list_redirects_category_param_to_tag_param(client, site_setting
 
 
 @pytest.mark.django_db
+def test_project_list_tag_filter_does_not_match_partial_tag(client, site_settings):
+    """?tag=ai must not return a project tagged only 'rail' (substring collision)."""
+    Project.objects.create(
+        title="Rail Project",
+        slug="rail-project",
+        short_description="A rail project.",
+        tags="rail",
+        status="completed",
+    )
+    Project.objects.create(
+        title="AI Project",
+        slug="ai-project",
+        short_description="An AI project.",
+        tags="ai",
+        status="completed",
+    )
+    response = client.get(reverse("projects:list") + "?tag=ai")
+    assert response.status_code == 200
+    titles = [p.title for p in response.context["projects"]]
+    assert "AI Project" in titles
+    assert "Rail Project" not in titles
+
+
+@pytest.mark.django_db
+def test_project_list_tag_filter_does_not_match_superstring(client, site_settings):
+    """?tag=data must not return a project tagged only 'metadata'."""
+    Project.objects.create(
+        title="Metadata Project",
+        slug="metadata-project",
+        short_description="A metadata project.",
+        tags="metadata",
+        status="completed",
+    )
+    Project.objects.create(
+        title="Data Project",
+        slug="data-project",
+        short_description="A data project.",
+        tags="data",
+        status="completed",
+    )
+    response = client.get(reverse("projects:list") + "?tag=data")
+    assert response.status_code == 200
+    titles = [p.title for p in response.context["projects"]]
+    assert "Data Project" in titles
+    assert "Metadata Project" not in titles
+
+
+@pytest.mark.django_db
 def test_project_detail_page(client, site_settings, project):
     url = reverse("projects:detail", kwargs={"slug": project.slug})
     response = client.get(url)

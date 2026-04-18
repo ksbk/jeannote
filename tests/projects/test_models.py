@@ -32,6 +32,24 @@ def test_project_tag_list_empty_when_no_tags():
     assert p.tag_list == []
 
 
+# ---------------------------------------------------------------------------
+# tag_list collision safety
+# ---------------------------------------------------------------------------
+
+@pytest.mark.django_db
+def test_project_tag_list_does_not_partial_match_substring():
+    """'ai' tag must not appear in a project tagged only 'rail'."""
+    p = Project.objects.create(title="Rail Project", tags="rail")
+    assert "ai" not in p.tag_list
+
+
+@pytest.mark.django_db
+def test_project_tag_list_does_not_partial_match_superstring():
+    """'data' tag must not appear in a project tagged only 'metadata'."""
+    p = Project.objects.create(title="Metadata Project", tags="metadata")
+    assert "data" not in p.tag_list
+
+
 @pytest.mark.django_db
 def test_project_get_absolute_url(project):
     url = project.get_absolute_url()
