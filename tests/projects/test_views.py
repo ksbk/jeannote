@@ -233,13 +233,14 @@ def test_project_detail_labels_non_gallery_media_with_truthful_section_heading(
 
 
 @pytest.mark.django_db
-def test_project_detail_cta_prefills_contact_project_type_from_category(
+def test_project_detail_cta_links_to_contact_without_prefill(
     client, site_settings, project
 ):
     response = client.get(reverse("projects:detail", kwargs={"slug": project.slug}))
 
     assert response.status_code == 200
-    assert b'href="/contact/?project_type=Housing"' in response.content
+    assert b'href="/contact/"' in response.content
+    assert b'project_type' not in response.content
 
 
 @pytest.mark.django_db

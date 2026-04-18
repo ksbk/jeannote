@@ -9,12 +9,6 @@ PROJECT_TYPE_CHOICES = [
     ("Other", "Other"),
 ]
 
-PROJECT_CATEGORY_TO_ENQUIRY_TYPE = {
-    "housing": "Housing",
-    "civic": "Civic",
-    "workplace": "Workplace",
-}
-
 SERVICE_SLUG_TO_ENQUIRY_TYPE = {
     "housing": "Housing",
     "residential-design": "Housing",

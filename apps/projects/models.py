@@ -9,8 +9,6 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.text import slugify
 
-from apps.core.enquiry_types import PROJECT_CATEGORY_TO_ENQUIRY_TYPE
-
 # ---------------------------------------------------------------------------
 # Project
 # ---------------------------------------------------------------------------
@@ -147,10 +145,6 @@ class Project(models.Model):
 
     def get_seo_description(self):
         return self.seo_description or self.short_description
-
-    @property
-    def contact_project_type(self) -> str:
-        return PROJECT_CATEGORY_TO_ENQUIRY_TYPE.get(self.category, "Other")
 
     @cached_property
     def preview_gallery_image(self):
