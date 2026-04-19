@@ -47,9 +47,23 @@ uv run python manage.py runserver
 Visit **<http://127.0.0.1:8000>** and confirm the site loads.
 Visit **<http://127.0.0.1:8000/admin>** and log in with the credentials you just created.
 
-`seed_demo` loads the shipped demo dataset: `Site Settings`, `About Profile`,
-three active services, eleven example projects (seven featured), testimonials,
-and the tracked demo-media bundle when available.
+`seed_demo` creates or updates the shipped starter/demo dataset so a fresh install
+renders immediately. It currently seeds:
+
+- `Site Settings` — including the optional-module flags
+- `Brand Settings`
+- `About Profile`
+- four `Service` records
+- three `Research Project` records
+- three `Publication` records
+- one `Resume / CV Profile`
+- one published `Post` for the Writing module
+- eleven example `Project` records (seven featured)
+- four `Testimonial` records: three project-linked and one standalone homepage testimonial
+- the tracked demo-media bundle when available
+
+`seed_demo` does **not** configure production email delivery, production media storage,
+or deployment settings. It is starter content only.
 
 > **Note:** If you run `make check-content` now, you will see several blockers
 > — that is expected. The starter/demo content is intentionally placeholder; the
@@ -85,7 +99,7 @@ That document is the single source of truth for which surfaces are:
 > **Common assumptions to avoid**
 >
 > - Nav labels and routes are not `admin-managed`.
-> - Project categories are fixed in code.
+> - Project tags are `admin-managed`, but the filter behavior and URL/query-param shape are code-defined.
 > - Contact form structure and dropdown choices are code-defined.
 > - Some CTA and editorial strings still require template edits.
 > - Production media and contact delivery require config, not admin content.
@@ -142,7 +156,7 @@ If you do set a page-specific meta description, make sure it matches the current
 studio identity. The launch-readiness check now flags stale per-page metadata
 that still names an old demo studio.
 
-**Social links** (all optional — leave blank to hide the icon):
+**Social links — quick setup path** (all optional):
 
 - `linkedin_url`
 - `instagram_url`
@@ -150,9 +164,35 @@ that still names an old demo studio.
 - `behance_url`
 - `issuu_url`
 
+These inline `Site Settings` URL fields are the fastest setup path and work well if
+you only need simple text links in the footer and contact page.
+
+If you want more controlled social rendering, use **Admin → Social Links** instead:
+
+- create one `Social Link` record per platform
+- set `label`, `url`, and `icon_slug`
+- use this path when you choose Brand Settings → `social_links_display` = `icons` or `icons_text`
+
+When active `Social Link` records exist, the footer uses them in preference to the
+inline URL fields. For icon-based display modes, `icon_slug` must be set on each entry.
+
 **Analytics** (optional):
 
 - `google_analytics_id` — paste your GA4 Measurement ID (e.g. `G-XXXXXXXXXX`)
+
+### Admin → Brand Settings
+
+Use this screen to tune how the current brand is rendered without changing the site
+structure.
+
+| Field | What to enter | Notes |
+| --- | --- | --- |
+| `logo_display_mode` | `auto`, `transparent`, or `safe_card` | Controls the navbar wrapper used around the uploaded logo |
+| `typography_preset` | Choose the closest built-in type pairing | Applied site-wide via CSS custom properties |
+| `color_preset` | Choose a named preset | Controls accent color surfaces such as buttons, borders, and highlights |
+| `accent_color_custom` | Optional 6-digit hex value such as `#B45309` | Only used when `color_preset` is `custom` |
+| `visual_style` | `crisp`, `balanced`, or `soft` | Controls corner rounding across cards, buttons, and images |
+| `social_links_display` | `text`, `icons`, or `icons_text` | `icons` and `icons_text` work best with `Social Link` records that have `icon_slug` set |
 
 ---
 
@@ -202,22 +242,31 @@ Portrait and file options:
 
 ### Admin → Services
 
-Three starter service records are loaded by `seed_demo`. Edit them to match your
+Four starter service records are loaded by `seed_demo`. Edit them to match your
 actual offering, or delete and create your own.
 
 For each service:
 
 | Field | What to enter |
 | --- | --- |
-| `title` | Service name, e.g. "Housing" or "Feasibility Studies" |
-| `summary` | One-sentence description shown on cards (under 250 characters) |
-| `description` | Full explanation of the service |
-| `who_for` | Who this is best suited to, e.g. "Homeowners planning a new build" |
-| `value_proposition` | What the client gains |
-| `deliverables` | One deliverable per line, e.g. "Concept drawings", "Planning submission" |
-| `slug` | Usually leave the prepopulated slug alone — the Services page uses it for section anchors and contact-form prefill mapping |
+| `name` | Service name, e.g. "Briefing & Feasibility" |
+| `short_description` | The short summary shown on service cards and previews |
+| `long_description` | Optional longer explanation shown on the Services page |
 | `order` | Controls display order; lower numbers appear first |
 | `active` | Uncheck to hide a service without deleting it |
+
+### Other optional modules
+
+The optional modules are controlled in **Admin → Site Settings → Optional modules**.
+Starter content is seeded for the modules that are enabled by default, but each module
+still needs to be reviewed and replaced with your own material before launch.
+
+| Module | Admin location | Notes |
+| --- | --- | --- |
+| `Research` | `Admin → Research Projects` | `seed_demo` creates three starter records |
+| `Publications` | `Admin → Publications` | `seed_demo` creates three starter records |
+| `Resume / CV` | `Admin → Resume / CV Profile` | `seed_demo` creates one starter profile |
+| `Blog / Writing` | `Admin → Posts` | `seed_demo` creates one modest published starter post so the route is visible |
 
 ---
 
@@ -236,8 +285,9 @@ For each project:
 | Field | What to enter |
 | --- | --- |
 | `title` | Project name |
+| `slug` | Usually leave the autogenerated slug unless you need a specific URL |
 | `short_description` | 1–2 sentences for cards and search results (under 160 characters ideal) |
-| `category` | `Housing` / `Civic` / `Workplace` |
+| `tags` | Comma-separated tags, e.g. `housing` or `housing, residential` |
 | `status` | Completed / In Progress / Concept / Competition Entry |
 
 ### Metadata
@@ -265,7 +315,11 @@ For each project:
 | Field | What to enter |
 | --- | --- |
 | `cover_image` | Hero image — at least 1600 × 900 px, JPEG or WebP |
-| Project Images (inline) | Gallery images — add as many as needed |
+| `image` (Project Images inline) | Upload each gallery/supporting image |
+| `image_type` | Choose `gallery`, `plan`, `section`, `sketch`, `detail`, or `render` |
+| `caption` | Optional caption shown with the image |
+| `alt_text` | Optional descriptive alt text; recommended for accessibility |
+| `order` | Controls image order within the gallery/supporting media |
 
 ### Display flags
 
@@ -296,7 +350,7 @@ Always run `--dry-run` first:
 uv run python manage.py bootstrap_project \
   --dry-run \
   --title "House Aldea" \
-  --category residential \
+  --tags "housing, residential" \
   --short-description "Private residence on a constrained urban site." \
   --cover /absolute/path/to/cover.jpg \
   --gallery /absolute/path/to/gallery-01.jpg /absolute/path/to/gallery-02.jpg

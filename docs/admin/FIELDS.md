@@ -7,11 +7,13 @@ This file is a table-first reference for the current admin surfaces. It document
 | Admin model | Add/edit rule | Main use |
 | --- | --- | --- |
 | `Site Settings` | Singleton; only one record exists | Global brand, contact, metadata, and homepage controls |
+| `Brand Settings` | Singleton; only one record exists | Visual brand controls: logo treatment, typography, color, shape, and social rendering mode |
 | `About Profile` | Singleton; only one record exists | About page identity, content, portrait, and professional profile |
+| `Social Link` | Multiple records | Structured footer/social links with optional icon support |
 | `Service` | Multiple records | Services page content and ordering |
 | `Project` | Multiple records | Project list/detail content, homepage featured pool, and project SEO |
 | `Project Image` | Inline on `Project` | Project gallery and drawing/media structure |
-| `Testimonial` | Inline on `Project`, also standalone admin | Client quotes on project detail pages (project-linked only; unlinked testimonials are not rendered publicly) |
+| `Testimonial` | Inline on `Project`, also standalone admin | Client quotes on project detail pages and, when unlinked, the optional homepage testimonials section |
 | `Contact Inquiry` | Read-only inbound records; add disabled | Enquiry workflow tracking only |
 
 ## Site Settings
@@ -39,6 +41,12 @@ This file is a table-first reference for the current admin surfaces. It document
 | `contact_response_time` | Public response-time wording on the Contact page and success state | Defaults to `two working days`. Use short human-readable wording such as `24 hours` or `one week`. |
 
 ### Social
+
+These inline URL fields are the quick setup path. They are useful when you only need
+simple text links in the footer and contact page.
+
+If you want icon-based social rendering, use `Social Link` records instead. The footer
+prefers active `Social Link` entries over these inline fields when they exist.
 
 | Field | Public effect | Constraints / notes |
 | --- | --- | --- |
@@ -80,6 +88,47 @@ This file is a table-first reference for the current admin surfaces. It document
 | Homepage fallback warning | Launch readiness warns when no featured projects are selected and the homepage will fall back to ordered projects. |
 | Homepage hero placeholder warning | Launch readiness warns when the current homepage hero source has no cover image, so the hero will use the placeholder background. |
 | Contact notification readiness warning | Launch readiness warns when the internal notification inbox is not configured, even if the public contact page still looks complete. |
+
+## Brand Settings
+
+### Logo Assets
+
+| Field | Public effect | Constraints / notes |
+| --- | --- | --- |
+| `logo_display_mode` | Controls the wrapper/background treatment around the navbar logo | `auto` is the default. `safe_card` adds a padded card-style background for logos that need extra contrast. |
+| `logo_max_width` | Desktop navbar logo width cap | Default `160`. Must stay between `80` and `300`. |
+| `logo_max_width_mobile` | Mobile navbar logo width cap | Default `120`. Must be less than or equal to desktop width. |
+| `logo_light` | Optional light-context logo asset | Falls back to the master `Site Settings.logo` when blank. |
+| `logo_dark` | Optional dark-context logo asset | Falls back to the master logo when blank. |
+| `logo_icon` | Optional square icon asset | Intended for icon/fav-style uses. Falls back to the master logo when blank. |
+
+### Typography, Color, And Shape
+
+| Field | Public effect | Constraints / notes |
+| --- | --- | --- |
+| `typography_preset` | Sets the heading/body type pairing site-wide | Applied through CSS custom properties. |
+| `color_preset` | Sets the accent color system | Named presets are bundled. Use `custom` to unlock `accent_color_custom`. |
+| `accent_color_custom` | Sets a custom accent color | Must be a 6-digit hex color with a leading `#`, e.g. `#B45309`. |
+| `visual_style` | Controls global corner rounding | Affects cards, buttons, and image treatments. |
+
+### Social Links Display
+
+| Field | Public effect | Constraints / notes |
+| --- | --- | --- |
+| `social_links_display` | Controls how footer social links render | `text` works with simple labels. `icons` and `icons_text` require active `Social Link` entries with `icon_slug` populated. |
+
+## Social Links
+
+Use `Social Link` records when you want structured control over order, label, and icon-based
+display. This is the recommended path when Brand Settings uses `icons` or `icons_text`.
+
+| Field | Public effect | Constraints / notes |
+| --- | --- | --- |
+| `label` | Public link label | Used as the visible text label and accessibility label. |
+| `url` | Social destination | Public link target. |
+| `icon_slug` | Optional icon key used by the footer renderer | Required for icon-based display modes. Examples: `linkedin`, `github`, `instagram`. |
+| `order` | Footer ordering | Lower numbers appear first. |
+| `active` | Public visibility | Only active links render. When any active `Social Link` exists, the footer prefers these entries over the legacy inline URL fields. |
 
 ## About Profile
 
@@ -130,13 +179,9 @@ This file is a table-first reference for the current admin surfaces. It document
 
 | Field | Public effect | Constraints / notes |
 | --- | --- | --- |
-| `title` | Service heading and default slug source | Max length `120`. |
-| `slug` | Service section `id` anchor and contact-form prefill mapping key | Prepopulated from title. Non-standard slugs fall back to contact project type `Other`. |
-| `summary` | Service summary text | Max length `250`. |
-| `description` | Main service prose | Omitted when blank. |
-| `who_for` | “Ideal for” row | Omitted when blank. |
-| `value_proposition` | “What you get” row | Omitted when blank. |
-| `deliverables` | Deliverables list | One line per item. Omitted when blank. |
+| `name` | Service heading | Max length `120`. |
+| `short_description` | Service summary text | Used on cards and homepage/service previews. |
+| `long_description` | Extended service prose | Optional. Shown on the Services page below the summary when present. |
 | `order` | Service ordering on the Services page | Lower numbers appear first. |
 | `active` | Public visibility on the Services page | Only active services are listed publicly. |
 
@@ -150,7 +195,7 @@ This file is a table-first reference for the current admin surfaces. It document
 | `slug` | Project URL path | Prepopulated from title; must be unique. |
 | `short_description` | Project card description, project hero description, and SEO fallback | Max length `300`. |
 | `cover_image` | Project detail hero image, project OG image, and homepage hero image source for the first selected homepage project | If blank, the detail page falls back to the first gallery image for hero/share media when one exists; otherwise detail hero switches to the no-image layout. The homepage hero may still use the placeholder if this is the selected hero project and no cover image exists. Use an optimized landscape export because this file is also a likely LCP asset. |
-| `category` | Project list filtering, card metadata, detail-page category label, related-project matching, and detail-page contact CTA prefill | Fixed choices: `Housing`, `Civic`, `Workplace`. |
+| `tags` | Project list filtering, card metadata, detail-page label, and related-project matching | Comma-separated tags. The first tag is used as the visible label on cards and detail pages. |
 | `status` | Project detail metadata row | Fixed choices: `Completed`, `In Progress`, `Concept`, `Competition Entry`. |
 | `featured` | Eligibility for homepage featured-project selection | Homepage prefers featured projects first. |
 | `order` | Ordering in homepage selection, project list, and related-project picking | Lower numbers appear first. |
@@ -177,16 +222,24 @@ This file is a table-first reference for the current admin surfaces. It document
 | `alt_text` | Image alt text | Falls back to `caption`, then project title if blank. |
 | `order` | Image ordering within gallery/drawings | Lower numbers appear first. If `cover_image` is blank, the first gallery image by order becomes the detail hero/share fallback. |
 
-### Testimonial Inline
+### Testimonial Inline / Standalone
 
 | Field | Public effect | Constraints / notes |
 | --- | --- | --- |
-| `name` | Testimonial attribution | Public on project pages. |
+| `name` | Testimonial attribution | Public on project pages and, for standalone testimonials, on the homepage section. |
 | `role` | Testimonial attribution meta | Public when present. |
 | `company` | Testimonial attribution meta | Public when present. |
-| `quote` | Testimonial body | Public on project pages. |
+| `quote` | Testimonial body | Public on project pages and on the homepage when the testimonial is used as a standalone entry. |
 | `order` | Testimonial ordering | Lower numbers appear first. |
-| `active` | Public visibility | Only active testimonials render on the project detail page. |
+| `active` | Public visibility | Inactive testimonials are hidden everywhere. |
+
+### Testimonial Render Rules
+
+| Rule | Current behavior |
+| --- | --- |
+| Project-linked testimonials | Active testimonials linked to a `Project` render on that project’s detail page. |
+| Standalone testimonials | Active testimonials with no linked project may render on the homepage when `Site Settings.testimonials_enabled=True`. |
+| Inactive testimonials | Hidden on both project detail pages and the homepage. |
 
 ## Contact Inquiries
 

@@ -5,7 +5,7 @@ A professional, content-driven portfolio template for developers, designers, res
 > **New here?** See [SETUP.md](SETUP.md) for the buyer-facing setup and customisation checklist.
 > See [docs/admin/CUSTOMIZATION.md](docs/admin/CUSTOMIZATION.md) for the canonical customization matrix and the exact split between `admin-managed`, `env/config-managed — required for launch`, `env/config-managed — optional integration`, `code-only (simple editorial change)`, `code-only (behavior-coupled / risky)`, and `intentionally opinionated` surfaces.
 >
-> **Current stable version:** `v1.1.1`\
+> **Current stable version:** `v1.4.1`\
 > **Status:** Stable\
 > **Stack:** Python `3.13` · Django `5.2 LTS`\
 > **Docs:** [SETUP.md](SETUP.md) · [DEMO.md](DEMO.md) · [docs/admin/CUSTOMIZATION.md](docs/admin/CUSTOMIZATION.md) · [CHANGELOG.md](CHANGELOG.md) · [LICENSE.md](LICENSE.md)\
@@ -39,8 +39,7 @@ currently buyer-editable without touching code or deployment settings.
   footer legal text, and other fixed editorial strings.
 - `code-only (behavior-coupled / risky)`: contact form structure, metadata selection
   logic, and other logic-tied surfaces.
-- `intentionally opinionated`: core navigation, public taxonomy, route structure, and the
-  design system.
+- `intentionally opinionated`: core navigation, route structure, and the design system.
 
 The canonical source of truth is [docs/admin/CUSTOMIZATION.md](docs/admin/CUSTOMIZATION.md).
 
@@ -77,7 +76,7 @@ Sentry and similar tooling are optional integrations, not launch blockers.
 Some buyer-visible surfaces are not yet `admin-managed`:
 
 - nav labels and footer nav labels
-- project taxonomy and filter behavior
+- project filter behavior and query params
 - contact form structure and dropdown choices
 - some CTA labels and editorial strings across home, projects, contact, and privacy
 - share-image precedence and metadata logic
@@ -87,7 +86,7 @@ See [docs/admin/CUSTOMIZATION.md](docs/admin/CUSTOMIZATION.md) for the detailed 
 > **Common assumptions to avoid**
 >
 > - Nav labels and routes are not `admin-managed`.
-> - Project categories are fixed in code.
+> - Project tags are `admin-managed`, but the filter behavior and URL/query-param shape are code-defined.
 > - Contact form structure and dropdown choices are code-defined.
 > - Some CTA and editorial strings still require template edits.
 > - Production media and contact delivery require config, not admin content.
@@ -507,6 +506,9 @@ Six custom commands handle content bootstrap, media import, and readiness checki
 
 > `seed_demo` is idempotent and loads the shipped starter/demo dataset — it is safe to
 > run on a fresh production database to get the site rendering immediately.
+> On `v1.4.1`, that starter dataset includes `Site Settings`, `Brand Settings`,
+> `About Profile`, Services, Research Projects, Publications, a Resume profile,
+> one published Writing post, Projects, Testimonials, and tracked demo media when available.
 > `check_content_readiness` will continue to flag that demo content until you replace it.
 > It will update existing records if re-run, so avoid running it after you have replaced
 > starter/demo content with your own real content.

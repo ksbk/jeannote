@@ -10,6 +10,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.test import override_settings
 
+from apps.blog.models import Post
 from apps.projects.models import Project, Testimonial
 from apps.site.about_defaults import (
     CLOSING_INVITATION_DEFAULT,
@@ -402,6 +403,27 @@ def test_seed_demo_sets_coherent_about_demo_defaults_without_forcing_non_portrai
         "About Demo Portfolio Studio, the studio approach, experience, and professional profile."
     )
     assert about.portrait_mode == AboutProfile.PortraitMode.TEXT_ONLY
+
+
+@pytest.mark.django_db
+def test_seed_demo_aligns_enabled_blog_and_homepage_testimonials_with_visible_demo_content():
+    call_command("seed_demo")
+    call_command("seed_demo")
+
+    site = SiteSettings.load()
+
+    assert site.blog_enabled is True
+    assert Post.objects.filter(
+        slug="notes-on-practice-and-process",
+        is_published=True,
+    ).count() == 1
+
+    assert site.testimonials_enabled is True
+    assert Testimonial.objects.filter(
+        name="Jordan Reed",
+        project__isnull=True,
+        active=True,
+    ).count() == 1
 
 
 @pytest.mark.django_db

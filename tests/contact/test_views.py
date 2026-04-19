@@ -68,6 +68,25 @@ def test_contact_pages_use_configured_response_time_copy(client, site_settings):
 
 
 @pytest.mark.django_db
+def test_contact_page_hides_optional_contact_details_when_visibility_controls_disabled(client, site_settings):
+    site_settings.contact_email = "contact@example.com"
+    site_settings.phone = "+354 555 0101"
+    site_settings.location = "Reykjavik, Iceland"
+    site_settings.show_email = False
+    site_settings.show_phone = False
+    site_settings.show_location = False
+    site_settings.save()
+
+    response = client.get(reverse("contact:contact"))
+
+    assert response.status_code == 200
+    assert b"contact@example.com" not in response.content
+    assert b"+354 555 0101" not in response.content
+    assert b"Reykjavik, Iceland" not in response.content
+    assert b"For urgent matters" not in response.content
+
+
+@pytest.mark.django_db
 def test_contact_prefills_project_type_from_query_param(client, site_settings):
     response = client.get(reverse("contact:contact") + "?project_type=Housing")
     assert response.status_code == 200

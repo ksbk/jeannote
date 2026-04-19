@@ -71,8 +71,8 @@ The `recommended action` column means:
 | Services CTA labels | services template | `code-only (simple editorial change)` | medium | document clearly | `Enquire About This Service` and `Get in Touch`. |
 | Service CTA prefill behavior | service slug plus built-in slug map | `code-only (behavior-coupled / risky)` | high | refactor before sale | Slugs are not cosmetic; changing them affects contact-form prefill behavior. |
 | Projects list page hero strings | projects list template | `code-only (simple editorial change)` | medium | document clearly | `Portfolio` and `Projects`. |
-| Project categories and taxonomy labels | `Project.CATEGORY_CHOICES` | `intentionally opinionated` | high | keep opinionated | Fixed to `Housing`, `Civic`, and `Workplace`. |
-| Project filter behavior and query params | projects model and view logic | `intentionally opinionated` | high | keep opinionated | Category logic is application behavior, not content. |
+| Project tags and visible labels | `Project.tags` | `admin-managed` | medium | leave as-is | Buyers can set comma-separated tags in admin. The first tag becomes the visible label on cards and detail pages. |
+| Project filter behavior and query params | projects model and view logic | `intentionally opinionated` | medium | keep opinionated | Filter interaction and URL/query-param behavior are application logic, even though the tag content is admin-managed. |
 | Projects list cards content and images | `Project` fields and media | `admin-managed` | low | leave as-is | Titles, descriptions, years, locations, and images. |
 | Projects list empty-state text | projects list template | `code-only (simple editorial change)` | medium | document clearly | `No projects found in this category.` |
 | Projects list pagination labels | projects list template | `code-only (simple editorial change)` | low | leave as-is | `Previous`, `Next`, and `Page X of Y`. |
@@ -110,7 +110,7 @@ The `recommended action` column means:
 
 - The site looks more admin-editable than it really is. Nav labels, several CTA labels,
   privacy copy, contact copy, and multiple editorial strings are still template-level.
-- Project categories are not seeded demo content. They are fixed product taxonomy.
+- Project tags are content-managed, but the filter logic and URL/query-param behavior are still code-defined.
 - Service slugs are not just cosmetic. They affect contact-form prefill behavior.
 - The public contact page can look complete while internal contact delivery is still
   unconfigured if `CONTACT_EMAIL` and SMTP settings are missing.
@@ -124,7 +124,6 @@ The `recommended action` column means:
 These are deliberate product choices in the current version of Kusse Folio:
 
 - the core information architecture: `Projects`, `About`, `Services`, `Contact`
-- the architecture-specific public taxonomy: `Housing`, `Civic`, and `Workplace`
 - the overall design system, layout language, and route structure
 - CTA destinations that reinforce the primary site flow
 
@@ -152,7 +151,7 @@ These do not block launch:
 ## Common Assumptions To Avoid
 
 - Nav labels and routes are not `admin-managed`.
-- Project categories are fixed in code.
+- Project tags are `admin-managed`, but the filter behavior and URL/query-param shape are code-defined.
 - Contact form structure and dropdown choices are code-defined.
 - Some CTA and editorial strings still require template edits.
 - Production media and contact delivery require config, not admin content.

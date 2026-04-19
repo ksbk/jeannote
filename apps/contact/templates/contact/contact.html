@@ -108,28 +108,28 @@
           <h2 class="contact-process__title">What to expect</h2>
           <p class="contact-process__intro">
             The practice reviews each enquiry directly.
-            {% if site_settings.phone and site_settings.contact_email %}
+            {% if site_settings.show_phone and site_settings.phone and site_settings.show_email and site_settings.contact_email %}
             For urgent matters, reach out directly.
-            {% elif site_settings.contact_email %}
+            {% elif site_settings.show_email and site_settings.contact_email %}
             For urgent matters, email directly.
-            {% elif site_settings.phone %}
+            {% elif site_settings.show_phone and site_settings.phone %}
             For urgent matters, call directly.
             {% endif %}
           </p>
           <div class="contact-info">
-            {% if site_settings.contact_email %}
+            {% if site_settings.show_email and site_settings.contact_email %}
             <p>
               <span class="contact-info__label">Email</span>
               <a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a>
             </p>
             {% endif %}
-            {% if site_settings.phone %}
+            {% if site_settings.show_phone and site_settings.phone %}
             <p>
               <span class="contact-info__label">Phone</span>
               <a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a>
             </p>
             {% endif %}
-            {% if site_settings.location %}
+            {% if site_settings.show_location and site_settings.location %}
             <p>
               <span class="contact-info__label">Studio</span>
               <span>{{ site_settings.location }}</span>
@@ -159,7 +159,7 @@
 
 <section class="contact-close-strip">
   <div class="container">
-    <p class="contact-close-strip__note">{% if site_settings.location %}{{ site_settings.location }} · {% endif %}Enquiries reviewed within {{ site_settings.contact_response_time|default:"two working days" }}</p>
+    <p class="contact-close-strip__note">{% if site_settings.show_location and site_settings.location %}{{ site_settings.location }} · {% endif %}Enquiries reviewed within {{ site_settings.contact_response_time|default:"two working days" }}</p>
   </div>
 </section>
 

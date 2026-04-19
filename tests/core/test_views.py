@@ -16,6 +16,8 @@ def test_admin_login_page_resolves(client):
 @pytest.mark.django_db
 def test_sitemap_returns_200(client, site_settings, project):
     """Sitemap renders with a project present so ProjectSitemap.lastmod/location are exercised."""
+    site_settings.blog_enabled = True
+    site_settings.save()
     response = client.get("/sitemap.xml")
     assert response.status_code == 200
     assert b"urlset" in response.content
@@ -38,7 +40,6 @@ def test_robots_txt_returns_200(client, site_settings):
         "/about/",
         "/privacy/",
         "/projects/",
-        "/writing/",
         "/contact/",
     ],
 )
@@ -50,6 +51,31 @@ def test_shared_shell_landmarks_present_on_primary_public_routes(client, site_se
     assert b'id="site-header"' in response.content
     assert b'<main id="main-content">' in response.content
     assert b'class="site-footer"' in response.content
+
+
+@pytest.mark.django_db
+def test_shared_shell_landmarks_present_on_blog_route_when_blog_enabled(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
+
+    response = client.get("/writing/")
+
+    assert response.status_code == 200
+    assert b'class="skip-link"' in response.content
+    assert b'id="site-header"' in response.content
+    assert b'<main id="main-content">' in response.content
+    assert b'class="site-footer"' in response.content
+
+
+@pytest.mark.django_db
+def test_sitemap_excludes_blog_route_when_blog_module_disabled(client, site_settings, project):
+    site_settings.blog_enabled = False
+    site_settings.save()
+
+    response = client.get("/sitemap.xml")
+
+    assert response.status_code == 200
+    assert b"/writing/" not in response.content
 
 
 @pytest.mark.django_db

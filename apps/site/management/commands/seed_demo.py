@@ -1,15 +1,17 @@
 """
 Management command: python manage.py seed_demo
 
-Seeds a complete set of generic starter content: SiteSettings, AboutProfile,
-Services, and placeholder projects so the site renders immediately after setup.
+Seeds a complete generic starter dataset so a fresh install renders immediately.
+The command creates or updates SiteSettings (including optional-module flags),
+BrandSettings, AboutProfile, Services, Research Projects, Publications,
+ResumeProfile, a modest published blog post, Projects, and Testimonials.
 
 This is your starting point — use it to see a working site, then replace
 content with your own via the admin. All copy uses generic placeholders;
 nothing is specific to any individual or region.
 
-Idempotent — safe to re-run (uses get_or_create / update, duplicate detection
-for cover images and gallery images).
+Idempotent — safe to re-run (uses get_or_create / update, plus duplicate
+detection for cover images and gallery images).
 
 Optional flag
 -------------
@@ -33,11 +35,13 @@ Missing individual files warn and continue; an invalid PATH errors immediately.
 
 import os
 import re
+from datetime import date
 from pathlib import Path
 
 from django.core.files import File
 from django.core.management.base import BaseCommand, CommandError
 
+from apps.blog.models import Post
 from apps.projects.models import Project, ProjectImage, Testimonial
 from apps.publications.models import Publication
 from apps.research.models import ResearchProject
@@ -419,7 +423,7 @@ PROJECTS = [
     },
 ]
 
-TESTIMONIALS = [
+TESTIMONIALS: list[dict[str, str | int | None]] = [
     {
         "name": "Sarah & Mark L.",
         "role": "Private Clients",
@@ -459,14 +463,44 @@ TESTIMONIALS = [
         "project_slug": "commercial-office-conversion",
         "order": 3,
     },
+    {
+        "name": "Jordan Reed",
+        "role": "Founder",
+        "company": "Northline Advisory",
+        "quote": (
+            "The process was calm, clear, and well structured. "
+            "The site gave us a professional starting point without making the content "
+            "feel over-produced."
+        ),
+        "project_slug": None,
+        "order": 4,
+    },
+]
+
+BLOG_POSTS: list[dict[str, str | date | bool]] = [
+    {
+        "title": "Notes on Practice and Process",
+        "slug": "notes-on-practice-and-process",
+        "summary": (
+            "A short starter post used to make the Writing module visible on a fresh install."
+        ),
+        "body": (
+            "This starter post exists to show how the Writing module renders on first run.\n\n"
+            "Replace it with your own note, article, or case-study reflection when the site "
+            "moves beyond the demo dataset."
+        ),
+        "published_date": date(2024, 10, 1),
+        "is_published": True,
+        "tags": "practice, process",
+    }
 ]
 
 
 class Command(BaseCommand):
     help = (
-        "Seed generic starter content: SiteSettings, AboutProfile, and example "
-        "Projects with placeholder testimonials. Use as your starting point and replace "
-        "content via admin. Idempotent — safe to re-run."
+        "Seed generic starter content for a fresh install: site settings, brand "
+        "settings, optional-module starter records, projects, blog, and testimonials. "
+        "Use as your starting point and replace content via admin. Idempotent — safe to re-run."
     )
 
     def add_arguments(self, parser):
@@ -501,6 +535,7 @@ class Command(BaseCommand):
         self._seed_research()
         self._seed_publications()
         self._seed_resume()
+        self._seed_blog()
         self._seed_projects()
         self._seed_testimonials()
 
@@ -737,6 +772,25 @@ class Command(BaseCommand):
         profile.save()
         action = "Created" if created else "Updated"
         self.stdout.write(f"  {action} ResumeProfile")
+
+    def _seed_blog(self):
+        created_count = 0
+        for item in BLOG_POSTS:
+            post, created = Post.objects.get_or_create(
+                slug=item["slug"],
+                defaults={"title": item["title"]},
+            )
+            for key, value in item.items():
+                if key != "slug":
+                    setattr(post, key, value)
+            post.save()
+            if created:
+                created_count += 1
+        existing = len(BLOG_POSTS) - created_count
+        if created_count:
+            self.stdout.write(f"  Created {created_count} Post(s)")
+        if existing:
+            self.stdout.write(f"  Skipped {existing} Post(s) (already exist)")
 
     def _seed_about(self):
         profile, created = AboutProfile.objects.get_or_create(pk=1)

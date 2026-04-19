@@ -45,12 +45,16 @@ def _draft_post(**kwargs) -> Post:
 
 @pytest.mark.django_db
 def test_writing_list_returns_200(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     response = client.get(reverse("blog:list"))
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
 def test_writing_list_shows_published_posts(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     _published_post(title="First Post", slug="first-post")
     response = client.get(reverse("blog:list"))
     assert b"First Post" in response.content
@@ -58,6 +62,8 @@ def test_writing_list_shows_published_posts(client, site_settings):
 
 @pytest.mark.django_db
 def test_writing_list_excludes_draft_posts(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     _draft_post(title="Secret Draft", slug="secret-draft")
     response = client.get(reverse("blog:list"))
     assert b"Secret Draft" not in response.content
@@ -65,6 +71,8 @@ def test_writing_list_excludes_draft_posts(client, site_settings):
 
 @pytest.mark.django_db
 def test_writing_list_shows_empty_state_when_no_posts(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     response = client.get(reverse("blog:list"))
     assert response.status_code == 200
     assert b"No posts published yet" in response.content
@@ -72,6 +80,8 @@ def test_writing_list_shows_empty_state_when_no_posts(client, site_settings):
 
 @pytest.mark.django_db
 def test_writing_list_shows_summary(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     _published_post(summary="This is the summary text.")
     response = client.get(reverse("blog:list"))
     assert b"This is the summary text." in response.content
@@ -79,6 +89,8 @@ def test_writing_list_shows_summary(client, site_settings):
 
 @pytest.mark.django_db
 def test_writing_list_orders_by_published_date_descending(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     _published_post(
         title="Older Post",
         slug="older-post",
@@ -101,6 +113,8 @@ def test_writing_list_orders_by_published_date_descending(client, site_settings)
 
 @pytest.mark.django_db
 def test_post_detail_returns_200_for_published_post(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     post = _published_post()
     response = client.get(reverse("blog:detail", kwargs={"slug": post.slug}))
     assert response.status_code == 200
@@ -108,6 +122,8 @@ def test_post_detail_returns_200_for_published_post(client, site_settings):
 
 @pytest.mark.django_db
 def test_post_detail_returns_404_for_draft(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     post = _draft_post()
     response = client.get(reverse("blog:detail", kwargs={"slug": post.slug}))
     assert response.status_code == 404
@@ -115,6 +131,8 @@ def test_post_detail_returns_404_for_draft(client, site_settings):
 
 @pytest.mark.django_db
 def test_post_detail_renders_title_and_body(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     post = _published_post(title="My Essay", body="Essay body here.")
     response = client.get(reverse("blog:detail", kwargs={"slug": post.slug}))
     assert b"My Essay" in response.content
@@ -123,6 +141,8 @@ def test_post_detail_renders_title_and_body(client, site_settings):
 
 @pytest.mark.django_db
 def test_post_detail_renders_tags(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     post = _published_post(tags="design, process")
     response = client.get(reverse("blog:detail", kwargs={"slug": post.slug}))
     assert b"design" in response.content
@@ -131,9 +151,24 @@ def test_post_detail_renders_tags(client, site_settings):
 
 @pytest.mark.django_db
 def test_post_detail_breadcrumb_links_to_list(client, site_settings):
+    site_settings.blog_enabled = True
+    site_settings.save()
     post = _published_post()
     response = client.get(reverse("blog:detail", kwargs={"slug": post.slug}))
     assert b"/writing/" in response.content
+
+
+@pytest.mark.django_db
+def test_writing_routes_return_404_when_blog_module_disabled(client, site_settings):
+    site_settings.blog_enabled = False
+    site_settings.save()
+    post = _published_post()
+
+    list_response = client.get(reverse("blog:list"))
+    detail_response = client.get(reverse("blog:detail", kwargs={"slug": post.slug}))
+
+    assert list_response.status_code == 404
+    assert detail_response.status_code == 404
 
 
 # ---------------------------------------------------------------------------
