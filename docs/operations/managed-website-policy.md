@@ -5,6 +5,25 @@
 
 ---
 
+## Infrastructure map
+
+| Layer | Technology | Who manages |
+|---|---|---|
+| Code | GitHub | Kusse Studio |
+| Runs the website/app | Railway | Kusse Studio |
+| Stores website data | Postgres | Kusse Studio |
+| Stores uploaded images/files | Cloudinary (or equivalent) | Kusse Studio |
+| Public address | Domain / DNS | Client |
+| Content, brand, business data | Admin / export | Client |
+
+For non-technical clients, they do not need to manage GitHub, Railway,
+Cloudinary, or any deployment details. Kusse Studio handles the engine room.
+The client handles the front door and what goes inside.
+
+Handover and export rights remain documented and available at any time.
+
+---
+
 ## Purpose
 
 This document defines the default operating model for Kusse Studio managed
