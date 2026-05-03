@@ -15,18 +15,10 @@
 <section class="page-hero page-hero--short page-hero--service">
   <div class="container">
     <p class="page-hero__label">Website Service</p>
-    <h1 class="page-hero__title">Professional Website Setup</h1>
-    <p class="page-hero__subtitle">Get a clean, modern, mobile-friendly website — built and deployed for you.</p>
-  </div>
-</section>
-
-<!-- Intro -->
-<section class="section ws-intro">
-  <div class="container ws-intro__layout">
-    <div class="ws-intro__body prose">
-      <p class="ws-intro__lead">This is a service, not just a template.</p>
-      <p>You don't need to learn code, hosting, or design. I handle everything and deliver a working site.</p>
-    </div>
+    <h1 class="page-hero__title">Your website, built and delivered.</h1>
+    <p class="page-hero__subtitle">Clean, modern, mobile-ready — I handle everything from design to deployment.</p>
+    <p class="ws-hero__support">For researchers, consultants, freelancers, and small businesses.</p>
+    <a href="{% url 'contact:contact' %}" class="btn btn--primary">Request a website quote</a>
   </div>
 </section>
 
@@ -109,6 +101,7 @@
 
       <article class="ws-tier ws-tier--featured">
         <p class="ws-tier__label">Starter website</p>
+        <!-- badge text updated in CSS -->
         <p class="ws-tier__price">From 150,000 ISK</p>
         <p class="ws-tier__desc">Full simple website — home, about, contact, basic content</p>
       </article>
@@ -120,6 +113,31 @@
       </article>
 
     </div>
+    <div class="ws-pricing__cta">
+      <a href="{% url 'contact:contact' %}" class="btn btn--primary">Request a website quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- Proof -->
+<section class="section section--tinted ws-proof">
+  <div class="container">
+    <header class="section__header">
+      <p class="section__label">Proof</p>
+      <h2 class="section__title">Live work</h2>
+      <p class="section__subheading">Built by Kusse Sukuta Bersha, a Django developer and researcher based in Iceland.</p>
+    </header>
+    <div class="ws-proof__cards">
+
+      <div class="ws-proof-card ws-proof-card--live">
+        <p class="ws-proof-card__status">Live</p>
+        <p class="ws-proof-card__name">Jat21.com</p>
+        <p class="ws-proof-card__desc">Architectural business website — live and in use.</p>
+        <a href="https://jat21.com" class="btn btn--outline" target="_blank" rel="noopener noreferrer">Visit site</a>
+      </div>
+
+    </div>
+    <p class="ws-proof__in-progress">Academic portfolio example in progress: drkusse.com.</p>
   </div>
 </section>
 
@@ -141,32 +159,6 @@
   </div>
 </section>
 
-<!-- Proof -->
-<section class="section section--tinted ws-proof">
-  <div class="container">
-    <header class="section__header">
-      <p class="section__label">Proof</p>
-      <h2 class="section__title">Live work</h2>
-    </header>
-    <div class="ws-proof__cards">
-
-      <div class="ws-proof-card ws-proof-card--live">
-        <p class="ws-proof-card__status">Live</p>
-        <p class="ws-proof-card__name">Jat21.com</p>
-        <p class="ws-proof-card__desc">Architectural business website — live and in use.</p>
-        <a href="https://jat21.com" class="btn btn--outline" target="_blank" rel="noopener noreferrer">Visit site</a>
-      </div>
-
-      <div class="ws-proof-card ws-proof-card--progress">
-        <p class="ws-proof-card__status">In progress</p>
-        <p class="ws-proof-card__name">drkusse.com</p>
-        <p class="ws-proof-card__desc">Academic and research portfolio — publications, research, CV.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- CTA -->
 <section class="section cta-section">
   <div class="container">
@@ -179,7 +171,7 @@
         No retainer. No surprises. Clear delivery.
       </p>
       <div class="cta-section__actions">
-        <a href="{% url 'contact:contact' %}" class="btn btn--primary btn--large">Get in touch</a>
+        <a href="{% url 'contact:contact' %}" class="btn btn--primary btn--large">Tell me about your project</a>
       </div>
     </div>
   </div>
