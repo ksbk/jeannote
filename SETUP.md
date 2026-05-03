@@ -22,6 +22,9 @@ uv sync --group dev
 cp .env.example .env
 ```
 
+This copy step is required before running tests, type checks, or Django management
+commands. A missing `.env` (or missing `SECRET_KEY`) will fail local health checks.
+
 Open `.env` and set `SECRET_KEY`:
 
 ```bash
