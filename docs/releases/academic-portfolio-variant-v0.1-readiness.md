@@ -28,6 +28,22 @@ Date: 2026-05-03
 
 - Local preflight depends on a valid `.env` file that sets `SECRET_KEY`.
 
+## Staging Smoke Test
+
+- Status: **PENDING** — no staging deployment exists for this variant branch yet
+- Smoke-test command: `DEPLOY_URL=https://<railway-domain> make smoke-prod`
+- Required env vars before deploy (Railway project settings):
+  - `SECRET_KEY` — generate with `uv run python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`
+  - `DJANGO_SETTINGS_MODULE=config.settings.prod`
+  - `ALLOWED_HOSTS=<railway-domain>`
+  - `CSRF_TRUSTED_ORIGINS=https://<railway-domain>`
+  - `DATABASE_URL` — from Railway Postgres plugin
+  - `EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend` (staging)
+  - `CONTACT_EMAIL=<monitored inbox>`
+- Deploy command: `railway up --detach` from branch `feat/academic-portfolio-variant-v0.1`
+- Next action: deploy to Railway, run `make smoke-prod`, record result here
+
 ## Decision
 
 - **Conditionally ready for client/service delivery**: `make preflight` passes when `.env` exists with a real `SECRET_KEY`. No code changes to application behavior were required. The env loading architecture (Option A) was already correct.
+- Upgrade to **full GO** after staging smoke test passes.
