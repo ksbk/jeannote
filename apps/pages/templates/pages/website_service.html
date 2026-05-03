@@ -13,12 +13,21 @@
 
 <!-- Hero -->
 <section class="page-hero page-hero--short page-hero--service">
-  <div class="container">
-    <p class="page-hero__label">Website Service</p>
-    <h1 class="page-hero__title">Your website, built and delivered.</h1>
-    <p class="page-hero__subtitle">Clean, modern, mobile-ready — I handle everything from design to deployment.</p>
-    <p class="ws-hero__support">For researchers, consultants, freelancers, and small businesses.</p>
-    <a href="{% url 'contact:contact' %}" class="btn btn--primary">Request a website quote</a>
+  <div class="container ws-hero__layout">
+    <div class="ws-hero__content">
+      <p class="page-hero__label">Website Service</p>
+      <h1 class="page-hero__title">Your website, built and delivered.</h1>
+      <p class="page-hero__subtitle">Clean, modern, mobile-ready — I handle everything from design to deployment.</p>
+      <p class="ws-hero__support">For researchers, consultants, freelancers, and small businesses.</p>
+      <a href="{% url 'contact:contact' %}" class="btn btn--primary btn--large">Request a website quote</a>
+    </div>
+    <aside class="ws-hero__callout" aria-hidden="true">
+      <p class="ws-hero__callout-price">Starter websites from 150,000 ISK</p>
+      <ul class="ws-hero__callout-list">
+        <li>Typical delivery: 1–2 weeks after content is ready</li>
+        <li>Fixed scope. Clear price. Live deployment.</li>
+      </ul>
+    </aside>
   </div>
 </section>
 
@@ -100,8 +109,7 @@
       </article>
 
       <article class="ws-tier ws-tier--featured">
-        <p class="ws-tier__label">Starter website</p>
-        <!-- badge text updated in CSS -->
+        <p class="ws-tier__label">Starter website <span class="ws-tier__badge">Best start</span></p>
         <p class="ws-tier__price">From 150,000 ISK</p>
         <p class="ws-tier__desc">Full simple website — home, about, contact, basic content</p>
       </article>
@@ -125,11 +133,13 @@
     <header class="section__header">
       <p class="section__label">Proof</p>
       <h2 class="section__title">Live work</h2>
-      <p class="section__subheading">Built by Kusse Sukuta Bersha, a Django developer and researcher based in Iceland.</p>
     </header>
     <div class="ws-proof__cards">
 
       <div class="ws-proof-card ws-proof-card--live">
+        <div class="ws-proof-card__preview" aria-hidden="true">
+          <span class="ws-proof-card__preview-label">jat21.com</span>
+        </div>
         <p class="ws-proof-card__status">Live</p>
         <p class="ws-proof-card__name">Jat21.com</p>
         <p class="ws-proof-card__desc">Architectural business website — live and in use.</p>
@@ -137,6 +147,7 @@
       </div>
 
     </div>
+    <p class="ws-proof__identity">Built by Kusse Sukuta Bersha, a Django developer and researcher based in Iceland.</p>
     <p class="ws-proof__in-progress">Academic portfolio example in progress: drkusse.com.</p>
   </div>
 </section>
@@ -160,7 +171,7 @@
 </section>
 
 <!-- CTA -->
-<section class="section cta-section">
+<section class="section cta-section ws-cta--dark">
   <div class="container">
     <div class="cta-section__inner">
       <p class="section__label">Get started</p>
