@@ -16,20 +16,16 @@
   <div class="container ws-hero__layout">
     <div class="ws-hero__content">
       <p class="page-hero__label">Website Service</p>
-      <h1 class="page-hero__title">Your website, built and delivered.</h1>
-      <p class="page-hero__subtitle">Clean, modern, mobile-ready — I handle everything from design to deployment.</p>
-      <p class="ws-hero__support">For researchers, consultants, freelancers, and small businesses.</p>
-      <a href="{% url 'contact:contact' %}" class="btn btn--primary btn--large">Request a website quote</a>
+      <h1 class="page-hero__title">Your website, built and live.</h1>
+      <p class="page-hero__subtitle">Clean, modern, mobile-ready &mdash; I handle <strong>everything</strong> from design to deployment.</p>
+      <a href="{% url 'contact:contact' %}" class="btn btn--primary btn--large">Tell me about your project</a>
       <p class="ws-hero__support">Based in Iceland. Delivered remotely.</p>
+      <p class="ws-hero__mobile-price">Starter websites from €1,050.</p>
     </div>
     <aside class="ws-hero__callout" aria-hidden="true">
-      <p class="ws-hero__callout-price">Starter websites from 150,000 ISK</p>
-      <ul class="ws-hero__callout-list">
-        <li>Typical delivery: 1–2 weeks after content is ready</li>
-        <li>Fixed scope. Clear price. No surprises</li>
-        <li>You own everything</li>
-        <li>Live on the internet (not just a draft)</li>
-      </ul>
+      <p class="ws-hero__callout-label">Starter website</p>
+      <p class="ws-hero__callout-price">€1,050</p>
+      <p class="ws-hero__callout-tagline">Fixed scope. Live in 1–2 weeks.</p>
     </aside>
   </div>
 </section>
@@ -58,39 +54,29 @@
       <p class="section__label">What you get</p>
       <h2 class="section__title">Everything to go live</h2>
     </header>
-    <ul class="ws-deliverables__grid">
-      <li class="ws-deliverable">
-        <span class="ws-deliverable__title">Clean, professional design</span>
-        <span class="ws-deliverable__desc">Desktop and mobile</span>
-      </li>
-      <li class="ws-deliverable">
-        <span class="ws-deliverable__title">About page</span>
-        <span class="ws-deliverable__desc">Your story, profile, credentials</span>
-      </li>
-      <li class="ws-deliverable">
-        <span class="ws-deliverable__title">Projects or services section</span>
-        <span class="ws-deliverable__desc">Showcase what you do</span>
-      </li>
-      <li class="ws-deliverable">
-        <span class="ws-deliverable__title">Contact form</span>
-        <span class="ws-deliverable__desc">With email notifications and admin tracking</span>
-      </li>
-      <li class="ws-deliverable">
-        <span class="ws-deliverable__title">Basic SEO</span>
-        <span class="ws-deliverable__desc">Titles, meta descriptions, sitemap, robots.txt</span>
-      </li>
-      <li class="ws-deliverable">
+    <ul class="ws-deliverables__primary">
+      <li class="ws-deliverable ws-deliverable--primary">
         <span class="ws-deliverable__title">Full deployment</span>
         <span class="ws-deliverable__desc">Your site is live, not just built</span>
       </li>
-      <li class="ws-deliverable">
-        <span class="ws-deliverable__title">Admin access</span>
-        <span class="ws-deliverable__desc">Update content yourself</span>
+      <li class="ws-deliverable ws-deliverable--primary">
+        <span class="ws-deliverable__title">Clean, professional design</span>
+        <span class="ws-deliverable__desc">Desktop and mobile — built to represent you</span>
       </li>
-      <li class="ws-deliverable">
-        <span class="ws-deliverable__title">One revision after launch</span>
-        <span class="ws-deliverable__desc">Included</span>
+      <li class="ws-deliverable ws-deliverable--primary">
+        <span class="ws-deliverable__title">Contact form + admin access</span>
+        <span class="ws-deliverable__desc">Email notifications, admin tracking, update content yourself</span>
       </li>
+      <li class="ws-deliverable ws-deliverable--primary">
+        <span class="ws-deliverable__title">Search-ready from day one</span>
+        <span class="ws-deliverable__desc">Titles, meta descriptions, sitemap, robots.txt</span>
+      </li>
+    </ul>
+    <p class="ws-deliverables__also-label">Also included</p>
+    <ul class="ws-deliverables__secondary">
+      <li>About page — your story, profile, credentials</li>
+      <li>Projects or services section</li>
+      <li>Post-launch revision — one round of changes included</li>
     </ul>
   </div>
 </section>
@@ -100,42 +86,49 @@
   <div class="container">
     <header class="section__header">
       <p class="section__label">Pricing</p>
-      <h2 class="section__title">Transparent, fixed pricing</h2>
-      <p class="section__subheading">All prices in ISK, excluding VAT. Final quote confirmed before work begins.</p>
-      <p class="section__subheading">Most clients start with the Starter Website.</p>
+      <h2 class="section__title">Transparent starting prices</h2>
+      <p class="section__subheading">Every project is different, but these starting prices help you understand the likely range before contacting me.</p>
+      <p class="section__subheading">All prices in EUR, excluding VAT.</p>
     </header>
     <div class="ws-review-banner">
-      <span class="ws-review-banner__tag">Free</span>
-      Not sure where to start? I'll review your current website or idea — no cost, no commitment.
-      <a href="{% url 'contact:contact' %}" class="ws-review-banner__link">Request a free review →</a>
+      <div class="ws-review-banner__body">
+        <p class="ws-review-banner__title"><span class="ws-review-banner__tag">Free</span> Not sure where you fit? Start with a free review.</p>
+        <p class="ws-review-banner__text">Send your current website or idea. I'll tell you what to improve, what to fix, and what to build next. No commitment. No pressure.</p>
+      </div>
+      <a href="{% url 'contact:contact' %}" class="btn btn--outline btn--small ws-review-banner__cta">Start with a free review</a>
     </div>
 
     <div class="ws-tiers">
 
       <article class="ws-tier">
         <p class="ws-tier__label">Website fixes</p>
-        <p class="ws-tier__price">From 25,000 ISK</p>
+        <p class="ws-tier__price">From €175</p>
         <p class="ws-tier__desc">For existing websites that need updates, fixes, layout improvements, or small additions.</p>
         <p class="ws-tier__trust">Fixed scope. Clear price.</p>
+        <a href="{% url 'contact:contact' %}" class="ws-tier__inline-cta">Tell me what you need →</a>
       </article>
 
       <article class="ws-tier ws-tier--featured">
         <p class="ws-tier__label">Starter website <span class="ws-tier__badge">Most popular</span></p>
-        <p class="ws-tier__price">From 150,000 ISK</p>
-        <p class="ws-tier__desc">A complete professional website built from scratch — home, about, contact, and deployment.</p>
+        <p class="ws-tier__price">From €1,050</p>
+        <p class="ws-tier__desc">Everything you need to launch a professional website — home, about, contact, and deployment.</p>
         <p class="ws-tier__trust">Fixed scope. Clear price.</p>
+        <a href="{% url 'contact:contact' %}" class="ws-tier__inline-cta">Tell me about your project →</a>
       </article>
 
       <article class="ws-tier">
         <p class="ws-tier__label">Custom website</p>
-        <p class="ws-tier__price">From 300,000 ISK</p>
-        <p class="ws-tier__desc">For larger, academic, business, or advanced websites. If the scope is unclear, I'll give a custom quote.</p>
+        <p class="ws-tier__price">From €2,100</p>
+        <p class="ws-tier__desc">For larger, academic, business, or advanced websites. If the scope is unclear, I’ll give a custom quote.</p>
         <p class="ws-tier__trust">Fixed scope. Clear price.</p>
+        <a href="{% url 'contact:contact' %}" class="ws-tier__inline-cta">Tell me about your project →</a>
       </article>
 
     </div>
+    <p class="ws-pricing__note">All prices in EUR, excluding VAT. Final quote confirmed before work begins. No retainer. No surprise invoices. Invoices issued in EUR. VAT may apply depending on location.</p>
+    <p class="ws-not-included">Not included by default: logo design, long-form copywriting, complex e-commerce, and ongoing maintenance. These can be quoted separately.</p>
     <div class="ws-pricing__cta">
-      <a href="{% url 'contact:contact' %}" class="btn btn--primary">Request a website quote</a>
+      <a href="{% url 'contact:contact' %}" class="btn btn--primary">Tell me about your project</a>
     </div>
   </div>
 </section>
@@ -144,31 +137,36 @@
 <section class="section ws-proof ws-proof--dark">
   <div class="container">
     <header class="section__header">
-      <p class="section__label">Proof</p>
-      <h2 class="section__title">Live work</h2>
+      <p class="section__label">Recent work</p>
+      <h2 class="section__title">A real website, delivered</h2>
     </header>
     <div class="ws-proof__cards">
 
       <div class="ws-proof-card ws-proof-card--live">
-        <div class="ws-proof__preview">
+        <div class="ws-browser-frame">
+          <div class="ws-browser-frame__bar">
+            <div class="ws-browser-frame__dots">
+              <span class="ws-browser-frame__dot"></span>
+              <span class="ws-browser-frame__dot"></span>
+              <span class="ws-browser-frame__dot"></span>
+            </div>
+            <span class="ws-browser-frame__url">jat21.com</span>
+          </div>
           <img
             src="{% static 'img/jat21-preview.jpg' %}"
-            alt="Jat21 website preview"
-            class="ws-proof__image"
+            alt="Jat21 website screenshot"
+            class="ws-browser-frame__img"
           />
-        </div>
-        <div class="ws-proof-card__preview" aria-hidden="true">
-          <span class="ws-proof-card__preview-label">jat21.com</span>
         </div>
         <p class="ws-proof-card__status">Live</p>
         <p class="ws-proof-card__name">Jat21.com</p>
-        <p class="ws-proof-card__desc">Architectural business website — live and in use.</p>
-        <a href="https://jat21.com" class="btn btn--outline" target="_blank" rel="noopener noreferrer">Visit site</a>
+        <p class="ws-proof-card__desc">Starter Website — built for an architectural studio to establish a credible online presence.</p>
+        <blockquote class="ws-proof-card__quote">&ldquo;Delivered in 10 days. Clear, professional, exactly what we needed.&rdquo;</blockquote>
+        <a href="https://jat21.com" class="btn btn--outline ws-proof-card__visit" target="_blank" rel="noopener noreferrer">Visit live site ↗</a>
       </div>
 
     </div>
     <p class="ws-proof__identity">Built by Kusse Sukuta Bersha, a Django developer and researcher based in Iceland.</p>
-    <p class="ws-proof__in-progress">Academic portfolio example in progress: drkusse.com.</p>
   </div>
 </section>
 
@@ -179,14 +177,20 @@
       <p class="section__label">What to expect</p>
       <h2 class="section__title">No surprises</h2>
     </header>
-    <ul class="ws-expectations__list">
-      <li><strong>Fast delivery</strong> — typically 1–2 weeks after content is ready</li>
-      <li><strong>Professional result</strong> — built to represent you clearly and credibly</li>
-      <li><strong>Mobile-ready</strong> — works on all devices</li>
-      <li><strong>Real functionality</strong> — contact form, admin panel, structured content</li>
-      <li><strong>Search-ready</strong> — basic SEO included</li>
-      <li><strong>Guided deployment</strong> — you go live with support</li>
-    </ul>
+    <ol class="ws-steps ws-steps--horizontal">
+      <li class="ws-step">
+        <span class="ws-step__num">1</span>
+        <span class="ws-step__text">You send your idea or current site</span>
+      </li>
+      <li class="ws-step">
+        <span class="ws-step__num">2</span>
+        <span class="ws-step__text">I send a clear scope and fixed price</span>
+      </li>
+      <li class="ws-step">
+        <span class="ws-step__num">3</span>
+        <span class="ws-step__text">Your website goes live in 1–2 weeks</span>
+      </li>
+    </ol>
   </div>
 </section>
 
@@ -195,14 +199,15 @@
   <div class="container">
     <div class="cta-section__inner">
       <p class="section__label">Get started</p>
-      <h2 class="cta-section__title">Ready to build your website?</h2>
+      <h2 class="cta-section__title">Start with a free review.</h2>
       <p class="cta-section__body">
-        Send a message with your idea or current website and what you want to improve or build.
-        You will get a clear scope, a fixed price, and a simple timeline.
+        Send your idea or current website. I'll tell you what to improve, what to fix, and what to build next.
+        You get a clear scope, a fixed price, and a simple timeline.
         No retainer. No surprises. Clear delivery.
       </p>
       <div class="cta-section__actions">
         <a href="{% url 'contact:contact' %}" class="btn btn--primary btn--large">Tell me about your project</a>
+        <p class="ws-cta__availability">Currently available for new projects.</p>
       </div>
     </div>
   </div>
